@@ -1,0 +1,110 @@
+<div class="Dr_sidemodal">
+
+
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="right">
+
+      <app-sidebarshedulestudent (update)="refreshEvents()" [course]="course" [voir]='mode' *ngIf="type=='Cours'"></app-sidebarshedulestudent>
+      <app-sidebarplagehoraire *ngIf="type!='Cours'"></app-sidebarplagehoraire>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+
+          <div class="col-md-10">
+            <div class="col-md-4 col-lg-offset-5 top_br text-center">
+              <h3>
+                <i class="fa fa-fw fa-caret-left	" mwlCalendarPreviousView [view]="'month'" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+
+                </i>
+                <span mwlCalendarToday [(viewDate)]="viewDate">
+                  {{ viewDate | amLocale:'fr' | amDateFormat:'MMMM' }}
+                </span>
+
+
+                <i class="fa fa-fw fa-caret-right	" mwlCalendarNextView [view]="'month'" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+
+                </i>
+              </h3>
+            </div>
+          </div>
+          <div class="col-md-2 top_br">
+            <div class="form-group has-feedback">
+
+              <input type="text" class="form-control" id="inputSuccess2" placeholder="Rechercher par nom " />
+              <span class="glyphicon glyphicon-search form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="container">
+
+        <div class="row top_br">
+          <div class="col-md-4">
+
+          </div>
+        </div>
+
+        <div class="top_br">
+          <div class="row text-center">
+            <div class="col-md-2 top_br Dr_pd_left">
+              <button type="button" class="btn_add Dr_WB" (click)="createSidebar()">
+                Ajouter un cours
+              </button>
+            </div>
+            <div class="col-md-2 top_br Dr_pd_left">
+              <button type="button" class="btn_add Dr_WB" (click)="type='Horaire';_toggleSidebar()">
+                Plage horaire
+              </button>
+            </div>
+            <div class="col-md-5 top_br">
+              <button type="submit" class="ang_nav left_radius" [ngClass]="showclass?'active_ang':''" (click)="activeClass()">Classes</button>
+              <button type="submit" class="ang_nav right_radius " [ngClass]="!showclass?'active_ang':''" (click)="activeEns()">Enseignants</button>
+            </div>
+            <div class="col-md-3 top_br">
+              <div class="col-xs-12 btn-group Dr_right">
+                <button class="Dr_btn_CAL Dr_listeIcone" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+                  <i class="fa fa-fw fa-caret-left	"></i>
+                </button>
+                <button class=" icon_Dr_CAL Dr_listeIcone" (click)="view = 'week'" [class.active]="view === 'week'">
+                  {{ viewDate | amLocale:'fr' | amDateFormat:'ww'}}
+                </button>
+                <button class="Dr_btn_CAL Dr_listeIcone" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+                  <i class="fa fa-fw fa-caret-right	"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="top_br">
+            <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+            </mwl-demo-utils-calendar-header>
+            <app-loader *ngIf="loading" [word]="'Chargement en cours'"></app-loader>
+
+            <div [ngSwitch]="view">
+              <div *ngIf="!loading">
+                <mwl-calendar-week-view *ngSwitchCase="'week'" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)"
+                  [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-week-view>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </ng-sidebar-container>
+
+</div>

@@ -1,0 +1,107 @@
+
+<ng-sidebar [(opened)]="_opened" position="right" >
+
+  <app-sidebarPeriod *ngIf="ready"  (data)="updated()" [etablissement]="etablissement"  [mode]="mode"   ></app-sidebarPeriod>
+
+</ng-sidebar>
+
+<div class="container">
+
+<!--  <input type="text"  class="form-control Dr_input" name="id" [(ngModel)]="ecole.id" hidden style="display: block">
+  <input type="text"  class="form-control Dr_input" name="nomGroupe" [(ngModel)]="ecole.groupeScolaire"  hidden style="display: block">-->
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 "><label class="Dr_titre_filtre"> Année scolaire   </label></div>
+  </div>
+
+
+
+  <div *ngFor="let decoupageList of ecole.Decoupages;let j=index">
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Libellé année</label></div>
+    <div class="col-md-6">
+      <input type="text" class="form-control Dr_input" name="libelleAS" [(ngModel)]="decoupageList.AnneeScolaire.libelleAS">
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="row top_br " >
+    <div class="col-xs-1 col-md-4 "><label class="Dr_add_form">Du</label></div>
+    <div class="col-md-7">
+      <div class="col-xs-5 col-md-4 Dr_pd_left">
+        <input type="text" class="form-control Dr_input" bsDatepicker  name="dateDebut" [(ngModel)]="decoupageList.AnneeScolaire.dateDebut"
+               [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+      </div>
+      <div class="col-xs-1 col-md-1"><label class="Dr_lab_form">au</label></div>
+      <div class="col-xs-5 col-md-4 Dr_pd_left">
+        <input type="text" class="form-control Dr_input" bsDatepicker  name="dateFin" [(ngModel)]="decoupageList.AnneeScolaire.dateFin"
+               [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row top_br " >
+    <div class="col-md-4 "><label class="Dr_add_form">Découpages </label></div>
+    <div class="col-md-6">
+      <input type="text" class="form-control Dr_input"   name="libelleD" [(ngModel)]="decoupageList.libelleD" >
+   <!--       <select class="form-control Dr_input  " name="libelleD" [(ngModel)]="ecole.Decoupages[0].libelleD" >
+            <option  [value]="0">Bimestre </option>
+            <option  [value]="1">Trimestre </option>
+            <option  [value]="2">Semestre </option>
+            <option  [value]="3">Persnnalisé </option>
+          </select>-->
+    </div>
+  </div>
+  <div *ngFor="let periodList of decoupageList.PeriodeDecoupages;let i=index">
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Libellé {{ i+1 }} ère période</label></div>
+    <div class="col-xs-11 col-md-6">
+      <input type="text" class="form-control Dr_input" name="nomPeriode" [(ngModel)]="periodList.nomPeriode">
+    </div>
+   <!-- <div class="col-xs-1 col-md-1"><button  class="icon_supp " type="submit"></button></div>
+    <div class="col-xs-1 col-md-1"><button  class="icon_modif " type="submit"></button></div>-->
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-1 col-md-4 "><label class="Dr_add_form">Du</label></div>
+    <div class="col-md-7">
+      <div class="col-xs-5 col-md-4 Dr_pd_left">
+        <input type="text" class="form-control Dr_input" bsDatepicker name="debutDP" [(ngModel)]="periodList.debutD"  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+      </div>
+      <div class="col-xs-1 col-md-1"><label class="Dr_lab_form">au</label></div>
+      <div class="col-xs-5 col-md-4 Dr_pd_left">
+        <input type="text" class="form-control Dr_input" bsDatepicker name="finDP" [(ngModel)]="periodList.finD"  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form Dr_text_Imprim">+ Ajouter une période </label></div>
+    <div class="col-md-6"></div>
+  </div>
+</div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form Dr_text_Imprim" (click)="_toggleSidebar();initialiseSidebar()" type="submit">+ Ajouter un autre découpage</label></div>
+    <div class="col-md-6"></div>
+  </div>
+
+
+
+  <div class="row top_br ">
+    <div class="col-md-4 "></div>
+    <div class="col-md-6">
+      <div class="col-md-4">
+        <button type="submit" class="form-control Dr_btn_02">Annuler</button>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <button type="submit" class="form-control btn_add">Enregistrer</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+

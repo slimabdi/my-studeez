@@ -1,0 +1,150 @@
+
+<div class="Dr_sidemodal">
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right" [mode]="mode" >
+        <sidebar-carnet-sante (update)="refreshEvents()"></sidebar-carnet-sante>
+    </ng-sidebar>
+    <div ng-sidebar-content>
+        <div class="container-fluid Dr_top_100" >
+            <div class="row">
+    
+              <div class="col-md-9 col-lg-10">
+                <div class="col-xs-12 col-sm-8 col-md-4 col-lg-3 col-sm-offset-2 col-md-offset-6 top_br" >
+                  <button type="submit" class="ang_nav left_radius "   [routerLink]="['/directeurplateform/scholar-life/infirmerie']"   >Passage en infirmerie</button>
+                  <button type="submit"  class="ang_nav right_radius active_tab" [routerLink]="['/directeurplateform/scholar-life/infirmerie/carnet']"  (click)="activeEns()" >Carnet de santé</button> 
+    
+            
+                   <!-- <a class="ang_nav right_radius "  [routerLink]="['/directeurplateform/scholar-life/infirmerie/carnet']"> Carnet de santé</a>-->
+                
+                </div>
+              </div>
+          
+              <div class="col-md-3 col-lg-2 top_br">
+                <div class="form-group has-feedback">
+                  <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+                  <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+                  <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+    
+    
+          <div class="container" >
+        <div *ngIf="sante">
+
+            <div class="col-xs-12 col-md-12 top_br">
+              <div class="col-xs-2 col-md-1"> </div>
+              <div class="col-xs-4 col-md-4" >Nom de la classe </div>
+              <div class="col-xs-4 col-md-5"> Abrégé</div>
+              <div class="col-xs-2 col-md-2 text-center"> Nombre d’élèves</div>
+            </div>
+          
+            <div class="col-xs-12 col-md-12 top_br Dr_C_ligne" *ngFor="let carnt  of carn"  >
+              <div class="col-xs-2 col-md-1"> <img src="{{carnt.icone}}" alt="" width="47px" class="rounded-circle"></div>
+              <div class="col-xs-4 col-md-4">
+                <label  class="text_label Dr_label Dr_CJ"   (click)="getcarnet(carnt.id)" >
+                    {{carnt.nomC}}
+                </label>
+              </div>
+          
+              <div class="col-xs-4 col-md-5">
+                <label  class="text_label Dr_label " >
+                    {{carnt.abrege}}
+                </label>
+              </div>
+          
+              <div class="col-xs-2 col-md-2 text-center">
+                <label  class="text_label Dr_label ">
+                    {{carnt.nbCarnet}}
+                </label>
+              </div>
+            </div>
+          
+            <div class="col-md-12 top_br">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" >
+                  <button type="submit" class="Impr_btn" (click)="generationPDFf()">Imprimer la liste</button>
+                  <button type="submit" class="Expo_btn" (click)="exportationExcell()" >Export EXCEL</button>
+                </div>
+          
+                <div class="col-md-2"></div>
+              </div>
+              
+          </div>
+          <div class="row top_br" *ngIf="classe">
+              <div class="col-xs-3 col-md-3">
+                <button type="submit" class="form-control btn_add"  (click)="onshowlistecarnet() ; _toggleSidebar()">Passage Carnet</button>
+              </div>
+            </div>
+          
+          <div *ngIf="classe">
+          
+          
+            <div class="col-xs-12 col-md-12 top_br">
+              <div class="col-xs-2 col-md-1"> </div>
+              <div class="col-xs-4 col-md-2" >Élève </div>
+              <div class="col-xs-4 col-md-5"> Observations, traitements, recommendations particulières</div>
+              <div class="col-xs-2 col-md-2 "> Contact en cas d’urgence</div>
+              <div class="col-xs-2 col-md-2 text-center"> Télephone contact</div>
+            </div>
+          
+            <div class="row top_br">
+                <div class="col-md-4">
+                  <span class="titre_table Dr_cr" (click)="canet()"> Classes  >    </span>
+          
+                </div>
+              </div>
+          
+            <div class="col-xs-12 col-md-12 top_br Dr_C_ligne Dr_cr " *ngFor="let listeca of dataMalade "  (click)="InitEleve(listeca);add=false;carnet=true ;_toggleSidebar()" >
+          
+            
+              <div class="col-xs-2 col-md-1"> <img src="{{listeca.avatar}}" alt="" width="47px" class="rounded-circle"></div>
+              <div class="col-xs-4 col-md-2">
+                  
+                <label  class="text_label Dr_label Dr_cr "   >
+                    {{listeca.nom}} {{listeca.prenom}}
+                </label>
+              </div>
+          
+              <div class="col-xs-4 col-md-5">
+                <label  class="text_label Dr_label ">
+                    {{listeca.observation}}
+                </label>
+              </div>
+          
+              <div class="col-xs-2 col-md-2 text-center">
+                <label  class="text_label Dr_label ">
+                    {{listeca.responsable1}}
+                </label>
+              </div>
+              <div class="col-xs-2 col-md-2 text-center">
+                <label  class="text_label Dr_label ">
+                    {{listeca.tel1}}
+                </label>
+              </div>
+          
+                
+            </div>
+            <div class="col-md-12 top_br">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" >
+                  <button type="submit" class="Impr_btn" (click)="generationPDflist()">Imprimer la liste</button>
+                  <button type="submit" class="Expo_btn" (click)="exportationExcel()" >Export EXCEL</button>
+                </div>
+          
+                <div class="col-md-2"></div>
+              </div>
+          </div>
+          </div>
+      </div>
+      </ng-sidebar-container>
+      </div>
+
+
+
+
+
+
+

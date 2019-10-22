@@ -1,0 +1,92 @@
+<!-- Container for sidebar(s) + page content -->
+<div class="Dr_content_nav" >
+  <ng-sidebar-container [style.background]="colorbody" style="height: 100vh;position: absolute;margin-top: -32px;">
+
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="left">
+      <div class="Dr_content_sidebar" style="height: 100%;" [style.background]="color" >
+        <ul class="nav Dr_sidebar" id="side-menu" [style.background]="color">
+
+
+          <li *ngFor="let item of MENU;let i=index" class="item_titre">
+            <a data-toggle="collapse"   data-parent="#accordion" href="#collapse_{{i}}" class="fleche color_item">
+              <label>{{item.title}}</label>
+            </a>
+            <ul class="nav nav-second-level panel-collapse collapse Dr_UI" [style.background]="color"  id="collapse_{{i}}">
+              <li class=" Dr_i_side" *ngFor="let menu of item.content;let j=index" >
+                <label class="Dr_label_001 Dr_item_left"   *ngIf="!menu.SMenu" routerLink="{{menu.link}}"  closeSidebar  >
+                  <i [ngClass]="menu.icon"></i> {{menu.title}}</label>
+                <a class="fleche color_item Dr_Bn Dr_ISM"  *ngIf="menu.SMenu" data-toggle="collapse" href="#sous_collapse_{{j}}{{i}}"   >
+                  <i [ngClass]="menu.icon"></i> {{menu.title}}</a>
+                <ul class="nav nav-second-level panel-collapse collapse Dr_UL"  *ngIf="menu.SMenu" id="sous_collapse_{{j}}{{i}}">
+                  <li class=" Dr_i_sideS" *ngFor="let sous of menu.SMenu ">
+                    <label class="Dr_label_001 Dr_item_left Dr_SIL" [style.color]="color"  routerLink="{{sous.link}}"  closeSidebar  >
+                    {{sous.title}}
+                    </label>
+                  </li>
+
+                </ul>
+              </li>
+
+            </ul>
+            <!-- /.nav-second-level -->
+          </li>
+        </ul>
+      </div>
+    </ng-sidebar>
+    <!-- Page content -->
+    <div  ng-sidebar-content>
+      <nav class="navbar Dr_navbar-inverse navbar-fixed-top " [style.background-color]="color" style="position: fixed">
+        <div class="container-fluid">
+          <img src="{{logo}}" alt="" class="Dr_logo">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+              <i class="fa fa-angle-double-down fa-fw"></i>
+            </button>
+            <a class="navbar-brand">
+              <div id="menuToggle" (click)="_toggleSidebarNav()">
+                <input type="checkbox" />
+                <span id="span1"></span>
+                <span id="span2"></span>
+                <span id="span3"></span>
+              </div>
+
+            </a>
+          </div>
+          <div id="navbar" [style.background-color]="color" class="navbar-collapse collapse bg_ff">
+            <ul class="nav navbar-right top-nav menuTop">
+              <li class="dropdown Dr_icon_nav">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <button type="submit" class="icon_info"></button>
+                </a>
+              </li>
+              <li class="dropdown Dr_icon_nav">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <button type="submit" class="icon_notif"></button>
+                </a>
+              </li>
+              <li class="dropdown Dr_icon_nav">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <button type="submit" class="icon_message"></button>
+                </a>
+              </li>
+              <li class="dropdown Dr_icon_nav">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <button type="submit" class="icon_Dr_profil"></button>
+                </a>
+              </li>
+              <li class="dropdown Dr_icon_nav">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <button type="submit" class="icon_Dr_setting"></button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </ng-sidebar-container>
+
+</div>

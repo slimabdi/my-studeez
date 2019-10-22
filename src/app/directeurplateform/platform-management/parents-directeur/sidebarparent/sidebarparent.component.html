@@ -1,0 +1,196 @@
+<div class="col-md-12 Dr_titre_sideMD"  >
+Modifier une fiche parent
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+<form #formulaire="ngForm">
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Photo de profil ou avatar</div>
+    <div class="col-xs-8 col-md-8">
+      <div class="Dr_icon_MD" [style.background-image]="parent.avatar!=''?('url('+ parent.avatar+')'):('url(../../assets/images/directeur/avatar.png)')  "  >
+        <input autocomplete="off" class="file_input_Dr" type="file"
+               name="input-file-preview" (change)="onAvatarSelected($event)" />
+      </div>
+    </div>
+  </div>
+  <input type="text"  class="form-control Dr_input" name="id" [(ngModel)]="parent.id"  hidden style="display: none">
+  <input type="text"  class="form-control Dr_input" name="idCU" [(ngModel)]="parent.idCU" hidden style="display: none" >
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Nom *</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="nomP" [(ngModel)]="parent.nomP" required   #nomm="ngModel">
+      <show-errors [control]="nomm"></show-errors>
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Prénom *</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="prenomP" [(ngModel)]="parent.prenomP"  #prenomm="ngModel" required>
+      <show-errors [control]="prenomm"></show-errors>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Lien de parenté *</div>
+    <div class="col-xs-8 col-md-8">
+
+      <select class="form-control Dr_input"   name="lienPrente" [(ngModel)]="parent.lienPrente"  #lienParente="ngModel" required>
+        <option value="null">  </option>
+        <option value="pere"> Père </option>
+         <option value="mere"> Mère </option>
+         <option value="autre"> Autre </option>
+      </select>
+      <show-errors [control]="lienParente"></show-errors>
+    </div>
+
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Adresse postale</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="adressePostaleP" [(ngModel)]="parent.adressePostaleP" >
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Complément d'adresse</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="ComplementAdresse" [(ngModel)]="parent.ComplementAdresse" >
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Ville</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="ville" [(ngModel)]="parent.ville" >
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Code postal</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="number"  class="form-control Dr_input" name="codePostale" [(ngModel)]="parent.codePostale" >
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Profession </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="prof" [(ngModel)]="parent.prof" >
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Tel 1 *</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="number"  class="form-control Dr_input" name="tel1" [(ngModel)]="parent.tel1"   #tel="ngModel" required >
+      <show-errors [control]="tel"></show-errors>
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Tel 2</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="number"  class="form-control Dr_input" name="tel2" [(ngModel)]="parent.tel2" >
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Email*</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="email"  class="form-control Dr_input" name="emailP" [(ngModel)]="parent.emailP"  #emaill="ngModel" required email >
+      <show-errors [control]="emaill"></show-errors>
+
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Mot de passe</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="password"  class="form-control Dr_input" name="password" [(ngModel)]="parent.password" required>
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Confirmation mot de passe</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="password"  class="form-control Dr_input" name="password2" [(ngModel)]="parent.password2" required>
+    </div>
+  </div>
+
+
+  <br>
+
+<div  class="table-responsive-sm top_br">
+    <table class="table ">
+      <tbody  class="">
+      <tr  *ngFor="let eleveParent of listParentEleve; let p=index" >
+        <td>
+        </td>
+        <td  class=" border_td ">
+          <div *ngIf="estNonVidee(eleveParent.avatarEleves ); then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+            <img class="img_liste" src="../../../assets/uploads/{{eleveParent.avatarEleves}}" >
+          </ng-template>
+          <ng-template #elseBlock>
+            <img src="../../../../assets/images/admin/avatar_eleve.png" alt="" width="47px" class="rounded-circle">
+          </ng-template>        </td>
+        <td class=" border_td">{{eleveParent.nom}} {{eleveParent.prenom}}</td>
+        <td class=" border_td"></td>
+        <td  class=" border_td">{{eleveParent.nomC}}  </td>
+        <td  class="border_td">
+          <label class="text_label Dr_label">
+            <button type="submit" class="icon_supp right "   (click)="modalSupprimeEleve(eleveParent)"></button>
+          </label>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar  >Annuler</button>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn"  closeSidebar   (click)="modifierParent(formulaire.value)">Enregistrer</button>
+    </div>
+  </div>
+</form>
+
+
+
+<div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal">Etes vous sur(e) de supprimer l'élève « {{tmpeleveParent.nom}} {{tmpeleveParent.prenom}}»?  </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp "  data-dismiss="modal"  value="OUI"  (click)="deleteParentEleve(tmpeleveParent.id)">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,199 @@
+<div class="container">
+
+  <div class="row top_br Dr_bgCol_001"  >
+    <div class="col-md-4 ">
+      <label class="Dr_titre_filtre">Personnalisation externe  </label>
+    </div>
+  </div>
+
+  <form #formulaire="ngForm">
+
+  <input type="text"  class="form-control Dr_input" name="id" [(ngModel)]="ecole.id" hidden style="display: none">
+  <input type="text"  class="form-control Dr_input" name="nomGroupe" [(ngModel)]="ecole.groupeScolaire"  hidden style="display: none">
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form">Image page de connexion</label>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12 Dr_file_01 " [style.background-image]="('url(../../../assets/images/directeur/upload-logo-icon-72720.png)')  ">
+        <input class="file_input_Dr" type="file" name="input-file-preview"  name="imgPageCnx" [(ngModel)]="ecole.imgPageCnx" />
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form">Logo page de connexion</label>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12 Dr_file_01 " [style.background-image]="('url(../../../assets/images/directeur/upload-logo-icon-72720.png)')  ">
+        <input class="file_input_Dr" type="file" name="input-file-preview"  name="logoPageCnx" [(ngModel)]="ecole.logoPageCnx"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form"> Couleur externe</label>
+    </div>
+    <div class="col-md-6">
+      <label class="form-control Dr_input">
+        <input type="text" [value]="color" class="col-xs-11 col-md-11 Dr_inputT_color"  disabled name="couleurExterne" [(ngModel)]="ecole.couleurExterne">
+        <button type="submit" [style.background]="color" [(colorPicker)]="color" class="Dr_color" [cpPosition]="'left'" ></button>
+      </label>
+    </div>
+  </div>
+
+
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 ">
+      <label class="Dr_titre_filtre">Page de présentation   </label>
+    </div>
+  </div>
+
+
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form">Insérer une photo ou une image </label>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12 Dr_file_01 " [style.background-image]="('url(../../../assets/images/directeur/upload-logo-icon-72720.png)')  ">
+        <input class="file_input_Dr" type="file" name="input-file-preview" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form">Saisir le titre de la présentation</label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control Dr_input" name="titrePresentation" [(ngModel)]="ecole.titrePresentation">
+    </div>
+  </div>
+
+
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form"> Saisir le texte</label>
+    </div>
+    <div class="col-md-6">
+      <textarea  class="form-control Dr_input"   name="presentation" [(ngModel)]="ecole.presentation"></textarea>
+    </div>
+  </div>
+
+
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 ">
+      <label class="Dr_titre_filtre">Horaires d’ouverture   </label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-1 col-md-4 ">
+      <label class="Dr_add_form"> </label>
+    </div>
+    <div class="col-xs-11 col-md-6">
+      <div class="col-xs-4 col-md-4 text-center">
+        <label class="Dr_lab_form ">Matin</label>
+      </div>
+      <div class="col-xs-4 col-md-4 text-center">
+        <label class="Dr_lab_form ">Après-midi</label>
+      </div>
+    </div>
+  </div>
+
+    <div class="row top_br "   *ngFor="let h of ecole.HorairesEcoles ; let i=index">
+      <div class="col-xs-1 col-md-4 ">
+        <label class="Dr_add_form"> {{h.jour}}</label>
+      </div>
+      <div class="col-xs-11 col-md-7">
+        <div class="col-xs-2 col-md-2 Dr_pd_left">
+          <!--
+                  <timepicker name="hd_matin" [(ngModel)]="ecole.HorairesEcoles[0].hd_matin" class="form-control Dr_input"></timepicker>
+          -->
+
+          <input type="time" class="form-control Dr_input"   name="hd_matin{{i}}" [(ngModel)]="h.hd_matin">
+        </div>
+
+        <div class="col-xs-2 col-md-2 Dr_pd_left">
+          <!--
+                  <timepicker [(ngModel)]="mytime" class="form-control Dr_input"></timepicker>
+          -->
+          <input type="time" class="form-control Dr_input" name="hf_matin{{i}}" [(ngModel)]="h.hf_matin">
+        </div>
+        <div class="col-xs-1 col-md-1 Dr_pd_left">
+
+        </div>
+
+        <div class="col-xs-2 col-md-2 Dr_pd_left">
+          <input type="time" class="form-control Dr_input" name="hd_ApresMidi{{i}}" [(ngModel)]="h.hd_ApresMidi">
+        </div>
+
+        <div class="col-xs-2 col-md-2 Dr_pd_left">
+          <input type="time" class="form-control Dr_input" name="hf_ApresMidi{{i}}" [(ngModel)]="h.hf_ApresMidi">
+        </div>
+
+        <div class="col-xs-2 col-md-2 Dr_pd_left">
+          <input type="checkbox" name="estFermer{{i}}" [(ngModel)]="h.estFermer" >
+          <label class="Dr_lab_form " >Fermé</label>
+        </div>
+      </div>
+    </div>
+
+
+
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 ">
+      <label class="Dr_titre_filtre">Personnalisation interne   </label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form">Logo barre de tâche</label>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12 Dr_file_01  ">
+        <input class="file_input_Dr" type="file" name="input-file-preview"   name="logoBarreTache" [(ngModel)]="ecole.logoBarreTache" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 ">
+      <label class="Dr_add_form"> Couleur barre de tâche</label>
+    </div>
+    <div class="col-md-6">
+      <label class="form-control Dr_input">
+        <input type="text" [value]="color1" class="col-xs-11 col-md-11 Dr_inputT_color"  disabled  name="couleurBarreTache" [(ngModel)]="ecole.couleurBarreTache">
+        <button type="submit" [style.background]="color1" [(colorPicker)]="color1" class="Dr_color" [cpPosition]="'left'" ></button>
+      </label>
+    </div>
+  </div>
+
+
+
+
+  <div class="row top_br Dr_padding_003">
+    <div class="col-md-4 "></div>
+    <div class="col-md-6">
+      <div class="col-md-4">
+        <button type="submit" class="form-control Dr_btn_02" >Annuler</button>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <button type="submit" class="form-control DrBtn" (click)="updatePresentation(formulaire.value)"   >Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  </form>
+</div>
+
+
+
+

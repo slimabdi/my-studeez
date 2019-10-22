@@ -1,0 +1,54 @@
+.myadminclassselect {
+  width: 367px;
+  border: 1px solid;
+  position: absolute;
+  background: #fff;
+  z-index: 4;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 11px;
+  .titleniveau {
+    font-size: 20px;
+    margin-bottom: 0;
+  }  
+  .titleniveau:hover{
+    color: #b5babb;
+    cursor: pointer;
+  }
+  .titlesection{
+    padding-left: 37px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .sectionselect:hover{
+    background: #ecebeb;
+  }
+.numberNiv{
+  
+  padding-right: 16px;
+}
+.flecheniv{
+  float: right;
+  color: #4ab3cc;
+}
+}
+.myimg{
+  position: absolute;
+  right: -22px;
+  top: 7px;
+}
+.nav_ajout_1{
+  border-bottom-left-radius: 20px!important;
+  border-top-left-radius: 20px!important;
+}
+.nav_ajout_2{
+  border-bottom-right-radius: 20px!important;
+  border-top-right-radius: 20px!important;
+  margin-left: -4px;
+}
+.btn_sm_studeez{
+  width: auto!important;
+  height: auto!important;
+  padding: 10px 30px;
+  margin-left: 36px;
+}

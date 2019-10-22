@@ -1,0 +1,118 @@
+<div class="col-md-12 Dr_titre_sideMD">
+<span *ngIf="mode!='update'" >Ajouter une fiche directeur</span>
+<span *ngIf="mode=='update'" >Modifier une fiche directeur</span>
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+<form #formulaire="ngForm">
+  <div class=" col-xs-12 col-md-12 top_br ">
+    <div class="col-xs-4 col-md-4">Photo de profil ou avatar</div>
+    <div class="col-xs-8 col-md-8">
+      <div class="Dr_icon_MD" [style.background-image]="(personnel.avatar&&personnel.avatar!='')?('url('+ personnel.avatar+')'):('url(../assets/images/directeur/avatar.png)')  ">
+        <input class="file_input_Dr" type="file" name="input-file-preview" (change)="onupPhotoEtablissementSelected($event)" />
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Civilitée*</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" #civilite="ngModel" name="civilite" [(ngModel)]="personnel.civilite" required>
+      <show-errors [control]="civilite"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Nom*</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" #nom="ngModel" name="nom" [(ngModel)]="personnel.nom" required>
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Prénom*</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" #prenom="ngModel" name="prenom" [(ngModel)]="personnel.prenom" required>
+      <show-errors [control]="prenom"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Fonction*</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" #fonction="ngModel" name="fonction" [(ngModel)]="personnel.fonction" required>
+      <show-errors [control]="fonction"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Administrateur</div>
+    <div class="col-xs-8 col-md-8">
+      <material-slide-toggle (change)="personnel.estAdmin=$event" [checked]="personnel.estAdmin" name="estAdmin">
+      </material-slide-toggle>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Accès à la messagerie</div>
+    <div class="col-xs-8 col-md-8">
+      <material-slide-toggle (change)="personnel.messagerie=$event" [checked]="personnel.messagerie" name="messagerie">
+      </material-slide-toggle>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8 Dr_bold">Coordonnées</div>
+
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Tel1</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" name="tel1" [(ngModel)]="personnel.tel1">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Tel2</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" name="tel2" [(ngModel)]="personnel.tel2">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Adresse postale</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" name="adressePostale" [(ngModel)]="personnel.adressePostale">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Complément d'adresse</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" name="complement_adresse" [(ngModel)]="personnel.complement_adresse">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Ville</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" name="ville" [(ngModel)]="personnel.ville">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Code postale</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" name="code_postal" [(ngModel)]="personnel.code_postal">
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Email*</div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" class="form-control Dr_input" #email="ngModel" name="email" [(ngModel)]="personnel.email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+      <show-errors [control]="email"></show-errors>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02" closeSidebar (click)="formulaire.reset()">Annuler</button>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn"  [disabled]="formulaire.invalid" (click)="ajouterDirecteur(personnel);">Enregistrer</button>
+    </div>
+  </div>
+</form>

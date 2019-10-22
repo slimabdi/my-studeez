@@ -1,0 +1,44 @@
+<div class="col-md-9 col-md-offset-3 AdTop" >
+  <br>
+
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="float: right;"><p  class="Dconnexion">Derniére Connexion  : {{dateDeconx}} </p></div>
+  </div>
+
+
+<div class="row ">
+  <div class="col-md-1 "></div>
+  <div class="col-md-2 myCol" >
+    <label *ngIf="loader" class="loader-div statik" ><img  src="../../../assets/images/admin/loader.gif"></label>
+    <label *ngIf="!loader"  class="text_form statik" >{{StatGroupe}}</label> groupes
+  </div>
+  <div class="col-md-2 myCol">
+    <label *ngIf="loader" class="loader-div statik" ><img  src="../../../assets/images/admin/loader.gif"></label>
+    <label *ngIf="!loader"  class="text_form statik" >{{StatEcole}}</label> écoles
+  </div>
+  <div class="col-md-2 myCol">
+    <label *ngIf="loader" class="loader-div statik" ><img  src="../../../assets/images/admin/loader.gif"></label>
+    <label *ngIf="!loader"  class="text_form statik">{{StatEleve}}</label> élèves
+  </div>
+  <div class="col-md-2 myCol">
+    <label  *ngIf="loader" class="loader-div statik" ><img  src="../../../assets/images/admin/loader.gif"></label>
+    <label  *ngIf="!loader"  class="text_form statik" >{{StatParent}}</label> parents
+  </div>
+  <div class="col-md-2 "></div>
+</div>
+
+  <div style="width: 90%; margin-top: 66px;">
+    <canvas id="line-chart"
+      baseChart
+      [chartType]="'line'"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="false"
+      [colors]="lineChartColors"
+      (chartClick)="onChartClick($event)">
+    </canvas>
+  </div>
+</div>
+

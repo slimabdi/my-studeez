@@ -1,0 +1,129 @@
+<div class="col-md-12 Dr_titre_sideMD">
+  <span *ngIf="mode=='create'"  >Ajouter un groupe d’élèves  </span>
+  <span *ngIf="mode=='update'" >Modifier un groupe d’élèves  </span>
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+<div class=" col-xs-12 col-md-12 top_br ">
+  <div class="col-xs-4 col-md-4">Icône</div>
+  <div class="col-xs-8 col-md-8">
+    <div class="Dr_icon_MD" [style.background-image]="(groupement.avatar&&groupement.avatar!='')?('url('+ groupement.avatar+')'):('url(../../assets/images/directeur/avatar.png)')  ">
+      <input autocomplete="off" class="file_input_Dr" type="file" name="input-file-preview" (change)="onAvatarSelected($event)"
+      />
+    </div>
+
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Nom du groupe*</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text" name="nomGpe" [(ngModel)]="groupement.nomGpe" class="form-control Dr_input">
+    <ul style="padding-left: 20px;" *ngIf="err.nomGpe">
+      <li style="color: #b7402c;">Ce champ est obligatoire</li>
+    </ul>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Abrégé*</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text" name="abregeGpe" [(ngModel)]="groupement.abregeGpe" [disabled]="saving" class="form-control Dr_input">
+    <ul style="padding-left: 20px;" *ngIf="err.abregeGpe">
+      <li style="color: #b7402c;">Ce champ est obligatoire</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-6 col-md-6 Dr_bold">Classes*</div>
+  <div class="col-xs-6 col-md-6 Dr_bold"></div>
+  <ul style="padding-left: 20px;" *ngIf="err.classesList">
+    <li style="color: #b7402c;">Ce champ est obligatoire</li>
+  </ul>
+</div>
+<div class="text-center" *ngIf="loadinC">
+  <img width="100px" src="assets/images/directeur/spinner.gif">
+</div>
+<div class="col-xs-12 col-md-12 top_br" *ngFor=" let class of classesList;let i=index" [style.display]="class.Etat=='deleted'?'none':'block'">
+  <div class="col-xs-6 col-md-6 top_br">
+    <div class="col-xs-11 col-md-11 Dr_pd_left ">
+      <select class="form-control Dr_input" [(ngModel)]="class.classeId" disabled>
+        <option value="">-------</option>
+        <option *ngFor="let c of classes" value="{{c.id}}"> {{c.nomC}} </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-6 col-md-6 top_br">
+    <div class="col-xs-11 col-md-11 Dr_pd_left ">
+      <input autocomplete="off" name="label" type="text" class="form-control Dr_input Dr_select" [readonly]="true" [(ngModel)]="class.studentsSelectedlabels">
+    </div>
+    <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+      <button type="submit" class="icon_supp right" [disabled]="saving" (click)="deleteRow(i)"></button>
+    </div>
+
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 " *ngIf="showaddclass&&classeCreate.length>0&&!saving">
+  <div class="col-xs-6 col-md-6 top_br">
+    <div class="col-xs-11 col-md-11 Dr_pd_left ">
+      <select class="form-control Dr_input" (change)="getStudents()" name="classeCreate" [(ngModel)]="newGroupement.classeId">
+        <option value=""></option>
+        <option *ngFor="let c of classeCreate" value="{{c.id}}"> {{c.nomC}} </option>
+      </select>
+    </div>
+    <!-- <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+      <button type="submit" class="icon_supp right"></button>
+    </div> -->
+
+  </div>
+  <div class="col-xs-6 col-md-6 top_br" (clickOutside)="nivSelect=false">
+    <div class="col-xs-11 col-md-11 Dr_pd_left ">
+      <input autocomplete="off" name="label" class="form-control Dr_input Dr_select" [readonly]="true" type="text" [(ngModel)]="newGroupement.studentsSelectedlabels"
+        (click)="nivSelect=!nivSelect">
+      <div class="myadminclassselect" *ngIf="nivSelect">
+        <p class="text-center" *ngIf="newGroupement.students&&newGroupement.students.length==0">Rien à afficher</p>
+        <div *ngIf="newGroupement.students&&newGroupement.students.length>0">
+          <div class="form-check">
+            <label class="form-check-label">
+              cocher tous
+              <input type="checkbox" class="form-check-input" name="checkall" [(ngModel)]="checkallbtn" (change)="checkAll()">
+            </label>
+          </div>
+          <div class="form-check" *ngFor="let ele of newGroupement.students;let j=index">
+            <label class="form-check-label">
+              {{ele.nom}} {{ele.prenon}}
+              <input type="checkbox" class="form-check-input" name="check1" [(ngModel)]="ele.checked" (change)="show($event,ele.idE,ele)">
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+      <button type="submit" (click)="addRow()" class="Dr_icon_ok">OK</button>
+    </div>
+
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 ">
+  <div class="col-xs-8 col-md-8 Dr_text_Imprim" *ngIf="!showaddclass&&classeCreate.length>0&&!saving" (click)="showaddclass=true">+ Ajouter une classe</div>
+
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" closeSidebar class="form-control Dr_btn_02">Annuler</button>
+  </div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control DrBtn" *ngIf="!saving" (click)="save()">Enregistrer</button>
+    <button class="form-control btn_loader" *ngIf="saving">
+      <img [style.width]="'27px'" src="../../assets/images/directeur/spinner.gif"> Enregistrer
+    </button>
+  </div>
+
+</div>

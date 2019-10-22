@@ -1,0 +1,176 @@
+<!--<aaaaaa></aaaaaa>-->
+<div class="Dr_sidemodal">
+
+
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="right">
+      <app-sidebargroupement (update)="updated()"  (erreur)="showErr()" [mode]="mode" *ngIf="type=='G'"></app-sidebargroupement>
+      <app-sidebar-regrouping  (update)="updated()"  (erreur)="showErr()" [mode]="mode"  *ngIf="type=='R'"></app-sidebar-regrouping>
+    </ng-sidebar>
+
+
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="col-md-8 col-lg-offset-3 top_br text-center">
+              <span class="Dr_titre_01 ">Liste des groupes et regroupements</span>
+            </div>
+          </div>
+          <div class="col-md-2 top_br">
+            <div class="form-group has-feedback">
+              <input type="text" class="form-control Dr_rech" id="inputSuccess2" [(ngModel)]="filterQuery" name="filterQuery" placeholder="Rechercher par nom " />
+              <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+              <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4">
+
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-3">
+            <div   dropdown>
+              <button type="submit" (click)="mode='create'" dropdownToggle aria-controls="dropdown-basic" class="form-control btn_add" style="width: 73%">Ajouter </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu Dr_add_cl" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" (click)="type='G';_toggleSidebar()" class=" Dr_item_add">Groupe</li>
+                <li role="menuitem" (click)="type='R';_toggleSidebar()" class=" Dr_item_add">Regroupement</li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive-sm top_br">
+          <app-loader *ngIf="loading" [word]="'Chargement en cours'" ></app-loader>
+          <app-nothingtoshow *ngIf="!loading&&data.length==0" [message]="'Aucun groupe ou regroupement à afficher'" >  </app-nothingtoshow>
+          <table *ngIf="!loading&&data.length!=0" class="table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <tbody  >
+              <tr>
+                <td class="border_td"></td>
+                <td class="titre_table border_td ">Nom</td>
+                <td class="titre_table border_td">Groupe/regroupement</td>
+                <td class="titre_table border_td">Abrégé</td>
+                <td class="titre_table border_td">Classes</td>
+                <td class="border_td"></td>
+              </tr>
+              <tr *ngIf=" mf.data.length==0">
+                <td colspan="6" class="text-center nothingToshow">
+                    Aucune résultat à afficher
+                  </td>
+              </tr>
+              <tr *ngFor="let class of mf.data;let i=index" class="border_col">
+                <td>
+                  <div class="img_liste" [style.background-image]="(class.avatar!=''&&class.avatar)?('url('+ class.avatar+')'):('url(../assets/images/directeur/avatar.png)')  ">
+                  </div>
+                </td>
+                <td>
+                  <label class="text_label Dr_label">
+                    {{class.nom}}
+                  </label>
+                </td>
+                <td>
+                  <label class="text_label Dr_label">
+                    {{class.type}}
+                  </label>
+                </td>
+                <td>
+                  <label class="text_label Dr_label">
+                    {{class.abrege}}
+                  </label>
+                </td>
+                <td>
+                  <label *ngFor="let c of class.Classes" class="text_label Dr_label col-sm-12">
+                    {{c.nomClasse}}
+                  </label>
+                  <label *ngFor="let c of class.groupes" class="text_label Dr_label col-sm-12">
+                      {{c.nomGroupe}}
+                    </label>
+                    <label *ngFor="let c of class.classes" class="text_label Dr_label col-sm-12">
+                        {{c.nomClasse}}
+                      </label>
+                </td>
+                <td>
+                  <label class="text_label Dr_label">
+                  </label>
+                </td>
+
+                <td>
+                  <label class="text_label Dr_label">
+                    <button type="submit" class="icon_modif right" (click)="openUpdate(class)" ></button>
+                  </label>
+
+                </td>
+                <td class="w_01 ">
+                  <label class="text_label Dr_label">
+                    <button type="submit" class="icon_supp right " [disabled]="deleteProcess" data-toggle="modal" (click)="objetDel=class;objetDel.index=i" data-target="#ModalSupp"></button>
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="data.length!=0">
+              <tr>
+                <td colspan="6">
+                  <div class="row btn_Bas">
+                    <div class=" col-md-3"></div>
+                    <div class="col-xs-8 col-md-6">
+                      <div class="Dr_pagination text-center">
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="row btn_Bas">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <button type="submit" (click)="generationPDF()" class="Impr_btn">Imprimer la liste</button>
+            <button type="submit" (click)="exportationExcel()" class="Expo_btn">Export EXCEL</button>
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </ng-sidebar-container>
+
+</div>
+
+
+<div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal" *ngIf="objetDel.nomGpe" >Etes vous sur(e) de supprimer le groupe «{{objetDel.nomGpe}} » ? </label>
+        <label class="Dr_lab_Modal" *ngIf="!objetDel.nomGpe" >Etes vous sur(e) de supprimer le regroupement «{{objetDel.nom}} » ? </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal" value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp " (click)="delete(objetDel)" data-dismiss="modal" value="OUI">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

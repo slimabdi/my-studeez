@@ -1,0 +1,45 @@
+#loading-page{
+    .loading{
+        padding: 12px 25px;
+        border-radius: 22px;
+        margin: auto;
+        margin-top: 59px;
+        margin-bottom: 59px;
+        p{
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 25px;
+            color: #b1cfe3;
+            margin: 0;
+            text-align: center;
+        }
+      img{
+          width:100px;
+    
+      }
+    
+    }
+    .dark-loader{
+        background-color: #f5f5f5
+    }
+    .light-loader{
+        background: #fff;
+    }
+   
+    @media screen and (max-width:768px){
+        .loading{
+            width: auto!important;
+            padding: 6px!important;
+        
+        img{
+            width:50px!important;
+            margin: auto!important;
+        }
+        p{
+            font-size: 18px!important;
+            text-align: center!important;
+        }
+
+    }
+     
+    }        
+}

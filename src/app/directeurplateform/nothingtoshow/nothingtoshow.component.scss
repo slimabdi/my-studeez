@@ -1,0 +1,23 @@
+#nothigToshow{
+    background: #fff;
+    padding: 128px 25px;
+    border-radius: 22px;
+    margin: auto;
+    margin-top: 59px;
+    border: 1px solid #b1cfe3;
+    margin-bottom: 140px;
+    p{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 35px;
+        color: #b1cfe3;
+        text-align: center;
+    }
+    @media screen and (max-width: 768px) {
+        padding: 21px!important;
+        margin-top: 36px!important;
+        margin-bottom: 104px!important;
+        p{
+            font-size: 22px
+        }
+    }
+}

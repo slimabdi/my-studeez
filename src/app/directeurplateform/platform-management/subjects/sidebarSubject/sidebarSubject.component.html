@@ -1,0 +1,66 @@
+
+<div class="col-md-12 Dr_titre_sideMD"  >
+ <span *ngIf="mode=='create'" >  Ajouter une matière</span>
+ <span *ngIf="mode=='update'" >  Modifier une matière</span>
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+
+<form #formulaire="ngForm">
+
+  <div class=" col-xs-12 col-md-12 top_br "  *ngIf="mode=='update'" hidden>
+    <div class="col-xs-8 col-md-8">
+
+        <input   name="id" [(ngModel)]="matiere.id" readonly  />
+      </div>
+
+  </div>
+<div class=" col-xs-12 col-md-12 top_br ">
+  <div class="col-xs-4 col-md-4">Icône</div>
+  <div class="col-xs-8 col-md-8">
+
+    <div class="Dr_icon_MD" [style.background-image]="icone!=''?('url('+ icone+')'):('url(../../assets/images/directeur/avatar.png)')  "  >
+      <input autocomplete="off" class="file_input_Dr" type="file"
+             name="input-file-preview" (change)="onAvatarSelected($event)" />
+    </div>  </div>
+
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Nom de la matière*</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text"  class="form-control Dr_input" name="nomMatiere" [(ngModel)]="matiere.nomMatiere" required  #nomMatieree="ngModel">
+    <show-errors [control]="nomMatieree"></show-errors>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Abrégé*</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text"  class="form-control Dr_input" name="abrege" [(ngModel)]="matiere.abrege" required #abregee="ngModel">
+    <show-errors [control]="abregee"></show-errors>
+
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Optionnelle</div>
+  <div class="col-xs-8 col-md-8">
+    <div class="toggle" >
+      <input type="checkbox"  class="form-control Dr_input" name="estOptionnelle"  [(ngModel)]="matiere.estOptionnelle"  id="alibaba"  >
+      <label for="alibaba" style="background: #fdb602 !important"></label>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='update'">Annuler</button>
+    <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='create'" (click)="formulaire.reset()">Annuler</button>
+  </div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control DrBtn"     (click)="ajouterMatiere(formulaire.value);formulaire.reset();">Enregistrer</button>
+  </div>
+</div>
+</form>
+

@@ -1,0 +1,416 @@
+
+<!-- *********************************************************************************************************************************************************************************************** -->
+<div class="col-md-9 col-md-offset-3 AdTop" >
+  <br>
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="float: right;"><p class="Dconnexion"> Derniére Connexion  : {{dateDeconx}} </p></div>
+  </div>
+
+  <!-- ***** -->
+  <div class="row ">
+    <div class="col-md-4"></div>
+    <div class="col-md-6">
+      <div class="R_01">
+        <select class="select-ecole"  [(ngModel)]="selectModel"  (change)="viewListParents($event)"  >
+          <option [value]="null"> Sélectionner une école</option>
+          <option *ngFor=" let ecole of ecoles"   [value]="ecole.id"  [selected]="isSelected(ecole.id)"> {{ecole.nomE}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="" class="form-control" style="float:right;height: 38px;width: 250px;border: 1px solid #ccc!important;margin-top: 22px" [(ngModel)]="term">
+      <img src="../../../assets/images/admin/fermer.png" alt="" class="img_fermer" (click)="Effacer_Recherche()">
+      <img src="../../../assets/images/admin/picto_recherche.png" alt="" class="img_recherche">
+    </div>
+  </div>
+
+  <br>
+
+  <!-- ********* -->
+
+  <div class="row" >
+    <div class="col-md-12"><label class="alert_V">{{successAdd}}</label></div>
+  </div>
+  <div *ngIf="loader" class="text-center loader-div" >
+    <img  src="../../../assets/images/admin/loader.gif">
+  </div>
+
+  <table *ngIf="!loader"  class="table  " [mfData]="data | parents:term" #mP="mfDataTable" [mfRowsOnPage]="5">
+    <tbody class="top_10">
+    <tr *ngFor="let parent of mP.data ">
+      <td class="col-md-1">
+        <div class="img_liste Ad_img" [style.background]="parent.avatar!=''?('url('+ parent.avatar+')'):('url(../../../assets/images/admin/avatar_parent.png)')  ">
+
+          </div>
+      </td>
+      <td class="col-md-2 " ><label style="margin-top: 10px" class="text_label text-center"> {{ parent.nomP}} {{ parent.prenomP}} </label></td>
+      <td class="col-md-3" ><label style="margin-top: 10px" class="text_label text-center">{{parent.nomE }} </label></td>
+      <td class="col-md-2" >
+        <div><label style="margin-top: 10px" class="text_label text-center">{{parent.tel1}}</label></div>
+      </td>
+
+      <td class="col-md-3">
+        <label style="margin-left: 50px ;margin-top: 10px" class="text_label text-center">{{parent.emailP}} </label>
+      </td>
+      <td class="col-md-1">
+        <div class="icon_L_ajouter">
+          <input type="submit" value="" class="btn_up" data-toggle="modal"   data-target="#ModalModif"
+                 (click)="ModalAfficheParent(parent)">
+          <input  class="btn_sup" value=""  data-dismiss="modal" (click)="modalSupp(parent)" data-toggle="modal" data-target="#ModalSupp" type="submit">
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="data.length==0">
+      <td colspan="6" class="text-center">
+        Aucune résultat à afficher
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="footer-table">
+    <tr *ngIf="data.length>5">
+      <td colspan="6">
+        <mfBootstrapPaginator></mfBootstrapPaginator>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+  <div *ngIf="data.length!=0" class="col-md-12" style="margin-top: 50px">
+    <div class=" col-md-2"></div>
+    <div class=" col-md-4"><input type="submit"name="" class="btn_bas Ad_right" value="Imprimer la liste (PDF)" (click)="generationPDF()"></div>
+    <div class=" col-md-4"><input type="submit"  name="" class="btn_bas" value="Exporter EXCEL" (click)="exportationExcel()"></div>
+    <div class=" col-md-2" ></div>
+  </div>
+
+</div>
+<div class="modal fade" id="ModalModif" role="dialog">
+  <div class="modal-dialog modal_T" >
+    <!-- Modal content-->
+    <div class="modal-content"  >
+      <div class="modal-header" style=" border-bottom: 1px solid #4ab3cc !important; ">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+
+        <h4 class="modal-title titre_ajouter"> Modifier un parent</h4>
+      </div>
+
+      <br> <br>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form"   #g="ngForm"   method="post" class="A_form" >
+          <fieldset>
+            <input type="text"  hidden  class="control-label label-text input-model"  name="id" ngModel [(ngModel)]="id">
+
+
+            <div class="row">
+
+              <div class=" col-md-4"><label class="text_form" >Photo de profil ou avatar   </label> </div>
+
+              <div class=" col-md-4">
+
+
+                <div class="input_01"  data-toggle="tooltip" title="<img src='{{tmp}}/{{pathAvatar}}'width='200px' />"
+                     attr.data-original-title="<img src='{{tmp}}/{{pathAvatar}}'width='200px' />"  >
+
+                  <input type="text"   name="avatarr"  [(ngModel)]="pathAvatar" style="margin-top: 0px!important;"  class=" image-preview-filename inputImg AdInT" disabled="disabled">
+                  <span class=" spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title"></span>
+
+                       <div *ngIf="estNonVidee(pathAvatar) ; then firstImgPcnx else secondImgPcnx "></div>
+                              <ng-template #firstImgPcnx ><img src="{{tmp}}/{{pathAvatar}}" class="file_imgBleu" ></ng-template>
+                              <ng-template #secondImgPcnx><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+                              <input  style=" position: absolute!important;bottom: 15px!important;width: 73%!important;opacity: 0!important;" type="file"  name="input-file-preview"  (change)="onAvatarSelected($event)"/>
+
+                          </div>
+                     </span>
+                </div>
+
+
+              </div>
+              <div class=" col-md-4"></div>
+              <input type="hidden" name="avatar" [(ngModel)]="pathAvatar"  ngModel />
+            </div>
+
+
+
+
+
+
+
+            <br>
+
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Nom  * </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"  name="nomP" ngModel [(ngModel)]="nomP" ></div>
+              <div class=" col-md-4 "> <input type="text" hidden class="control-label label-text input-model" name="id"  [(ngModel)]="id" ngModel>
+                <input type="text"  class="control-label label-text input-model" hidden name="idE"  [(ngModel)]="idE" ngModel>
+              </div>
+            </div>
+            <br>
+            <!--  -->
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Prenom * </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"  name="prenomP" ngModel [(ngModel)]="prenomP" ></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Lien de parenté   </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"  name="lienPrente" ngModel [(ngModel)]="lienPrente" ></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Profession  </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"  name="prof" ngModel [(ngModel)]="prof" ></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Adresse postale  </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"  name="adressePostaleP" ngModel [(ngModel)]="adressePostaleP"></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Complément d'adresse  </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"   name="complementAdresse" ngModel [(ngModel)]="complementAdresse" ></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Ville  </label> </div>
+              <div class=" col-md-4 "><input type="text"  class="input_01"  name="ville" ngModel [(ngModel)]="ville"></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form"> Code postal  </label> </div>
+              <div class=" col-md-4 "><input class="input_01"  type="number" name="codePostale" ngModel [(ngModel)]="codePostale"></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form">  Tel 1  </label> </div>
+              <div class=" col-md-4 "><input   class="input_01" name="tel1" ngModel [(ngModel)]="tel1" type="number" ></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form">  Tel 2  </label> </div>
+              <div class=" col-md-4 "><input   class="input_01" name="tel1" ngModel [(ngModel)]="tel2" type="number" ></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form">  Email *  </label> </div>
+              <div class=" col-md-4 "><input  class="input_01" name="emailP" ngModel [(ngModel)]="emailP" type="email"></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class=" col-md-4 "><label class="text_form">  Mot de passe  </label> </div>
+              <div class=" col-md-4 "><input type="password"  class="input_01" name="password" ngModel [(ngModel)]="password"></div>
+              <div class=" col-md-4 "></div>
+            </div>
+            <br>
+
+            <div class="row " >
+              <div class=" col-md-4"><label class="text_form">Confirmation mot de passe</label></div>
+              <div class=" col-md-4">
+                <input type="password" class="input_01"    name="password2" [(ngModel)]="password2"   ngModel   >
+              </div>
+
+              <div class=" col-md-4"></div>
+            </div>
+            <div *ngIf="password!=password2&& password2!='' ">
+              <div class="row " style="margin-left: 20px;margin-top: 20px">
+                <div class=" col-md-4"></div>
+                <div class=" col-md-4">
+                  <span class="alert alert-danger" >Confirmation mot de passe incorrect</span>
+                </div>
+
+                <div class=" col-md-4"></div>
+              </div>
+            </div>
+            <br>
+
+
+            <!------------ Liste des enfants ------------->
+            <!--    <div class="row">
+                <div class="col-md-9 content_liste top_10" style="margin-left: 4%; border: 1px solid #666666;width: 80%!important;">
+                  <div class="row top_row"  *ngFor=" let parentEleve of listParentEleve |async ">
+                    <div class="col-md-1">
+                <div *ngIf="estNonVidee(parentEleve.avatar); then thenBlock else elseBlock"></div>
+                      <ng-template #thenBlock>
+                        <div >
+                          <img class="img_liste" src="../../../assets//uploads/{{parentEleve.avatar}}" >
+                        </div>
+                      </ng-template>
+                      <ng-template #elseBlock>
+                        <div>
+                          <img class="img_liste" src="../../../assets/images/admin/iconeGroupe.png" >
+                        </div>
+                      </ng-template>
+                    </div>
+
+
+                    <div class="col-md-2"><label style="margin-top: 10px" class="text_label"> {{ parentEleve.nom}} {{ parentEleve.prenom}}  </label>
+                    </div>
+                    <div class="col-md-3">
+                      <label style="margin-left: 50px;margin-top: 10px" class="text_label">{{parentEleve.nomE }}
+                      </label>
+                    </div>
+
+                    <div class="col-md-3" style="text-align: center;" ><label style="margin-top: 10px" class="text_label"></label></div>
+
+
+
+                    <div class="col-md-1"  style="text-align: center;"><label style="margin-left: 50px ;margin-top: 10px" class="text_label"> </label></div>
+                    <div class="col-md-1" >
+                      <div class="btn_sup"  (click)="modalSupprimeEleve(parentEleve)" data-toggle="modal" data-target="#ModalSupprimeEleve">
+                      </div></div>
+
+                  </div>
+
+                </div>
+                </div>-->
+            <br>
+            <div class="row">
+              <div class=" col-md-4"><label class="tab_ajouter titre_interne" >  Compte élèves </label> </div>
+            </div>
+
+            <br>
+
+            <div  style="margin-left: 4%;width: 80%!important">
+              <table class="table" >
+                <tbody class="top_10" style="">
+                <tr *ngFor="let parentEleve of listParentEleve" >
+                  <div class="col-md-1">
+                    <div *ngIf="estNonVidee(parentEleve.avatar); then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                      <div >
+                        <img class="img_liste" src="../../../assets//uploads/{{parentEleve.avatar}}" >
+                      </div>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                      <div>
+                        <img class="img_liste" src="../../../assets/images/admin/avatar_eleve.png" >
+                      </div>
+                    </ng-template>
+                  </div>
+                  <td class="col-md-2 " ><label style="margin-top: 10px" class="text_label text-center">{{ parentEleve.nom}} {{ parentEleve.prenom}}</label></td>
+                  <td class="col-md-2" ><label style="margin-top: 10px" class="text_label text-center">{{parentEleve.nomE}}</label></td>
+
+
+
+                  <td class="col-md-2 " ><label style="margin-top: 10px" class="text_label text-center">{{parentEleve.nomC}}</label></td>
+                  <td class="col-md-3" ><label style="margin-top: 10px" class="text_label text-center"> </label></td>
+                  <td>
+                    <div class="icon_L_ajouter">
+                      <input  type="submit" value="" class="btn_sup" (click)="modalSupprimeEleve(parentEleve)" data-toggle="modal" data-target="#ModalSupprimeEleve">
+
+                    </div>
+                  </td>
+                </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+            <br>
+
+            <br>
+
+            <div class="row">
+              <div class=" col-md-4 "><label><input type="submit" name="" value="Annuler" class="btn_annuler R_btn_annuler"  data-dismiss="modal"></label> </div>
+              <div class=" col-md-4 "></div>
+              <div class=" col-md-4 ">
+                <label><button type="submit" value="Enregistrer la modification" class="btn_en_fiche"  (click)="updateParent(g.value)"  data-dismiss="modal" [disabled]="!g.valid  || password!=password2">
+                  Enregister la modification
+                </button></label>
+              </div>
+            </div>
+            <br>
+
+          </fieldset>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<div id="ModalSupp" class="modal fade ModalNotif" role="dialog">
+  <div class="modal-dialog modal_Notif">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body">
+        <label class="notif_01"> Etes vous sur(e) de supprimer le parent  « {{tmpparent.nomP}} » ? </label>
+        <label class="groupeNotif_btn">
+          <input type="submit" name="" class="btn_N_01" data-dismiss="modal"   value="Non">
+
+          <input type="submit" name="" class="btn_N_02"  data-dismiss="modal" (click)="deleteParent(tmpparent.id)"  value="Oui">
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="ModalSupprimeEleve" class="modal fade ModalNotif" role="dialog">
+  <div class="modal-dialog modal_Notif">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body">
+        <label class="notif_01">Etes vous sur(e) de supprimer l'enfant  « {{tmpeleveParent.nom}} » ? </label>
+        <label class="groupeNotif_btn">
+          <input type="submit" name="" class="btn_N_01" data-dismiss="modal"   value="NON">
+
+          <input type="submit" name="" class="btn_N_02"  data-dismiss="modal" (click)="deleteParentEleve(tmpeleveParent.id)"  value="OUI">
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,262 @@
+
+<div class="Dr_sidemodal">
+
+
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+      <app-sidebarupgalerie   ></app-sidebarupgalerie>
+
+    </ng-sidebar>
+
+
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+
+          <div  class="col-md-10">
+            <div  class="col-md-4 col-lg-offset-5 top_br text-center">
+              <span class="Dr_titre_01 ">
+                {{titrealbum}}
+              <button type="submit" class="icon_modif Dr_btnMA"  (click)="iconAdd=true;iconM=false;iconS=false;iconSupp=true" *ngIf="iconM"></button>
+              <button type="submit" class="icon_supp Dr_btnSA" data-toggle="modal" data-target="#ModalSuppalbum"  *ngIf="iconS"></button>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-2 top_br" >
+            <div class="form-group has-feedback">
+
+              <input type="text" class="form-control" id="inputSuccess2" placeholder="Rechercher par nom "/>
+              <span class="glyphicon glyphicon-search form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4"><span class="titre_table Dr_cr" [routerLink]="['/directeurplateform/administration/galerie']"> Galerie  </span>  > <span class="titre_table Dr_cr" > {{titrealbum}}</span></div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-12">
+            <div class="col-xs-6 col-md-3">
+
+              <button type="submit" class="form-control btn_add"(click)="iconAdd=true" >  Ajouter un fichier</button>
+            </div>
+            <label class="Dr_IG right">
+              <button type="submit" class="icon_Dr_G" [ngClass]="G_icon?'active icon_Dr_G01':''"  (click)="G_icon=true;"></button>
+              <button type="submit" class="icon_Dr_L" [ngClass]="!G_icon?'active icon_Dr_L01':''" (click)="G_icon=false;"></button>
+
+            </label>
+          </div>
+
+        </div>
+
+
+        <div class="col-md-12" *ngIf="!G_icon">
+          <div class="table-responsive-sm top_br">
+            <table class="table   " [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="8">
+              <tbody class="">
+              <tr>
+                <td class="border_td"></td>
+                <td class="titre_table border_td">Nom</td>
+                <td class="titre_table border_td">Type de fichier</td>
+                <td class="titre_table border_td">Date de mise à jour</td>
+                <td class="border_td"></td>
+              </tr>
+              <tr *ngFor="let upgalerie of data;let i=index" class="border_col">
+                <td >
+                  <img src={{upgalerie.fichier}} alt="" width="35px" class="rounded-circle">
+
+                </td>
+                <td >
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    <a type="text"  data-toggle="modal" data-target="#zumimg" (click)="modalzum(upgalerie.fichier)"  >{{upgalerie.titre}}</a>
+
+                  </label>
+                </td>
+
+                <td *ngIf="upgalerie.typeDoc == 1">
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    Image
+                  </label>
+
+                </td>
+                <td  *ngIf="upgalerie.typeDoc ==2">
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    video
+                  </label>
+                </td>
+                <td  *ngIf="upgalerie.typeDoc ==null">
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    --
+                  </label>
+                </td>
+                <td >
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{upgalerie.updatedAt}}
+                  </label>
+                </td>
+
+
+
+
+                <td class="w_01 " >
+                  <button type="submit" class="icon_supp right"  data-toggle="modal" data-target="#ModalSupp"  (click)="modalSupp(upgalerie)" *ngIf="iconSupp" ></button>
+                </td>
+
+
+              <tr *ngIf="data.length==0">
+                <td colspan="6" class="text-center nothingToshow">
+                  Aucune résultat à afficher
+                </td>
+              </tr>
+              </tbody>
+              <tfoot *ngIf="data.length!=0">
+              <tr>
+                <td colspan="6">
+                  <div class="row btn_Bas">
+                    <div class=" col-md-3"></div>
+                    <div class="col-xs-8 col-md-6" >
+                      <div class="Dr_pagination text-center">
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="col-md-12 Dr_padding_003 Dr_pd_left Dr_paddinR01 top_br" *ngIf="G_icon">
+          <table class="table   " [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="8">
+            <tbody class="">
+
+          <div  *ngFor="let upgalerie of mf.data;let i=index" class="col-md-3">
+            <label class="Dr_IIG " *ngIf="iconSupp">
+              <ul style="list-style-type:none" class="col-lg-offset-8 col-md-offset-7 col-xs-offset-8">
+                <li><button type="submit" class="icon_Dr_DB"  data-toggle="modal" data-target="#ModalSupp"  (click)="modalSupp(upgalerie)" ></button></li>
+              </ul>
+            </label>
+            <div class="thumbnail Dr_BoxAl">
+
+              <a  target="_blank" data-toggle="modal" data-target="#zumimg" (click)="modalzum(upgalerie.fichier)">
+                <img src={{upgalerie.fichier}} alt="Lights" style="width:100%">
+              </a>
+            </div>
+          </div>
+
+
+          <div class="col-md-3" *ngIf="iconAdd">
+            <div class="thumbnail Dr_BoxAl">
+              <a  target="_blank">
+                <span class=" Dr_GAdd"><i class="fa fa-plus fa-fw"></i></span>
+                <input type="file" class="col-md-10 form-control  Dr_pd_left Dr_input_size Dr_fileBg Dr_fileG"  (change)="uploadImage($event)" required  >
+              </a>
+            </div>
+          </div>
+
+          <tr *ngIf="data.length==0">
+            <td colspan="6" class="text-center nothingToshow">
+              Aucune résultat à afficher
+            </td>
+          </tr>
+            </tbody>
+            <tfoot *ngIf="data.length!=0">
+            <tr>
+              <td colspan="6">
+                <div class="row btn_Bas">
+                  <div class=" col-md-3"></div>
+                  <div class="col-xs-8 col-md-6" >
+                    <div class="Dr_pagination text-center">
+                      <mfBootstrapPaginator></mfBootstrapPaginator>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+
+        </div>
+
+
+
+
+      </div>
+
+
+    </div>
+
+  </ng-sidebar-container>
+
+</div>
+
+
+<div class="modal fade" id="zumimg" role="dialog">
+  <div class="modal-dialog  modal_T R_modal-dialog"  >
+
+      <img src={{temimage}} alt="Lights" style="width:100%">
+  </div>
+</div>
+
+
+
+<!---------------------------modal delete fichier --------------------------------------->
+
+
+<div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal">Etes vous sur(e) de supprimer le fichier « {{temupgalerie?.titre}} »?  </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp "  data-dismiss="modal"  value="OUI" (click)="supprimerfichier(temupgalerie?.id)">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!---------------------------modal delete album --------------------------------------->
+
+<div id="ModalSuppalbum" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal">Etes vous sur(e) de supprimer cette album?  </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp "  data-dismiss="modal"  value="OUI" (click)="supprimeralbum()">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

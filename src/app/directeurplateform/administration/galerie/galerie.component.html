@@ -1,0 +1,230 @@
+
+<div class="Dr_sidemodal">
+
+
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+
+      <app-sidebargalerie  [type]="type" (data)="updated()"  [galerie]="galerie" ></app-sidebargalerie>
+
+    </ng-sidebar>
+
+
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+
+          <div  class="col-md-10">
+            <div  class="col-md-4 col-lg-offset-5 top_br text-center">
+              <span class="Dr_titre_01 ">Albums publiés</span>
+            </div>
+          </div>
+          <div class="col-md-2 top_br" >
+
+
+            <div class="form-group has-feedback">
+
+              <input type="text" class="form-control Dr_rech" id="inputSuccess2" placeholder="Rechercher par nom " [(ngModel)]="term"/>
+              <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4"><span class="titre_table Dr_cr" [routerLink]="['/directeurplateform/administration/galerie']"> Galerie  </span>  </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-12">
+            <div class="col-xs-6 col-md-3">
+              <button type="submit" class="form-control btn_add" (click)="_toggleSidebar();initialiseSidebar()">  Ajouter un album</button>
+            </div>
+            <label class="Dr_IG right">
+              <button type="submit" class="icon_Dr_G" [ngClass]="G_icon?'active icon_Dr_G01':''"  (click)="G_icon=true;"></button>
+              <button type="submit" class="icon_Dr_L" [ngClass]="!G_icon?'active icon_Dr_L01':''" (click)="G_icon=false;"></button>
+
+            </label>
+          </div>
+
+        </div>
+
+
+        <div class="col-md-12" *ngIf="!G_icon">
+          <div class="table-responsive-sm top_br">
+            <table class="table   " [mfData]="data | galerie:term" #mf="mfDataTable" [mfRowsOnPage]="8">
+              <tbody class="">
+              <tr>
+                <td class="border_td"></td>
+                <td class="titre_table border_td">Nom</td>
+                <td class="titre_table border_td">Type de fichier</td>
+                <td class="titre_table border_td">Date de mise à jour</td>
+                <td class="titre_table border_td">Taille</td>
+                <td class="border_td"></td>
+              </tr>
+              <tr *ngFor="let galerie of mf.data;let i=index" class="border_col">
+                <td >
+                  <img src="../../../../assets/images/directeur/Dr_picto_dossier.png" alt="" width="35px" class="rounded-circle">
+                </td>
+                <td >
+                  <label style="margin-top: 10px" class="text_label Dr_label" [routerLink]="['/directeurplateform/administration/album']" [queryParams]="{id:galerie.id,titre:galerie.titre}">
+                    <a  target="_blank"><font color="black">{{galerie.titre}}</font></a>
+                  </label>
+                </td>
+
+
+
+                <td >
+                  <label style="margin-top: 10px" class="text_label Dr_label" *ngIf="galerie.hasphoto == true">
+                  <div  >image </div>
+
+                </label>
+                  <label style="margin-top: 10px" class="text_label Dr_label" *ngIf="galerie.hasvideo == true">
+                    <div  >video </div>
+
+                  </label>
+                </td>
+                <td >
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{galerie.updatedAt}}
+
+
+                  </label>
+                </td>
+                <td >
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{galerie.nbDocsInGroupDocs}}
+                  </label>
+                </td>
+
+
+                <td >
+                  <button type="submit" class="icon_modif right"  (click)="_toggleSidebar();getGalerie(galerie)"></button>
+                </td>
+                <td class="w_01 ">
+                  <button type="submit" class="icon_supp right" data-toggle="modal" data-target="#modalDel" (click)="modalSupp(galerie)"></button>
+
+                </td>
+
+              </tr>
+              <tr *ngIf="data.length==0">
+                <td colspan="6" class="text-center nothingToshow">
+                  Aucune résultat à afficher
+                </td>
+              </tr>
+              </tbody>
+              <tfoot *ngIf="data.length!=0">
+              <tr>
+                <td colspan="6">
+                  <div class="row btn_Bas">
+                    <div class=" col-md-3"></div>
+                    <div class="col-xs-8 col-md-6" >
+                      <div class="Dr_pagination text-center">
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="col-md-12" *ngIf="G_icon">
+          <table class="table   " [mfData]="data | galerie:term" #mf="mfDataTable" [mfRowsOnPage]="8">
+            <app-loader *ngIf="loading" [word]="'Chargement en cours'" ></app-loader>
+          <tbody class="">
+
+          <div *ngFor="let galerie of mf.data;let i=index" class="col-md-3">
+            <label class="Dr_IIG ">
+              <ul style="list-style-type:none" class="col-lg-offset-8 col-md-offset-7 col-xs-offset-8">
+                <li><button type="submit" class="icon_Dr_DB" data-toggle="modal" data-target="#modalDel"  (click)="modalSupp(galerie)"></button></li>
+
+
+                <li><button type="submit" class="icon_Dr_MB" (click)="type='M';_toggleSidebar()"></button></li>
+              </ul>
+            </label>
+            <div class="thumbnail Dr_BoxAl" [routerLink]="['/directeurplateform/administration/album']"  [queryParams]="{id:galerie.id,titre:galerie.titre}" >
+              <a   target="_blank">
+                <img src="../../../../assets/images/directeur/Dr_img_galerie.jpg" alt="Lights" style="width:100%">
+                <div class="caption text-center" >
+                  <label class="Dr_LabG">{{galerie.titre}}</label>
+                  <label class="Dr_LabG">{{galerie.nbDocsInGroupDocs}}fichiers -{{galerie.updatedAt}}</label>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+
+          <tr *ngIf="data.length==0">
+            <td colspan="6" class="text-center nothingToshow">
+              Aucune résultat à afficher
+            </td>
+          </tr>
+          </tbody>
+          <tfoot *ngIf="data.length!=0">
+          <tr>
+            <td colspan="6">
+              <div class="row btn_Bas">
+                <div class=" col-md-3"></div>
+                <div class="col-xs-8 col-md-6" >
+                  <div class="Dr_pagination text-center">
+                    <mfBootstrapPaginator></mfBootstrapPaginator>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tfoot>
+          </table>
+
+        </div>
+
+
+
+
+      </div>
+
+
+    </div>
+
+  </ng-sidebar-container>
+
+</div>
+
+<!---------------------------modal delete --------------------------------------->
+
+<div id="modalDel" class="modal fade" role="dialog">
+  <div class="modal-dialog modal_Notif">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body">
+        <label class="notif_01"> êtes-vous sûr(e) de vouloir supprimer «{{tempgalerie?.titre}}»  ? </label>
+        <label class="groupeNotif_btn">
+          <input type="submit" name="" class="btn_N_01" value="Non" data-dismiss="modal" >
+          <input type="submit" name="" class="btn_N_02" value="Oui" (click)="deletealbum(tempgalerie?.id)" data-dismiss="modal">
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<!------end delete modal ------------------------------------------------------------------------------------------------>
+
+
+

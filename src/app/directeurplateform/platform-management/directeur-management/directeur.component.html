@@ -1,0 +1,155 @@
+<div class="Dr_sidemodal">
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right">
+
+      <app-sidebardirecteur *ngIf="ready" (data)="updated()" [personnel]="personnel" [mode]="mode"></app-sidebardirecteur>
+
+    </ng-sidebar>
+    <div ng-sidebar-content>
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+
+          <div class="col-md-10">
+            <div class="col-md-4 col-lg-offset-5 top_br text-center">
+
+              <span class="Dr_titre_01 ">Liste des directeurs</span>
+            </div>
+          </div>
+          <div class="col-md-2 top_br">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+              <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+              <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4">
+            <span class="titre_table"> Nom du dossier </span> >
+            <span class="titre_table"> Nom du dossier</span>
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-3">
+
+            <button type="submit" class="form-control btn_add DrBTdir" (click)="_toggleSidebar();initialiseSidebar();">Ajouter un directeur</button>
+          </div>
+        </div>
+        <div class="table-responsive-sm top_br">
+          <table class="table   " [mfData]="data| dataFilter : term" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <tbody class="">
+              <tr>
+                <td class="border_td"></td>
+                <td class="titre_table border_td">Nom</td>
+                <td class="titre_table border_td">Email</td>
+                <td class="titre_table border_td">Téléphone</td>
+                <td class="titre_table border_td">Administrateur</td>
+                <td class="border_td"></td>
+              </tr>
+              <tr *ngFor="let directeur of mf.data" class="border_col">
+                <td class="td_dir-img" >
+                  <div class="img_liste" [style.background-image]="directeur.avatar!=''?('url('+ directeur.avatar+')'):('url(../assets/images/admin/iconeGroupe.png)')  ">
+                  </div>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{directeur.nom}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{directeur.email}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{directeur.tel1}}
+                  </label>
+                </td>
+
+                <td>
+
+                  <material-slide-toggle [checked]="directeur.estAdmin" [disabled]="true">
+                  </material-slide-toggle>
+
+                </td>
+
+
+                <td>
+
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    <button type="submit" class="icon_modif right " (click)="getDirecteur(directeur);"></button>
+                  </label>
+
+                </td>
+                <td class="w_01 ">
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    <button type="submit" class="icon_supp right " data-toggle="modal" data-target="#ModalSupp" (click)="modalSupp(directeur);"></button>
+                  </label>
+
+                </td>
+
+              </tr>
+              <tr *ngIf="data.length==0">
+                <td colspan="6" class="text-center nothingToshow">
+                  Aucun résultat à afficher
+                </td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="data.length!=0">
+              <tr>
+                <td colspan="6">
+                  <div class="row btn_Bas">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                      <div class="Dr_pagination text-center">
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2"></div>
+                  </div>
+
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="col-md-12 top-br"  *ngIf="data.length!=0">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <button type="submit" class="Impr_btn" (click)="generationPDF()">Imprimer la liste</button>
+            <button type="submit" class="Expo_btn" (click)="exportationDirecteurExcel()"> Export EXCEL</button>
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+  </ng-sidebar-container>
+</div>
+<div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal">Etes vous sur(e) de supprimer le personnel {{tmpdirecteur.nom}} ? </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal" value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp " data-dismiss="modal" (click)="supprimerDirecteur(tmpdirecteur.id)" value="OUI">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

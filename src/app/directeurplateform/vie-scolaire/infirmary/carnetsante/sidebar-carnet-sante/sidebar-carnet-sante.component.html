@@ -1,0 +1,123 @@
+<div class="Dr_titre_sideEmp text-center">
+    <span *ngIf="mode=='create'" >  Ajouter une fiche élève</span>
+  <span *ngIf="mode=='update'" >  Modifier une fiche élève</span>
+   carnet Santé
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+  
+  </div>
+  <form  #formulaire="ngForm" (ngSubmit)="onSubmit(formulaire)">
+    <div >
+      <div class="col-xs-12 col-md-12 top_br" >
+        <div class="col-xs-2 col-md-4"></div>
+        <div class="col-xs-10 col-md-4">
+          <img src="{{carnetsante.avatar}}" alt="" width="150px" class="rounded-circle" name="avatar">
+        </div>
+        <div class="col-xs-2 col-md-4"></div>
+      </div>
+
+
+      <div class="col-xs-12 col-md-12 top_br">
+          <div class="col-xs-2 col-md-3">
+            <label class="Dr_add_form">Élève malade*</label>
+          </div>
+          <div class="col-xs-10 col-md-9">
+            <select class="form-control Dr_input Dr_select Dr_input_size"  #idEleve="ngModel"  [(ngModel)]="infermerie.Listecarnet.idEleve" name="idEleve" required>
+              <option value="">Sélectionner</option>
+              <option  *ngFor="let eleve of ajoutlistecarnet" value="{{eleve.idEleve}}" >{{eleve.nomEleve}} {{eleve.prenomEleve}}</option>
+            </select>
+          </div>
+        </div>
+
+
+      <div class="col-xs-12 col-md-12 ">
+     
+        <div class="col-xs-2 col-md-4"></div>
+        <div class="col-xs-10 col-md-4 text-center">
+ 
+          <label class="text_label Dr_label " >{{eleve.nomEleve}} {{eleve.prenomEleve}}</label>
+        </div>
+        <div class="col-xs-2 col-md-4"></div>
+      </div>
+
+
+      <div class="col-xs-12 col-md-12 ">
+     
+          <div class="col-xs-2 col-md-4"></div>
+          <div class="col-xs-10 col-md-4 text-center">
+          </div>
+          <div class="col-xs-2 col-md-4"></div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 top_br DrPII">
+          <span style="color: #44c19a" class="text-center"> Observations, traitements, recommendations particulières</span>
+        <input type="text" class="form-control Dr_inputM" placeholder="Lorem ipsum"  #observation="ngModel"  [(ngModel)]="infermerie.Listecarnet.observation" name="observation">
+      </div>
+
+  
+      <div class="col-xs-12 col-md-12 top_br DrPII">
+          <span style="color: #fcac52" class="text-center"> Allergie</span>
+        <input type="text" class="form-control Dr_inputM" placeholder="Lorem ipsum" #allergie="ngModel"  [(ngModel)]="infermerie.Listecarnet.allergie" name="allergie">
+      </div>
+  
+      <div class="col-xs-12 col-md-12 top_br DrRtext">
+        Personnes à contacter en cas d’urgence
+      </div>
+  
+
+      <div class="col-xs-12 col-md-12 top_br DrPII">
+        <div class="col-xs-4 col-md-4">
+          <label class="text_label Dr_label ">Responsable 1</label>
+        </div>
+        <div class="col-xs-4 col-md-4">
+          <input class="form-control Dr_input Dr_input_size" type="text" placeholder="Nom Prénom"  #responsable1="ngModel"  [(ngModel)]="infermerie.Listecarnet.responsable1" name="responsable1"> </div>
+        <div class="col-xs-4 col-md-4">
+          <input class="form-control Dr_input Dr_input_size" type="text" placeholder="Téléphone" #tel1="ngModel"  [(ngModel)]="infermerie.Listecarnet.tel1" name="tel1" >
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12 top_br DrPII">
+          <div class="col-xs-4 col-md-4">
+            <label class="text_label Dr_label ">Responsable 2</label>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control Dr_input Dr_input_size" type="text" placeholder="Nom Prénom" #responsable2="ngModel" [(ngModel)]="infermerie.Listecarnet.responsable2" name="responsable2"> </div>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control Dr_input Dr_input_size" type="text" placeholder="Téléphone" #tel2="ngModel"  [(ngModel)]="infermerie.Listecarnet.tel2" name="tel2">
+          </div>
+        </div>
+
+
+      <div class="col-xs-12 col-md-12 top_br DrBtext">
+        Document Médical
+      </div>
+  
+      <div class="col-xs-12 col-md-12 top_br DrPII">
+        <div class="col-xs-4 col-md-6 " [hidden]="carnet.DocumentMedical" >
+          <a class="text_label Dr_label DrPIL " href= " {{ carnetsante.DocumentMedical }}" target="_blank">Document médical 1 </a>
+          <button type="submit" class="icon_Dr_down DrLF0"></button>
+        </div>
+      </div>
+  
+      <div class="col-xs-12 col-md-12 top_br DrPII" [hidden]="carnet.DocumentMedical">
+        <div class="col-xs-4 col-md-4 ">
+          <label class="text_label Dr_label  ">Ajouter un document</label>
+        </div>
+        <div class="col-xs-8 col-md-8 ">
+          <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file">
+            <img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt="">
+          </span>
+          <input  type="file" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg" [(ngModel)]="infermerie.Listecarnet.DocumentMedical"  #DocumentMedical="ngModel"  (change)="onFicheSelected($event)" name="DocumentMedical">
+        </div>
+      </div>
+  
+      <div class="col-xs-12 col-md-12 Dr_top_100">
+        <div class="col-xs-4 col-md-4"></div>
+        <div class="col-xs-4 col-md-4">
+          <button type="submit" class="form-control Dr_btn_02" (click)="formulaire.reset();">Annuler</button>
+        </div>
+        <div class="col-xs-4 col-md-4">
+          <button type="submit" class="form-control DrBtn" closeSidebar>Enregistrer</button>
+        </div>
+      </div>
+      </div>
+      </form>
+  

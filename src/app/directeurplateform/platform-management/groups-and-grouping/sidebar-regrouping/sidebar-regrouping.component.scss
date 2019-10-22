@@ -1,0 +1,30 @@
+.myadminclassselect {
+  width: 343px;
+  border: 1px solid;
+  position: absolute;
+  background: #fff;
+  left: -114px;
+  z-index: 4;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 11px;
+    .titleniveau {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+    .titleniveau:hover {
+      color: #b5babb;
+      cursor: pointer;
+    }
+    .titlesection {
+      padding-left: 37px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    label {
+      width: 100%; 
+      input[type="checkbox"] {
+        float: right;
+      }
+    }
+  }

@@ -1,0 +1,22 @@
+
+<div class="content_body">
+  <div class="logo_app"></div>
+
+  <form name="myLoginForm" #f="ngForm"  (ngSubmit)="loginUser(f.value)"  class="content_connexion">
+    <input type="text" name="email" class="form_con" placeholder="Adresse Mail" id="icon_login" ngModel>
+
+    <span class="alert-danger"  color="red">{{emailMessageErreur}}</span>
+
+    <input type="password" name="password" class="form_con" placeholder="Mot de Passe" id="icon_password" ngModel>
+    <br>
+    <input type="checkbox" name="" id="check_form">
+    <label id="lb_check">Se Souvenir de moi</label>
+    <input type="submit" name="" class="btn_connexion" value="Se Connecter">
+<br>
+    <br>
+    <p id="left_03"><u>Mot de Passe oublié ?</u></p>
+    <span class="alert-danger"  color="red">{{MessageErreur}}</span>
+  </form>
+
+</div>
+

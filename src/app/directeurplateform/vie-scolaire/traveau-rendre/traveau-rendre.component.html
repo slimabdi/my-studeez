@@ -1,0 +1,269 @@
+<div class="container-fluid Dr_top_100">
+<div class="row">
+
+    <div class="col-md-10">
+      <div class="col-md-8 col-md-offset-3 col-lg-offset-3 top_br text-center">
+
+
+      </div>
+    </div>
+    <div class="col-md-2 top_br">
+      <div class="form-group has-feedback">
+        <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+        <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+        <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container Dr_MD content-wrapper" >
+  <div class="row top_br">
+    <div class="col-md-4">
+      <span class="titre_table Dr_cr" > Listes d’appel  >
+      </span>
+
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-4">
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-2" >
+      <div class="" dropdown>
+        <button type="submit" dropdownToggle aria-controls="dropdown-basic" class="form-control btn_add" >  Ajouter </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu Dr_add_cl" role="menu" aria-labelledby="button-basic">
+          <li role="menuitem"  class=" Dr_item_add" (click)="lgModal.show()"> Un travail à rendre</li>
+          <li role="menuitem"  class=" Dr_item_add" >Un dossier</li>
+
+        </ul>
+      </div>
+    </div>
+    <label class="Dr_IG right">
+      <button type="submit" class="icon_Dr_MDG" ></button>
+      <button type="submit" class="icon_liste" ></button>
+
+    </label>
+  </div>
+
+  <div class="col-md-12 top_br ">
+    <div class="col-md-1 DrWI"></div>
+    <div class="col-md-1" > </div>
+    <div class="col-md-3 Dr_w4"> <label  class="text_label Dr_label">Fichier</label></div>
+    <div class="col-md-1"><label  class="text_label Dr_label">Classe</label></div>
+    <div class="col-md-1"><label  class="text_label Dr_label">Matière</label></div>
+    <div class="col-md-1 Dr_w3"><label  class="text_label Dr_label">Enseignant</label></div>
+    <div class="col-md-1 Dr_w3"><label  class="text_label Dr_label">A rendre pour</label></div>
+    <div class="col-md-1"></div>
+  </div>
+
+
+
+
+  <div class="content-wrapper">
+    <div class="content-item" *ngFor="let content of returnedArray">
+      <div class="col-md-12 top_br Dr_C_ligne content-item">
+
+        <div class="col-md-1 DrWI">  <i class="fa fa-circle fa-fw DrCI" style="font-size: 18px"></i></div>
+        <div class="col-md-1"> <i class="fa fa-file fa-fw" style="font-size: 35px"></i></div>
+        <div class="col-md-3 Dr_w4">
+          <label  class="text_label Dr_label">
+            {{content}}
+          </label>
+        </div>
+
+        <div class="col-md-1  ">
+          <label  class="text_label Dr_label">
+            4ème2
+          </label>
+        </div>
+
+        <div class="col-md-1  ">
+          <label  class="text_label Dr_label">
+            Histoire
+          </label>
+        </div>
+
+        <div class="col-md-1 Dr_w3 ">
+          <label  class="text_label Dr_label">
+            Mr COLIN
+          </label>
+        </div>
+
+        <div class="col-md-1 Dr_w3 ">
+          <label  class="text_label Dr_label">
+            00/00/2018
+          </label>
+        </div>
+
+        <div class="col-md-1  ">
+          <label  class="text_label Dr_label">
+            4ème2
+          </label>
+        </div>
+
+        <div class="col-md-2  ">
+          <label  class="text_label Dr_label">
+            <button class="icon_Dr_down" type="submit"></button>
+            <button class="icon_mdf" type="submit"></button>
+            <button class="icon_supp" type="submit"></button>
+          </label>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 top_br btn_Bas">
+    <div class="Dr_pagination text-center" style="padding-bottom: 50px;">
+      <pagination [totalItems]="contentArray.length" (pageChanged)="pageChanged($event)" [rotate]="rotate" [maxSize]="maxSize" [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-12 top_br">
+    <div class="col-md-3"></div>
+    <div class="col-md-5" >
+      <button type="submit" class="Impr_btn">Annuler</button>
+      <button type="submit" class="Expo_btn DrBtn">Enregistrer </button>
+    </div>
+
+  </div>
+
+
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-md-12">
+          <div class="col-md-2"></div>
+          <div class="col-md-9 text-center"><label class="Dr_titre_M ">Nouveau travail à rendre</label> </div>
+          <div class="col-md-1">
+            <label  class="Dr_LBM Dr_label">
+            <button type="button" class="icon_Dr_fermer right" (click)="lgModal.hide()" aria-label="Close"></button>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-12 top_br">
+          Classe(s) sélectionné(es)
+        </div>
+
+        <div class="col-md-12 top_br">
+          <select class="form-control Dr_inputM  ">
+            <option value="">Sélectionnez</option>
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div class="col-md-12 top_br">
+          Titre du travail à rendre
+        </div>
+
+        <div class="col-md-12 top_br">
+          <input type="text" class="form-control Dr_inputM" placeholder="Insérez un texte">
+        </div>
+        <div class="col-md-12 top_br">
+          <quill-editor></quill-editor>
+        </div>
+        <div class="col-md-12 top_br">
+          Ajouter du contenu
+        </div>
+
+        <div class="col-md-12 top_br DrInline">
+          <div class="col-md-2">
+          Choisir un type de fichier
+          </div>
+          <button type="submit" class="form-control DrBTN1" >Texte enrichi</button>
+          <button type="submit" class="form-control DrBTN2" >Enreg. audio</button>
+          <button type="submit" class="form-control DrBTN3" >Vidéo</button>
+          <button type="submit" class="form-control DrBTN3" >Enreg. vidéo</button>
+          <button type="submit" class="form-control DrBTN4" >Document</button>
+          <button type="submit" class="form-control DrBTN5" >Enquête</button>
+          <button type="submit" class="form-control DrBTN6" >Quizz</button>
+          <button type="submit" class="form-control DrBTN7" >Test</button>
+        </div>
+
+        <div class="col-md-12 top_br">
+          Niveau de difficulté
+        </div>
+
+        <div class="col-md-12 top_br ">
+
+          <label class="DrLR">Facile</label>
+          <label class="Dr_container"><input  name="radio" type="radio"><span  class="Dr_radio Dr_C1"></span></label>
+          <label class="DrLR">Moyen</label>
+          <label class="Dr_container"><input  name="radio" type="radio"><span  class="Dr_radio Dr_C3"></span></label>
+          <label class="DrLR">Difficile</label>
+          <label class="Dr_container"><input  name="radio" type="radio"><span  class="Dr_radio Dr_C4"></span></label>
+
+        </div>
+
+        <div class="col-md-12 top_br">
+          Type de travail
+        </div>
+
+        <div class="col-md-12 top_br">
+          <select class="form-control Dr_inputM  ">
+            <option value="">En groupe</option>
+            <option value=""></option>
+          </select>
+        </div>
+
+
+        <div class="col-md-12 top_br">
+          Nombre d’élèves par groupe
+        </div>
+
+        <div class="col-md-12 top_br">
+          <select class="form-control Dr_inputM  ">
+            <option value="">1</option>
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div class="col-md-12 top_br">
+          Organisation
+        </div>
+
+        <div class="col-md-12 top_br">
+          <select class="form-control Dr_inputM  ">
+            <option value="">J’organise moi-même les groupes</option>
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div class="col-md-12 top_br">
+          <button type="button" class="btn btn-info " data-toggle="collapse" data-target="#demo" style="width: 100%">Button</button>
+          <div id="demo" class="collapse">
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,39 @@
+<div >
+    <div class="col-xs-12 col-md-12 top_br">
+      <div class="col-xs-2 col-md-1"> </div>
+      <div class="col-xs-4 col-md-2" >Élève </div>
+      <div class="col-xs-4 col-md-5"> Observations, traitements, recommendations particulières</div>
+      <div class="col-xs-2 col-md-2 "> Contact en cas d’urgence</div>
+      <div class="col-xs-2 col-md-2 text-center"> Télephone contact</div>
+    </div>
+
+    <div class="col-xs-12 col-md-12 top_br Dr_C_ligne" *ngFor="let listeca of liste.dataMalade"  (click)="voirlist"  >
+
+      
+      <div class="col-xs-2 col-md-1"> <img src="{{listeca.avatar}}" alt="" width="47px" class="rounded-circle"></div>
+      <div class="col-xs-4 col-md-2">
+          
+        <label  class="text_label Dr_label " >
+            {{listeca.nom}} {{listeca.prenom}}
+        </label>
+      </div>
+
+      <div class="col-xs-4 col-md-5">
+        <label  class="text_label Dr_label ">
+            {{listeca.observation}}
+        </label>
+      </div>
+
+      <div class="col-xs-2 col-md-2 text-center">
+        <label  class="text_label Dr_label ">
+            {{listeca.responsable1}}
+        </label>
+      </div>
+      <div class="col-xs-2 col-md-2 text-center">
+        <label  class="text_label Dr_label ">
+            {{listeca.tel1}}
+        </label>
+      </div>
+
+    </div>
+  </div>

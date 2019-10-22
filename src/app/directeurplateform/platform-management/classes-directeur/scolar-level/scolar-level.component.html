@@ -1,0 +1,194 @@
+<div class="Dr_sidemodal">
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right">
+      <app-sidebarlevels [ecoleNiv]="ecoleNiv" (update)="updateted()" ></app-sidebarlevels>
+    </ng-sidebar>
+    <div ng-sidebar-content>
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+
+          <div class="col-xs-9 col-md-10">
+            <div class="col-md-4 col-xs-offset-5 top_br">
+              <button type="submit" class="ang_nav left_radius " [routerLink]="['/directeurplateform/platform-management/classes/scolar-class']">Classes</button>
+              <button type="submit" class="ang_nav right_radius active_ang" [routerLink]="['/directeurplateform/platform-management/classes/scolar-level']">Niveaux</button>
+            </div>
+          </div>
+          <div class="col-md-2 top_br">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+              <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+              <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="container" style="padding: 50px 0px;">
+        <div class="row top_br">
+          <div class="col-md-4">
+            <span class="titre_table"> Nom du dossier </span> >
+            <span class="titre_table"> Nom du dossier</span>
+          </div>
+        </div>
+        <div>
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h4>Nombre de niveau d’apprentissage </h4>
+            </div>
+            <div class="card-body">
+              <div class=" col-md-4 top_br">
+                <label class="text_form">Nombre de niveau d’apprentissage </label>
+              </div>
+              <div class="col-xs-12 col-md-4 top_br">
+                <input type="text" class="form-control Dr_input " [(ngModel)]="ngniv">
+              </div>
+              <div class="col-xs-12 col-md-4 top_br">
+                <input type="submit" class=" DrBtn Dr_left_btn" (click)="_toggleSidebar();initNiv(ngniv)">
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+          <div class="row" *ngIf="ecoleNiv.length>0">
+            <div class="col-md-8 top_br">
+                Selectionnez et faites glisser les cadres pour changer l'ordre des niveaux
+            </div>
+            <div class="col-md-4">
+                <input  class="Impr_btn Dr_left_btn02 top_br"  type="submit" (click)="sortable=!sortable" *ngIf="!sortable" value="Modifier l'ordre">
+              </div>
+          </div>
+
+          <!-- niveaux d'apprentissage -->
+          <div >
+            <div *ngIf="loadernivpage" class="text-center loader-div">
+              <img src="../../../assets/images/admin/loader.gif">
+            </div>
+            <div *ngIf="ecoleNiv.length==0&&!loadernivpage">
+              <div  class="text-center nothingToshow">
+                Aucune résultat à afficher
+              </div>
+            </div>
+
+           <!-- sortable -->
+           <ul class="list-group" dnd-sortable-container   [sortableData]="ecoleNiv">
+              <li *ngFor="let n of ecoleNiv | dataFilter : filterQuery; let activeNivpage = index " class="card"  [ngClass]="sortable?'sortable':''" [dragEnabled]="sortable"  [dropEnabled]="sortable"  (onDragSuccess)='onDragSuccess($event)' dnd-sortable [sortableIndex]="activeNivpage">
+                  <div class="card-header" (click)="showlevel[activeNivpage]=!showlevel[activeNivpage]" >
+                      Niveau {{activeNivpage + 1}}  : {{n.name}}
+                      </div>
+                      <div class="card-body" *ngIf="showlevel[activeNivpage]">
+                        <div class="row top_br">
+                          <div class="col-xs-10 col-md-3">
+                            <label class="Dr_add_form">Niveau {{activeNivpage + 1}}</label>
+                          </div>
+                          <div class="col-xs-10 col-md-7">
+                            <input type="text" [(ngModel)]="n.name" [disabled]="true" name="nivname{{activeNivpage}}" class="form-control Dr_input">
+                          </div>
+                          <div class="icon_L_ajouter col-xs-2 col-md-2" >
+                              <input type="submit" value="" class="btn_up " (click)="_toggleSidebar();openupdateNiv(activeNivpage)">
+                            </div>
+                        </div>
+
+                        <!-- Creation de section -->
+                        <div class="sectiondiv" *ngFor="let section of n.sections;let i=index" [style.display]="section.state=='delete'?'none':'block'">
+                          <div class="row top_br">
+                            <div class="col-xs-10 col-md-3">
+                              <label style="padding-left: 32px" class="Dr_add_form">Titre section {{i+1}} </label>
+                            </div>
+                            <div class="col-xs-10 col-md-7 ">
+                              <input type="text" [disabled]="true" [(ngModel)]="section.name" name="sectionName{{i}}" class="form-control Dr_input">
+
+                            </div>
+                            <div class="icon_L_ajouter col-xs-2 col-md-4" >
+                                <input type="submit" value="" class="btn_up " (click)="_toggleSidebar();openupdateNivsec(activeNivpage,i)">
+                                <input class="btn_sup pull-right" value=""  (click)="deleteSectionFromNivModal(section,activeNivpage,i)" data-toggle="modal"
+                                  data-target="#ModalSuppSec" type="submit">
+                              </div>
+
+                          </div>
+                        </div>
+
+                        <div class="row top_br " >
+                          <div class="col-md-2 ">
+                            <label class="Dr_text_Imprim Dr_text_label" (click)="_toggleSidebar();openupdateNivNewsec(activeNivpage)">Ajouter une section </label>
+                          </div>
+                          <div class="col-md-6"></div>
+                        </div>
+                        <!-- ----- -->
+                      </div>
+              </li>
+          </ul>
+           <!-- sortable -->
+
+          </div>
+          <!-- niveaux d'apprentissage -->
+          <div class="row top_br " *ngIf="ecoleNiv.length>0">
+            <div  class=" col-md-2 col-md-offset-10">
+                <button  class="form-control DrBtn pull-right Dr_btn_HB"  (click)="_toggleSidebar();initNiv(1)" type="submit">  Ajouter un niveau </button>
+              </div>
+            <div class="col-md-6"></div>
+          </div>
+          <div class="row" *ngIf="ecoleNiv.length>0" >
+            <div class="top_br Dr_top_100">
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                  <button  class="Impr_btn top_br" style="width: 100%;" (click)="resetpage()"  type="submit">  Annuler </button>
+              </div>
+              <div class="col-md-3">
+                  <button  class="form-control DrBtn top_br"  (click)="sortable=true;updateNiveaux()" type="submit">  Enregister </button>
+              </div>
+
+
+            </div>
+          </div>
+          <!-- -------------------------------------------------------------------------------------------  -->
+        </div>
+
+      </div>
+    </div>
+
+  </ng-sidebar-container>
+</div>
+ <!-- delete Modal -->
+ <div id="ModalSuppSec" class="modal fade Dr_modal_supp" role="dialog">
+    <div class="modal-dialog ">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+
+        </div>
+        <div class="modal-body text-center" *ngIf="!sectionFordelete.section.delete&&!secDelLoader">
+            <label class="Dr_lab_Modal">Impossible de supprimer «{{sectionFordelete.section?.name}}» </label>
+            <div class="Dr_listeBtnModal">
+              <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+             </div>
+        </div>
+        <div class="modal-body text-center" *ngIf="sectionFordelete.section.delete&&!secDelLoader">
+          <label class="Dr_lab_Modal">êtes-vous sûr(e) de vouloir supprimer «{{sectionFordelete.section?.name}}» ?  </label>
+          <div class="Dr_listeBtnModal">
+            <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+            <input type="submit" name="" class="Dr_btn_Msupp "  data-dismiss="modal" (click)="deleteSecFromNiv()"   value="OUI">
+          </div>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="secDelLoader" class="text-center loader-div">
+            <img src="../../../../assets/images/admin/loader.gif">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

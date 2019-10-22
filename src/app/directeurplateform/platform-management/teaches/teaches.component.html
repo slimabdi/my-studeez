@@ -1,0 +1,132 @@
+<div class="Dr_sidemodal">
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+      <app-sidebarteaches [enseignant]="enseignant" ></app-sidebarteaches>
+
+    </ng-sidebar>
+    <div ng-sidebar-content>
+<div class="container-fluid Dr_top_100">
+  <div class="row">
+
+    <div class="col-md-10" >
+      <div class="col-md-4 col-lg-offset-5 top_br text-center" >
+        <span class="Dr_titre_01 ">Liste des enseignants</span>
+      </div>
+    </div>
+    <div class="col-md-2 top_br" >
+      <div class="form-group has-feedback">
+        <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+        <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+        <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="container">
+  <div class="row top_br">
+    <div class="col-md-4">
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-3">
+      <button type="submit" class="form-control btn_add DrBTen" (click)="_toggleSidebar();">    Ajouter un enseignant </button>
+
+    </div>
+  </div>
+  <div class="table-responsive-sm top_br">
+    <table class="table   " [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="100">
+      <tbody class="">
+      <tr>
+        <td class="border_td"></td>
+        <td class="titre_table border_td ">Nom</td>
+        <td class="titre_table border_td">Classes attribuées</td>
+        <td class="titre_table border_td">Email</td>
+        <td class="titre_table border_td">Téléphone</td>
+        <td class="border_td"></td>
+      </tr>
+      <tr *ngFor="let enseignant of mf.data;let i=index" class="border_col">
+        <td >
+          <div *ngIf="estNonVidee(enseignant.avatar ); then Image  else ImageParDefault "></div>
+          <ng-template #Image>
+            <img class="img_liste" src="../../../assets/uploads/{{enseignant.avatar}}" >
+          </ng-template>
+          <ng-template #ImageParDefault>
+            <img src="../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+          </ng-template>
+
+        </td>
+
+        <td >
+          <label style="margin-top: 10px" class="text_label Dr_label">
+            {{enseignant.nom}}
+          </label>
+        </td>
+        <td >
+
+<!--
+            <div *ngFor="let classe of PersoClasses">  <label *ngIf="classe.PersonnelClasses.PersonnelId==enseignant.id" style="margin-top: 10px" class="text_label Dr_label">{{classe.nomC}}</label></div>
+-->
+
+        </td>
+
+
+
+        <td>
+          <label style="margin-top: 10px" class="text_label Dr_label">
+            {{enseignant.email}}
+          </label>
+
+        </td>
+        <td>
+          <label style="margin-top: 10px" class="text_label Dr_label">
+            {{enseignant.tel1}}
+          </label>
+
+        </td>
+
+        <td >
+          <label style="margin-top: 10px" class="text_label Dr_label">
+            <button type="submit" class="icon_modif right "  (click)="_toggleSidebar(); getEnseignant(enseignant);" ></button>
+          </label>
+
+        </td>
+        <td class="w_01 ">
+          <label style="margin-top: 10px" class="text_label Dr_label">
+            <button type="submit" class="icon_supp right"  (click)="supprimerEnseignant(enseignant.id)" ></button>
+          </label>
+
+        </td>
+
+      </tr>
+      <tr *ngIf="data.length==0">
+        <td colspan="6" class="text-center nothingToshow">
+          Aucune résultat à afficher
+        </td>
+      </tr>
+      </tbody>
+      <tfoot *ngIf="data.length!=0">
+      <tr>
+        <td colspan="6">
+          <mfBootstrapPaginator></mfBootstrapPaginator>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="row btn_Bas">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" >
+      <button type="submit" class="Impr_btn" (click)="generationPDF()">Imprimer la liste</button>
+      <button type="submit" class="Expo_btn" (click)="exportationEnseignantExcel()" >Export EXCEL</button>
+
+    </div>
+
+    <div class="col-md-2"></div>
+  </div>
+
+</div>
+    </div>
+  </ng-sidebar-container>
+</div>

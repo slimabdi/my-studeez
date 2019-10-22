@@ -1,0 +1,655 @@
+<div class="col-md-12 Dr_titre_sideMD" >
+  Ajouter une fiche personnel
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+
+  <div class="col-xs-6 col-md-6">
+    <button type="submit" class="form-control Dr_btn_02" (click)="afficherIG();"    >Informations générales</button>
+  </div>
+  <div class="col-xs-6 col-md-6">
+    <button type="submit" class="form-control Dr_btn_02" (click)="afficheDP();"    >Droits de publication</button>
+  </div>
+</div>
+<form #formulaire="ngForm">
+  <div *ngIf="InfoGeneral">
+  <div class=" col-xs-12 col-md-12 top_br ">
+    <div class="col-xs-4 col-md-4">Photo de profil ou avatar</div>
+    <div class="col-xs-8 col-md-8">
+      <div class="Dr_icon_MD" [style.background-image]="(personnel.icone!=''&&personnel.icone)?('url('+ personnel.icone+')'):('url(../assets/images/directeur/avatar.png)')  ">
+
+        <input autocomplete="new-password" class="file_input_Dr" type="file"
+        name="input-file-preview" (change)="onupPhotoEtablissementSelected($event)" />
+     </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Civilitée*</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" #civilite="ngModel"  name="civilite" [(ngModel)]="personnel.civilite" required>
+      <show-errors [control]="civilite"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Nom*</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" #nom="ngModel" name="nom" [(ngModel)]="personnel.nom" required>
+      <show-errors [control]="nom"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Prénom*</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input"  #prenom="ngModel"  name="prenom" [(ngModel)]="personnel.prenom" required>
+      <show-errors [control]="prenom"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Fonction*</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" #fonction="ngModel" name="fonction" [(ngModel)]="personnel.fonction" required>
+      <show-errors [control]="fonction"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Administrateur</div>
+    <div class="col-xs-8 col-md-8">
+
+        <material-slide-toggle
+          (change)="personnel.estAdmin=$event" [disabled]="false"
+            [checked]="personnel.estAdmin" name="estAdmin"
+        >
+        </material-slide-toggle>
+
+
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8 Dr_bold">Coordonnées</div>
+
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Tel1</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="number"  class="form-control Dr_input" name="tel1"  [(ngModel)]="personnel.tel1">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Tel2</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="number"  class="form-control Dr_input" name="tel2"  [(ngModel)]="personnel.tel2">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Adresse postale</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" name="adressePostale"  [(ngModel)]="personnel.adressePostale">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Complément d'adresse</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" name="complement_adresse"  [(ngModel)]="personnel.complement_adresse">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Ville</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" name="ville" [(ngModel)]="personnel.ville">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Code postale</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" name="code_postal"  [(ngModel)]="personnel.code_postal">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Email*</div>
+    <div class="col-xs-8 col-md-8">
+      <input autocomplete="new-password" type="text"  class="form-control Dr_input" name="email" #mail="ngModel"  [(ngModel)]="personnel.email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" >
+      <show-errors [control]="mail"></show-errors>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Liste des classes rattachées</div>
+
+    <div class="col-xs-8 col-md-8">
+      <div *ngFor="let class of data2">
+        <div   *ngFor="let r of rang"  >
+          <div *ngIf="r==class.id">
+      <div class="row">
+        <div class="col-xs-10 col-md-10">
+          <input autocomplete="new-password" type="hidden" class="Dr_input" value="{{class.id}}"    >
+          <input autocomplete="new-password" type="text"  value="{{class.nomC}}"  class="form-control Dr_input"  style="margin-top: 5px;"  />
+        </div>
+        <div class="col-xs-2 col-md-2">
+          <button  value="" class="btn_sup"  style="margin-left: 10px;margin-top: 8px" (click)="suppClasse(i)"   ></button>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-xs-10 col-md-10">
+      <select autocomplete="new-password"   class="form-control Dr_input" name="classe"  [(ngModel)]="classe"   >
+        <option  *ngFor="let clas of data2" [value]="clas.id">{{clas.nomC}}</option>
+      </select>
+      </div>
+      <div class="col-xs-2 col-md-2">
+
+          <button (click)="ajouterClasse(classe)" class="Dr_Bp" ><span class="fa fa-plus"></span></button>
+      </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar  (click)="afficherIG()">Annuler</button>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn"  [disabled]="formulaire.invalid"   (click)="afficheDP();">Enregistrer</button>
+    </div>
+  </div>
+  </div>
+
+
+
+<div *ngIf="droits">
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Menu</label></div>
+    <div class="col-xs-8 col-md-8">
+      <label class="">Sous-menu</label>
+      <label class="Dr_add_form">Affichage</label>
+    </div>
+  </div>
+
+
+    <div id="input_Calender" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.accueil?'Dr_Active_ligne':''" >
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Page d'accueil</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   class=" " name="acceuil" id="check_accueil"   ngModel  [(ngModel)]="personnel.accueil"  >
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <div id="input_messagerieInt" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.messagerieInt?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Messagerie</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label >Interne</label>
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"  class=""  name="messagerieInt"   id="check_messagerieInt" value="1"  ngModel [(ngModel)]="personnel.messagerieInt"  checked>
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <div id="input_messagerieExt" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.messagerieExt?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Messagerie</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label >Externe</label>
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"  class="" name="messagerieExt"  [(ngModel)]="personnel.messagerieExt"  id="check_messagerieExt" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <!-- *** -->
+    <div id="input_rdv" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.rdv?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Mes rendez-vous</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"    name="rdv" [(ngModel)]="personnel.rdv"   id="check_rdv" ngModel >
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-12 " >
+      <label > Onglet administration</label>
+
+    </div>
+
+
+    <div id="input_calendrierScol" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.calendrierScol?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Calendrier scolaire</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   name="calendrierScol" [(ngModel)]="personnel.calendrierScol"  checked  id="check_CalendrierScol" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="personnel.docAdm?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002"></div>
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Documents administratifs</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">********</div>
+      </div>
+      <div class="col-xs-8 col-md-8 Dr_paddinR01">
+       <div class="col-md-12 Dr_padding_002 Drpdck ">
+         Documents Administratifs
+       </div>
+       <div class="col-md-12 Dr_padding_002 Drpdck " id="input_docAdm" [ngClass]="personnel.docAdm?'Dr_Active_ligne':''">
+         Documents Renvoyés signés
+         <label class="Dr_add_form" >
+           <input autocomplete="new-password" type="checkbox"   name="docAdm" [(ngModel)]="personnel.docAdm"  checked id="check_docAdm" ngModel>
+         </label>
+       </div>
+       <div class="col-md-12 Dr_padding_002 Drpdck" id="input_docAdmRenvoy" [ngClass]="personnel.docAdmRenvoy?'Dr_Active_ligne':''">
+         Documents reçus signés
+         <label class="Dr_add_form" >
+           <input autocomplete="new-password" type="checkbox"    name="docAdmRenvoy" [(ngModel)]="personnel.docAdmRenvoy"  checked   id="check_docAdmRenvoy" ngModel>
+         </label>
+       </div>
+      </div>
+
+    </div>
+
+
+    <div id="input_tabAff" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.tabAff?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Tableau d'affichage</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"  name="tabAff" [(ngModel)]="personnel.tabAff"  checked id="check_tabAff" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_galerie" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.galerie?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Galerie</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label >photos et vidéos</label>
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"    name="galerie" [(ngModel)]="personnel.galerie" id="check_galerie2" ngModel >
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div class="col-md-12 " >
+      <label > Onglet vie scolaire</label>
+
+    </div>
+
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne Dr_padding" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="personnel.emploi?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Emplois du temps</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 ">
+          Emploi du temps des classes
+        </div>
+        <div class="col-md-12 Dr_padding_002 " id="input_emploi" [ngClass]="personnel.emploi?'Dr_Active_ligne':''">
+          Emplois du temps des classes
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox" name="emploi" [(ngModel)]="personnel.emploi"  checked id="check_emploi" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_reservation" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.reservation?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Réservation de locaux et matériaux</label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   name="reservation" [(ngModel)]="personnel.reservation"   id="check_reservation" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+
+    <div id="input_cours" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.cours?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Documents Pédagogiques</label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"    name="cours" [(ngModel)]="personnel.cours"  id="check_cours" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_traveauxARendre" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.traveauxARendre?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Travaux à rendre </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"    name="traveauxARendre" [(ngModel)]="personnel.traveauxARendre"  id="check_traveauxARendre" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(personnel.appelEnSalle||personnel.suivieJustif)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Abscences et retards</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_appelEnSalle" [ngClass]="personnel.appelEnSalle?'Dr_Active_ligne':''">
+          Appel en salle
+          <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"    name="appelEnSalle" [(ngModel)]="personnel.appelEnSalle"  id="check_appelEnSalle" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_suivieJustif" [ngClass]="personnel.suivieJustif?'Dr_Active_ligne':''">
+          Suivie des justificatifs
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"    name="suivieJustif" [(ngModel)]="personnel.suivieJustif"  id="check_suivieJustif" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(personnel.saisieJustif||personnel.bilanAbsence)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Abscences et retards</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_saisieJustif" [ngClass]="personnel.saisieJustif?'Dr_Active_ligne':''">
+          Saisie des justificatifs
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"   name="saisieJustif"  [(ngModel)]="personnel.saisieJustif"  id="check_saisieJustif" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bilanAbsence" [ngClass]="personnel.bilanAbsence?'Dr_Active_ligne':''">
+          Bilan des abscences
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"  name="bilanAbsence" [(ngModel)]="personnel.bilanAbsence"   id="check_bilanAbsence" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_absencePersScol" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.absencePersScol?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Abscences personnels scolaire </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   [(ngModel)]="personnel.absencePersScol"   name="absencePersScol" id="check_absencePersScol" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(personnel.sanctions||personnel.suivieEleves)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Carnet de correspondance</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_sanctions" [ngClass]="personnel.sanctions?'Dr_Active_ligne':''">
+          Observations et sanctions
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"   name="sanctions" [(ngModel)]="personnel.sanctions" id="check_sanctions" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_suivieEleves" [ngClass]="personnel.suivieEleves?'Dr_Active_ligne':''">
+          Suivi des élèves
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox" name="suivieEleves" [(ngModel)]="personnel.suivieEleves" id="check_suivieEleves" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(personnel.notes||personnel.bilannotes)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Notes </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_notes" [ngClass]="personnel.notes?'Dr_Active_ligne':''">
+          Notes
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"  name="notes" [(ngModel)]="personnel.notes" id="check_notes" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bilannotes" [ngClass]="personnel.bilannotes?'Dr_Active_ligne':''">
+          Bilan des notes
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox" name="bilannotes" [(ngModel)]="personnel.bilannotes" id="check_bilannotes" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002"  [ngClass]="(personnel.conseilClasse||personnel.bulletinsEleves||personnel.bulletinsclasses)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">--</div>
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Bulletins</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">--</div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_conseilClasse" [ngClass]="personnel.conseilClasse?'Dr_Active_ligne':''">
+          Conseil de classe
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"  name="conseilClasse" [(ngModel)]="personnel.conseilClasse" id="check_conseilClasse" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bulletinsEleves" [ngClass]="personnel.bulletinsEleves?'Dr_Active_ligne':''">
+          Bulletins des élèves
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"   name="bulletinsEleves" [(ngModel)]="personnel.bulletinsEleves"  id="check_bulletinsEleves" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bulletinsclasses" [ngClass]="personnel.bulletinsclasses?'Dr_Active_ligne':''">
+          Bulletins des classes
+          <label class="Dr_add_form" >
+            <input autocomplete="new-password" type="checkbox"    name="bulletinsclasses" [(ngModel)]="personnel.bulletinsclasses" id="check_bulletinsclasses" ngModel>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-12 " >
+      <label > Onglet </label>
+
+    </div>
+
+
+
+    <div id="input_infirmerie" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.infirmerie?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Infirmerie </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"  name="infirmerie" [(ngModel)]="personnel.infirmerie"  id="check_infirmerie" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+    <div id="input_dictionnaire" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.dictionnaire?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Dictionnaire </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   name="dictionnaire" [(ngModel)]="personnel.dictionnaire"  checked  id="check_dictionnaire" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <div id="input_wiki" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.wiki?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Wiki </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   name="wiki" [(ngModel)]="personnel.wiki"  checked  id="check_wiki" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+
+    <div id="input_drive" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.drive?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Mon drive </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"    name="drive" [(ngModel)]="personnel.drive"  checked   id="check_drive" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+    <div id="input_office" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="personnel.office?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Mon office </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input autocomplete="new-password" type="checkbox"   name="office" id="check_office" [(ngModel)]="personnel.office"  checked ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+
+    <div class="col-xs-8 col-md-8">
+      <div class="col-xs-6 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02" (click)="afficherIG()"  closeSidebar    >Annuler</button>
+      </div>
+      <div class="col-xs-6 col-md-8">
+      <button type="submit" class="form-control Dr_btn_02" (click)="reinitialiser()"     >Réintialiser par défaut</button>
+      </div>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar [disabled]="formulaire.invalid"  (click)="ajouterPersonnel(personnel);afficheDP();"   >Enregistrer</button>
+    </div>
+  </div>
+</div>
+</form>

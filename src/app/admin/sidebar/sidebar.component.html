@@ -1,0 +1,107 @@
+<div>
+  <button class="btn_menu" id="btnMenu"></button>
+
+  <ul class=" col-md-3 nav navbar-nav side-nav exampleAccordion menuBox" id="menu" >
+    <li  class="item_menu"  [ngClass]="isactive('/home') ? 'item_menu_active':''" >
+      <a class="item_color nav-link"  [routerLink]="['/home']"  >
+
+        <span class="nav-link-text">Statistiques Générales</span>
+      </a>
+    </li>
+    <!--  -->
+    <li  class="item_menu" [ngClass]="isactive('/home/groupscolaires') ? 'item_menu_active':''" >
+      <a class="item_color nav-link" routerLink="groupscolaires">
+        <span class="nav-link-text">Groupes scolaires</span>
+      </a>
+    </li>
+    <!--  -->
+    <li class="item_menu" [ngClass]="isactive('/home/ecole') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="ecole" >
+        <span class="nav-link-text">Écoles</span>
+      </a>
+    </li>
+    <!--  -->
+    <li class="item_menu" [ngClass]="isactive('/home/importation') ? 'item_menu_active':''">
+      <a class="item_color nav-link"  routerLink="importation">
+        <span class="nav-link-text">Système d'importation</span>
+      </a>
+    </li>
+    <li class="item_menu cursor_item" >
+      <a class="item_color nav-link" >
+        <span class="nav-link-text">Professionnels</span>
+      </a>
+    </li>
+
+    <!-- ******************** -->
+
+    <li  class="item_s_menu" [ngClass]="isactive('/home/directeur') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="directeur" >
+        <span class="nav-link-text">Directeurs</span>
+      </a>
+    </li>
+
+    <!--  -->
+
+    <li  class="item_s_menu" [ngClass]="isactive('/home/personnel') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="personnel">
+
+        <span class="nav-link-text" >Personnels scolaires</span>
+      </a>
+    </li>
+
+    <!--  -->
+
+    <li  class="item_s_menu" [ngClass]="isactive('/home/enseignants') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="enseignants" >
+
+        <span class="nav-link-text">Enseignants</span>
+      </a>
+    </li>
+
+
+    <!--  -->
+
+    <li  class="item_s_menu" style="border-bottom: 0px!important;" [ngClass]="isactive('/home/superadmin') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="superadmin" >
+
+        <span class="nav-link-text">Super admin</span>
+      </a>
+    </li>
+
+    <!--  -->
+
+    <li class="item_menu" style="border-top: 1px solid #4ab3cc" [ngClass]="isactive('/home/matiere') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="matiere">
+
+        <span class="nav-link-text">Matières</span>
+      </a>
+    </li>
+
+    <!--  -->
+
+    <li class="item_menu" [ngClass]="isactive('/home/classe') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="classe" >
+
+        <span class="nav-link-text">Classes</span>
+      </a>
+    </li>
+
+    <!--  -->
+
+    <li class="item_menu" [ngClass]="isactive('/home/eleve') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="eleve">
+
+        <span class="nav-link-text">Élèves</span>
+      </a>
+    </li>
+
+    <!--  -->
+
+    <li class="item_menu" [ngClass]="isactive('/home/parent') ? 'item_menu_active':''">
+      <a class="item_color nav-link" routerLink="parent">
+        <span class="nav-link-text">Parents</span>
+      </a>
+    </li>
+  </ul>
+</div>
+

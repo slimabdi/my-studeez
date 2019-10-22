@@ -1,0 +1,1566 @@
+<div class="col-md-9 col-md-offset-3 AdTop" >
+  <br>
+  <div class="row">
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="float: right;"><p class="Dconnexion"> Derniére Connexion  : {{dateDeconx}} </p></div>
+  </div>
+
+  <!-- ***** -->
+  <div class="row ">
+    <div class=" col-md-4">
+      <button type="submit" class="btnAdd01 Ad_plus" [disabled]="Nomgroupe==null || Nomgroupe==null||ecoles.length==0"  id="add_pers"    data-toggle="modal" data-target="#ModalAdd" (click)="viderForm()"  > Ajouter un personnel</button>
+
+    </div>
+
+    <div class="col-md-6">
+      <div class="R_01">
+        <select class="select-ecole"  [(ngModel)]="selectModel"  (change)="viewListPerso(selectModel)"  >
+          <option [value]="null"> Sélectionner une école</option>
+          <option *ngFor=" let ecole of ecoles"   [value]="ecole.id" > {{ecole.nomE}}</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="" class="form-control" style="float:right;height: 38px;width: 250px;border: 1px solid #ccc!important;margin-top: 22px " [(ngModel)]="term">
+      <img src="../../../assets/images/fermer.png" alt="" class="img_fermer" (click)="Effacer_Recherche()">
+      <img src="../../../assets/images/picto_recherche.png" alt="" class="img_recherche">
+    </div>
+  </div>
+
+  <br>
+
+  <!-- ********* -->
+
+  <div class="row" >
+    <div class="col-md-12"><label class="alert_V"> {{successAdd}} </label></div>
+
+  </div>
+  <div *ngIf="loader" class="text-center loader-div" >
+    <img  src="../../../assets/images/admin/loader.gif">
+  </div>
+  <table  *ngIf="!loader  "  class="table content_liste top_10" [mfData]="data  | personnelName:term " #mf="mfDataTable" [mfRowsOnPage]="5"  >
+
+    <tbody>
+    <tr *ngFor="let personnel of mf.data">
+      <td class="col-md-1">
+        <div class="img_liste Ad_img" [style.background]="personnel.avatar!=''?('url(/'+ personnel.avatar+')'):('url(../../../assets/images/admin/iconeGroupe.png)')  ">
+        </div>
+      </td>
+      <td class="col-md-3">
+        <label class="text_label text-center" style="margin-top: 10px"> {{ personnel.nom}} </label>
+
+      </td>
+
+
+      <td class="col-md-3">
+        <label class="text_label text-center" style="margin-top: 10px"> {{ personnel.nomE}} </label>
+
+      </td>
+      <td class="col-md-3">
+        <label class="text_label text-center" style="margin-top: 10px"> {{ personnel.login}} </label>
+
+      </td>
+      <td class="col-md-3">
+        <label class="text_label text-center" style="margin-top: 10px"> {{ personnel.tel1}} </label>
+
+
+      </td>
+      <td class="col-md-1">
+
+        <div class="icon_L_ajouter">
+          <input type="submit" value=""   class="btn_up" data-toggle="modal" data-target="#ModalModif"   (click)="getPersonnel(personnel.id,personnel.avatar,personnel.civilite,personnel.nom,personnel.prenom,personnel.nomE
+
+          ,personnel.idE,personnel.fonction,personnel.estAdmin,personnel.tel1,personnel.tel2,personnel.adressePostale,personnel.complement_adresse,personnel.ville,personnel.code_postal,personnel.email,
+          personnel.password,personnel.acceuil,personnel.messagerieInt,personnel.messagerieExt,personnel.rdv,personnel.calendrierScol,personnel.docAdm,personnel.docAdmRenvoy,personnel.tabAff,personnel.galerie,personnel.emploi,
+          personnel.reservation,personnel.cours,personnel.traveauxARendre,personnel.appelEnSalle,personnel.suivieJustif,personnel.saisieJustif,personnel.bilanAbsence,personnel.absencePersScol,personnel.sanctions,
+
+         personnel.suivieEleves,personnel.notes,personnel.bilannotes,personnel.conseilClasse,personnel.bulletinsEleves,personnel.bulletinsclasses,personnel.infirmerie,personnel.dictionnaire,personnel.wiki,personnel.drive,personnel.office )"   >
+          <input id="modif_pers" type="submit" value="" class="btn_sup" data-toggle="modal" data-target="#SupPersonnel" (click)="modalSupp(personnel)"></div>
+
+      </td>
+    </tr>
+    <tr *ngIf="data.length==0">
+      <td colspan="6" class="text-center nothingToshow">
+        Aucun résultat à afficher
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="footer-table">
+    <tr *ngIf="data.length>5">
+      <td colspan="6">
+        <mfBootstrapPaginator></mfBootstrapPaginator>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+
+
+
+  <div class="col-md-12" style="margin-top: 50px" *ngIf="data.length!=0">
+    <div class=" col-md-2"></div>
+    <div class=" col-md-4"><input type="submit"  name="" class="btn_bas Ad_right" value="Imprimer la liste (PDF)" (click)="generationPDF()" ></div>
+    <div class=" col-md-4"><input type="submit"  name="" class="btn_bas" value="Exporter EXCEL" (click)="exportationPersonnelExcel()" ></div>
+    <div class=" col-md-2" ></div>
+  </div>
+
+
+</div>
+<!-- *********************************************************************************************************************************************************************************************** -->
+
+
+<div class="modal fade" id="ModalAdd" role="dialog">
+  <div class="modal-dialog modal_T" >
+
+    <!-- Modal content-->
+    <div class="modal-content" style="">
+      <div class="modal-header" style=" border-bottom: 1px solid #4ab3cc !important; ">
+
+
+
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+
+        <h4 class="modal-title titre_ajouter"> Ajouter une fiche personnel</h4>
+      </div>
+
+
+
+      <form  #monForm="ngForm" accept-charset="UTF-8"   name="form"   class="form-horizontal  A_form" role="form"  method="post" >
+
+        <fieldset>
+          <div class="modal-body">
+            <div class="panel-body">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#Informations" data-toggle="tab" class="nav_tab_ajouter">Informations générales</a>
+                </li>
+                <li ><a href="#droits" data-toggle="tab" aria-expanded="true"  class="nav_tab_ajouter">Droits de publication</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane fade active in" id="Informations">
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+
+                    <div class=" col-sm-4"><label class="text_form"  >Avatar</label> </div>
+
+                    <div class=" col-sm-4" >
+                      <div class="input_01"  data-toggle="tooltip" title="<img src='tmp/{{pathavatar}}'width='200px' />"
+                           attr.data-original-title="<img src='tmp/{{pathavatar}}'width='200px' />" >
+
+                        <input type="text"   name="iconee" [(ngModel)]="pathavatar" style="margin-top: 0px!important;"  class=" image-preview-filename inputImg AdInT" disabled="disabled">
+
+                        <span class=" spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title" ></span>
+
+                       <div *ngIf="estNonVidee(pathavatar) ; then firstImgPcnx else secondImgPcnx "></div>
+                              <ng-template #firstImgPcnx ><img src="tmp/{{pathavatar}}" name="pathavatar" [(ngModel)]="pathavatar"  class="file_imgBleu" ></ng-template>
+                              <ng-template #secondImgPcnx><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+
+                              <input  class="AdFile" type="file"  name="input-file-preview"  (change)="onupPhotoEtablissementSelected($event)"/>
+                          </div>
+                     </span>
+                      </div>
+
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                    <input type="hidden"  name="avatar" [(ngModel)]="pathavatar"  ngModel/>
+                  </div>
+
+
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Civilité*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="civilite"    ngModel  required  #civ="ngModel" [(ngModel)]="civilite" >
+                    </div>
+                    <show-errors [control]="civ"   ></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Nom*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="nom"    ngModel required #nomm="ngModel" [(ngModel)]="nom" >
+                    </div>
+                    <show-errors [control]="nomm"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <!--       <input type="hidden" class="input_01"      [(ngModel)]="idEcole" ngModel  >-->
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Prénom*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="prenom"  ngModel required #prenomm="ngModel"  [(ngModel)]="prenom" >
+                    </div>
+                    <show-errors [control]="prenomm"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Ecole ratachée*  </label></div>
+                    <div class=" col-sm-4">
+
+                      <select class="input_01  style_select"     name="idEcole" [(ngModel)]="idEcole"  required ngModel   #ecole="ngModel" (change)="viewListClasse(idEcole)">
+                        <option *ngFor=" let ecole of ecoles"   [value]="ecole.id" > {{ecole.nomE}}</option>
+                      </select>
+                    </div>
+                    <show-errors [control]="ecole"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Fonction*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="fonction"   ngModel required  #fn="ngModel" [(ngModel)]="fonction"  >
+                    </div>
+                    <show-errors [control]="fn"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Administrateur</label></div>
+                    <div class=" col-sm-4">
+                      <div class="toggle">
+                        <input type="checkbox"  name="estAdmin"  ngModel   id="alibaba"   [(ngModel)]="isCheked_estAdmin"  >
+                        <label for="alibaba"></label>
+                      </div>
+
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Coordonnées </label> </div>
+                    </div>
+                  </div>
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Tel 1</label></div>
+                    <div class=" col-sm-4">
+                      <input  type="tel" class="input_01"  name="tel1"   ngModel [(ngModel)]="tel1"  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Tel 2</label></div>
+                    <div class=" col-sm-4">
+                      <input  type="tel" class="input_01"  name="tel2"   ngModel [(ngModel)]="tel2" >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Adresse postale</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="adressePostale"  ngModel  [(ngModel)]="adressePostale"  >
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Complément d'adresse</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="complement_adresse"   ngModel [(ngModel)]="complement_adresse"  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Ville</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="ville"   ngModel  [(ngModel)]="ville"  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class=" col-sm-4"><label class="text_form">Code postale</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="code_postal"   ngModel  [(ngModel)]="code_postal"  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Email*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01" required   name="email" id="mail"   ngModel   #mail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"   [(ngModel)]="email"    >
+
+
+                    </div>
+                    <show-errors [control]="mail"></show-errors>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Mot de passe</label></div>
+                    <div class=" col-sm-4">
+
+                      <input type="password" class="input_01" minlength="4"    name="password" [(ngModel)]="password"   ngModel #pwd="ngModel"   >
+
+
+
+
+
+
+
+                    </div>
+                    <show-errors [control]="pwd"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Confirmation mot de passe</label></div>
+                    <div class=" col-sm-4">
+                      <input type="password" class="input_01"    name="password2" [(ngModel)]="password2" #pwd2c="ngModel"  ngModel    >
+
+
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+                  <div *ngIf="password!=password2">
+                    <div class="row " style="margin-left: 20px;margin-top: 20px">
+                      <div class=" col-sm-4"></div>
+                      <div class=" col-sm-4">
+                        <span class="alert alert-danger" >Confirmation mot de passe incorrect</span>
+                      </div>
+
+                      <div class=" col-sm-4"></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Classes ratachées </label> </div>
+                    </div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <input type="hidden">
+                    <div class=" col-md-4"><label class="text_form">Liste des classes rattachées</label></div>
+                    <div class=" col-md-6"  >
+                      <div *ngFor="let class of data2">
+                        <div id="divAjoutClasse"  *ngFor="let r of rang"  >
+                          <div *ngIf="r==class.id">
+                            <input type="hidden" class="input_01" value="{{class.id}}"    >
+                            <input type="text"  value="{{class.nomC}}"  class="input_01"  style="margin-top: 5px;"  />
+
+                            <button  value="" class="btn_sup" (click)="suppClasse(i)" style="margin-left: 10px;margin-top: 8px"  ></button>
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+
+                      <div class="input-group" style="margin-top: 5px;"  >
+                        <select class="input_01  style_select " name="Classe" [(ngModel)]="Classe" ngModel>
+                          <option [value]="null">Ajouter une classe</option>
+                          <option  *ngFor="let clas of data2" [value]="clas.id">{{clas.nomC}}</option>
+                        </select>
+                        <div class="input-group-addon">
+                          <button id="btnAjoutClasse"  (click)="ajouterClasse(Classe)" [disabled]="Classe==null"  ><span class="fa fa-plus"></span></button>
+
+                        </div>
+
+
+
+                      </div>
+                      <ul style="padding-left: 20px" *ngIf="error">
+                          <li style="color: #b7402c;">Cette classe est déjà selectionné</li>
+                        </ul>
+
+
+                    </div>
+
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class=" col-sm-4">
+                      <label class="text_form"><input type="submit" (click)="viderForm()" data-dismiss="modal"    value="Annuler" class="btn_en_fiche" style="width: 200px"></label>
+                    </div>
+                    <div class=" col-sm-3"></div>
+                    <div class=" col-sm-4">
+                      <label class="text_form">
+                        <input type="submit" value="Enregistrer la fiche"  id="BoutonnInfo"     style="width: 300px" class="btn_en_fiche" [disabled]="!monForm.valid || password!=password2" >
+                      </label>
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="tab-pane fade" id="droits">
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" >Menu</label>
+                      </div>
+                      <div class=" col-sm-4" style="text-align: right"><label class="tab_ajouter" >Affichage</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" > Page d'accueil </label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"   class="input_check chk_01" name="acceuil" id="check_accueil"   ngModel  [(ngModel)]="isCheked"  ><span class="Wcheckmark"  ></span></label>
+                      <label class="form_08" id="input_Calender" [ngClass]="isCheked?'colorCheck':''" >
+                        <p class="text_check">Page d'accueil</p>
+
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Messagerie</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="messagerieInt"   id="check_messagerieInt" value="1"  ngModel [(ngModel)]="isCheked_messagerieInt"  checked><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_messagerieInt" [ngClass]="isCheked_messagerieInt?'colorCheck':''">
+                        <p class="text_check">Interne</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <!-- *** -->
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" > </label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01" name="messagerieExt"  [(ngModel)]="isCheked_messagerieExt"  id="check_messagerieExt" ngModel><span class="Wcheckmark"></span></label>
+                      <label class="form_08" id="input_messagerieExt" [ngClass]="isCheked_messagerieExt?'colorCheck':''" >
+                        <p class="text_check">Externe</p>
+
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Mes rendez-vous</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="rdv" [(ngModel)]="isCheked_rdv"   id="check_rdv" ngModel ><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_rdv" [ngClass]="isCheked_rdv?'colorCheck':''" >
+                        <p class="text_check">Mes rendez-vous</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" >Onglet administration</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Calendrier scolaire</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="calendrierScol" [(ngModel)]="isCheked_calendrierScol"  checked  id="check_CalendrierScol" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_calendrierScol" [ngClass]="isCheked_calendrierScol?'colorCheck':''">
+                        <p class="text_check">Calendrier scolaire</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Documents administratifs</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="docAdm" [(ngModel)]="isCheked_docAdm"  checked id="check_docAdm" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_docAdm" [ngClass]="isCheked_docAdm?'colorCheck':''">
+                        <p class="text_check">Documents administratifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="docAdmRenvoy" [(ngModel)]="isCheked_docAdmRenvoy"  checked   id="check_docAdmRenvoy" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_docAdmRenvoy" [ngClass]="isCheked_docAdmRenvoy?'colorCheck':''">
+                        <p class="text_check">Documents renvoyés signés</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Tableau d'affichage</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="tabAff" [(ngModel)]="isCheked_tabAff"  checked id="check_tabAff" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_tabAff" [ngClass]="isCheked_tabAff?'colorCheck':''">
+                        <p class="text_check">Tableau d'affichage</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Galerie -photos et vidéos</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="galerie" [(ngModel)]="isCheked_galerie" id="check_galerie2" ngModel ><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_galerie" [ngClass]="isCheked_galerie?'colorCheck':''">
+                        <p class="text_check">Galerie -photos et vidéos</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" >Onglet vie scolaire</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Emplois du temps</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="emploi" [(ngModel)]="isCheked_emploi"  checked id="check_emploi" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_emploi"  [ngClass]="isCheked_emploi?'colorCheck':''">
+                        <p class="text_check">Emplois du temps des classes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Réservation de locaux et matériaux</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="reservation" [(ngModel)]="isCheked_reservation"   id="check_reservation" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_reservation" [ngClass]="isCheked_reservation?'colorCheck':''">
+                        <p class="text_check">Réservation de locaux et matériaux</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Documents Pédagogiques-cours</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="cours" [(ngModel)]="isCheked_cours"  id="check_cours" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_cours" [ngClass]="isCheked_cours?'colorCheck':''">
+                        <p class="text_check">Documents Pédagogiques-cours</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Travaux à rendre</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="traveauxARendre" [(ngModel)]="isCheked_traveauxARendre"  id="check_traveauxARendre" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_traveauxARendre" [ngClass]="isCheked_traveauxARendre?'colorCheck':''">
+                        <p class="text_check">Travaux à rendre</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Abscences et retards</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="appelEnSalle" [(ngModel)]="isCheked_appelEnSalle"  id="check_appelEnSalle" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_appelEnSalle" [ngClass]="isCheked_appelEnSalle?'colorCheck':''">
+                        <p class="text_check">Appel en salle</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="suivieJustif" [(ngModel)]="isCheked_suivieJustif"  id="check_suivieJustif" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_suivieJustif" [ngClass]="isCheked_suivieJustif?'colorCheck':''">
+                        <p class="text_check">Suivie des justificatifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="saisieJustif"  [(ngModel)]="isCheked_saisieJustif"  id="check_saisieJustif" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_saisieJustif" [ngClass]="isCheked_saisieJustif?'colorCheck':''">
+                        <p class="text_check">Saisie des justificatifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bilanAbsence" [(ngModel)]="isCheked_bilanAbsence"   id="check_bilanAbsence" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bilanAbsence" [ngClass]="isCheked_bilanAbsence?'colorCheck':''">
+                        <p class="text_check">Bilan des abscences</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01" [(ngModel)]="isCheked_absencePersScol"   name="absencePersScol" id="check_absencePersScol" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_absencePersScol" [ngClass]="isCheked_absencePersScol?'colorCheck':''">
+                        <p class="text_check">Abscences personnels scolaire </p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Carnet de correspondance</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="sanctions" [(ngModel)]="isCheked_sanctions" id="check_sanctions" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_sanctions" [ngClass]="isCheked_sanctions?'colorCheck':''">
+                        <p class="text_check">Observations et sanctions</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="suivieEleves" [(ngModel)]="isCheked_suivieEleves" id="check_suivieEleves" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_suivieEleves" [ngClass]="isCheked_suivieEleves?'colorCheck':''">
+                        <p class="text_check">Suivi des élèves</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Notes</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="notes" [(ngModel)]="isCheked_notes" id="check_notes" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_notes" [ngClass]="isCheked_notes?'colorCheck':''">
+                        <p class="text_check">Notes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bilannotes" [(ngModel)]="isCheked_bilannotes" id="check_bilannotes" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bilannotes" [ngClass]="isCheked_bilannotes?'colorCheck':''">
+                        <p class="text_check">Bilan des notes</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Bulletins</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="conseilClasse" [(ngModel)]="isCheked_conseilClasse" id="check_conseilClasse" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_conseilClasse" [ngClass]="isCheked_conseilClasse?'colorCheck':''">
+                        <p class="text_check">Conseil de classe</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bulletinsEleves" [(ngModel)]="isCheked_bulletinsEleves"  id="check_bulletinsEleves" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bulletinsEleves" [ngClass]="isCheked_bulletinsEleves?'colorCheck':''">
+                        <p class="text_check">Bulletins des élèves</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bulletinsclasses" [(ngModel)]="isCheked_bulletinsclasses" id="check_bulletinsclasses" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bulletinsclasses" [ngClass]="isCheked_bulletinsclasses?'colorCheck':''">
+                        <p class="text_check">Bulletins des classes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Infirmerie</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="infirmerie" [(ngModel)]="isCheked_infirmerie"  id="check_infirmerie" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_infirmerie" [ngClass]="isCheked_infirmerie?'colorCheck':''">
+                        <p class="text_check">Infirmerie</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Dictionnaire*</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="dictionnaire" [(ngModel)]="isCheked_dictionnaire"  checked  id="check_dictionnaire" ngModel><span class="Wcheckmark" checked></span></label>
+
+                      <label class="form_08" id="input_dictionnaire" [ngClass]="isCheked_dictionnaire?'colorCheck':''">
+                        <p class="text_check">Dictionnaire</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Wiki*</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="wiki" [(ngModel)]="isCheked_wiki"  checked  id="check_wiki" ngModel><span class="Wcheckmark" checked></span></label>
+
+                      <label class="form_08" id="input_wiki" [ngClass]="isCheked_wiki?'colorCheck':''">
+                        <p class="text_check">Wiki</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Mon drive</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="drive" [(ngModel)]="isCheked_drive"  checked   id="check_drive" ngModel><span class="Wcheckmark" checked></span></label>
+
+                      <label class="form_08" id="input_drive" [ngClass]="isCheked_drive?'colorCheck':''">
+                        <p class="text_check">Mon drive</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Mon office</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_office" [(ngModel)]="isCheked_office"  checked ngModel><span class="Wcheckmark" ></span></label>
+
+                      <label class="form_08" id="input_office" [ngClass]="isCheked_office?'colorCheck':''">
+                        <p class="text_check">Mon office</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class=" col-sm-4">
+                      <label class="text_form"><input type="submit" (click)="viderForm2()" data-dismiss="modal"   value="Annuler" class="btn_en_fiche" style="width: 200px"></label>
+                    </div>
+                    <div class=" col-sm-3"></div>
+                    <div class=" col-sm-4">
+                      <label class="text_form"><input type="submit" data-dismiss="modal"   value="Enregistrer la fiche" (click)="ajouterPersonnelScolaire(monForm.value)"      style="width: 300px" class="btn_en_fiche" [disabled]="!monForm.valid || password!=password2"></label>
+                    </div>
+                  </div>
+
+
+
+
+
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+
+
+      </form>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ModalModif" role="dialog">
+  <div class="modal-dialog modal_T" >
+
+    <!-- Modal content-->
+    <div class="modal-content" style="">
+      <div class="modal-header" style=" border-bottom: 1px solid #4ab3cc !important; ">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+
+
+        <h4 class="modal-title titre_ajouter">Modifier une fiche personnel</h4>
+
+      </div>
+
+
+
+      <form  #monFormModif="ngForm" accept-charset="UTF-8"   name="form"   class="form-horizontal  A_form" role="form"  method="post" >
+
+        <fieldset>
+          <div class="modal-body">
+            <div class="panel-body">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#InformationsModif" data-toggle="tab" class="nav_tab_ajouter">Informations générales</a>
+                </li>
+                <li ><a href="#droitsModif" data-toggle="tab" class="nav_tab_ajouter">Droits de publication</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane fade active in" id="InformationsModif">
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+
+                    <div class=" col-sm-4"><label class="text_form"  >Avatar</label> </div>
+
+                    <div class=" col-sm-4" >
+                      <div class="input_01" data-toggle="tooltip"  title="<img src='{{tmp}}/{{pathavatar}}'width='200px' />"
+                           attr.data-original-title="<img src='{{tmp}}/{{pathavatar}}'width='200px' />" >
+
+                        <input type="text"   name="avatarr" [(ngModel)]="pathavatar" style="margin-top: 0px!important;"  class=" image-preview-filename inputImg AdInT" disabled="disabled">
+
+                        <span class=" spanUpImg">
+                            <div class="btnUploadImg btn-default image-preview-input"  >
+
+
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title" ></span>
+
+                                    <div *ngIf="estNonVidee(pathavatar) ; then firstImgPcnx else secondImgPcnx "></div>
+
+
+                                <ng-template #firstImgPcnx ><img src="{{tmp}}/{{pathavatar}}" name="pathavatar" [(ngModel)]="pathavatar"  class="file_imgBleu" ></ng-template>
+
+                              <ng-template #secondImgPcnx><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+
+                               <input  class="AdFile" type="file"  name="input-file-preview"  (change)="onupPhotoEtablissementSelected($event)">
+                            </div>
+                        </span>
+
+
+                      </div>
+
+                    </div>
+                    <div class=" col-sm-4"></div>
+                    <input type="hidden"  name="avatar" [(ngModel)]="pathavatar"  ngModel/>
+                  </div>
+
+
+                  <input type="hidden" class="input_01"  name="id"    ngModel  [(ngModel)]="id"  >
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Civilité*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="civilite" [(ngModel)]="civilite"    ngModel  required  #civv="ngModel" >
+                    </div>
+                    <show-errors [control]="civv"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Nom*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="nom"    ngModel [(ngModel)]="nom" required #nommm="ngModel" >
+                    </div>
+                    <show-errors [control]="nommm"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Prénom*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="prenom" [(ngModel)]="prenom"  ngModel required #prenommm="ngModel" required >
+                    </div>
+                    <show-errors [control]="prenommm"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <input type="hidden" name="idEcole" [(ngModel)]="idEcole" ngModel>
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Ecole ratachée*</label></div>
+                    <div class=" col-sm-4">
+                      <select class="input_01  style_select"     name="idEcole" [(ngModel)]="idEcole"  required ngModel   #ecolee="ngModel" (change)="viewListClasse(idEcole)">
+                        <option *ngFor=" let ecole of ecoles"   [value]="ecole.id" > {{ecole.nomE}}</option>
+                      </select>
+                    </div>
+                    <show-errors [control]="ecolee"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Fonction*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="fonction" [(ngModel)]="fonction"    ngModel required  #fnn="ngModel"  >
+                    </div>
+                    <show-errors [control]="fnn"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Administrateur</label></div>
+                    <div class=" col-sm-4">
+                      <div class="toggle">
+                        <input type="checkbox"  name="estAdmin"  ngModel   id="alibaba" [(ngModel)]="estAdmin"  >
+                        <label for="alibaba"></label>
+                      </div>
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Coordonnées</label> </div>
+                    </div>
+                  </div>
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Tel 1</label></div>
+                    <div class=" col-sm-4">
+                      <input  type="tel" class="input_01"  name="tel1"   ngModel [(ngModel)]="tel1"  >
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Tel 2</label></div>
+                    <div class=" col-sm-4">
+                      <input  type="tel" class="input_01"  name="tel2" [(ngModel)]="tel2"   ngModel  >
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Adresse postale</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="adressePostale"  ngModel [(ngModel)]="adressePostale"   >
+                    </div>
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Complément d'adresse</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="complement_adresse"   ngModel [(ngModel)]="complement_adresse"   >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Ville</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="ville"   ngModel [(ngModel)]="ville"   >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class=" col-sm-4"><label class="text_form">Code postale</label></div>
+                    <div class=" col-sm-4">
+                      <input type="text" class="input_01"  name="code_postal" [(ngModel)]="code_postal"   ngModel  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Email*</label></div>
+                    <div class=" col-sm-4">
+                      <input type="email" class="input_01"  name="email"   ngModel required  #maill="ngModel"  [(ngModel)]="email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"      >
+
+                    </div>
+                    <show-errors [control]="maill"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Mot de passe</label></div>
+                    <div class=" col-sm-4">
+                      <input type="password" class="input_01"    name="password" [(ngModel)]="password"   ngModel minlength="4"  #pwd2="ngModel"  >
+
+                    </div>
+                    <show-errors [control]="pwd2"></show-errors>
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Confirmation mot de passe</label></div>
+                    <div class=" col-sm-4">
+                      <input type="password" class="input_01"    name="password2" [(ngModel)]="password2" #pwdc="ngModel"  ngModel   >
+                    </div>
+                    <div class=" col-sm-4"></div>
+                  </div>
+
+                  <div *ngIf="password!=password2">
+                    <div class="row " style="margin-left: 20px;margin-top: 20px">
+                      <div class=" col-sm-4"></div>
+                      <div class=" col-sm-4">
+                        <span class="alert alert-danger" >Confirmation mot de passe incorrect</span>
+                      </div>
+
+                      <div class=" col-sm-4"></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Classes ratachées </label> </div>
+                    </div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+                    <div class=" col-sm-4"><label class="text_form">Liste des classes rattachées</label></div>
+                    <div class=" col-sm-4"  >
+                      <div *ngFor="let class of data2">
+                        <div   *ngFor="let r of rang">
+                          <div *ngIf="r==class.id">
+                            <input type="hidden" class="input_01" value="{{class.id}}"    >
+                            <input type="text"  value="{{class.nomC}}"  class="input_01"  style="margin-top: 5px;"  />
+
+                            <button  value="" class="btn_sup" (click)="suppClasse(i)" style="margin-left: 10px;margin-top: 8px"  ></button>
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+
+                      <div class="input-group" style="margin-top: 5px;"  >
+                        <select class="input_01  style_select" name="Classe" [(ngModel)]="Classe" ngModel>
+                          <option [value]="null">Ajouter une classe</option>
+                          <option  *ngFor="let clas of data2" [value]="clas.id">{{clas.nomC}}</option>
+                        </select>
+
+                        <div class="input-group-addon">
+
+                          <button   (click)="ajouterClasse(Classe)" [disabled]="Classe==null "><span class="fa fa-plus"></span></button>
+
+                        </div>
+
+
+
+                      </div>
+                      <ul style="padding-left: 20px" *ngIf="error">
+                          <li style="color: #b7402c;">Cette classe est déjà selectionné</li>
+                        </ul>
+
+
+                    </div>
+
+
+                    <div class=" col-sm-4"></div>
+                  </div>
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class=" col-sm-4">
+                      <label class="text_form"><input type="submit" data-dismiss="modal"  value="Annuler" class="btn_en_fiche" style="width: 200px" (click)="viderForm()"></label>
+                    </div>
+                    <div class=" col-sm-3"></div>
+                    <div class=" col-sm-4">
+                      <label class="text_form">
+                        <input type="submit" value="Enregistrer la fiche"  id="BoutonnInfoModif"     style="width: 300px" class="btn_en_fiche" [disabled]="!monFormModif.valid || password!=password2">
+                      </label>
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="tab-pane fade" id="droitsModif">
+
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" >Menu</label>
+                      </div>
+                      <div class=" col-sm-4" style="text-align: right"><label class="tab_ajouter" >Affichage</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" > Page d'accueil </label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"   class="input_check chk_01" name="acceuil" id="check_accueil2"  ngModel   [(ngModel)]="acceuil"><span class="Wcheckmark"  ></span></label>
+                      <label class="form_08" id="input_Calender2" [ngClass]="acceuil ? 'colorCheck' : ''">
+                        <p class="text_check">Page d'accueil</p>
+
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Messagerie</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"   name="messagerieInt" id="check_messagerieInt2" ngModel [(ngModel)]="messagerieInt"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_messagerieInt2" [ngClass]="messagerieInt ? 'colorCheck' : ''">
+                        <p class="text_check">Interne</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <!-- *** -->
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" > </label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01" name="messagerieExt" id="check_messagerieExt2" ngModel [(ngModel)]="messagerieExt"><span class="Wcheckmark"></span></label>
+                      <label class="form_08" id="input_messagerieExt2" [ngClass]="messagerieExt ? 'colorCheck' : ''" >
+                        <p class="text_check">Externe</p>
+
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Mes rendez-vous</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="rdv" id="check_rdv2" ngModel [(ngModel)]="rdv"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_rdv2" [ngClass]="rdv ? 'colorCheck' : ''">
+                        <p class="text_check">Interne</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" >Onglet administration</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Calendrier scolaire</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="calendrierScol" id="check_CalendrierScol2" ngModel [(ngModel)]="calendrierScol"><span class="Wcheckmark" ></span></label>
+
+                      <label class="form_08" id="input_calendrierScol2" [ngClass]="calendrierScol ? 'colorCheck' : ''">
+                        <p class="text_check">Calendrier scolaire</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Documents administratifs</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="docAdm" id="check_docAdm2" ngModel [(ngModel)]="docAdm"><span class="Wcheckmark" ></span></label>
+
+                      <label class="form_08" id="input_docAdm2" [ngClass]="docAdm ? 'colorCheck' : ''">
+                        <p class="text_check">Documents administratifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="docAdmRenvoy" id="check_docAdmRenvoy2" ngModel [(ngModel)]="docAdmRenvoy"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_docAdmRenvoy2" [ngClass]="docAdmRenvoy ? 'colorCheck' : ''">
+                        <p class="text_check">Documents renvoyés signés</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Tableau d'affichage</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="tabAff" id="check_tabAff2" ngModel [(ngModel)]="tabAff"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_tabAff2" [ngClass]="tabAff ? 'colorCheck' : ''">
+                        <p class="text_check">Tableau d'affichage</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Galerie -photos et vidéos</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="galerie" id="check_galerie" ngModel [(ngModel)]="galerie"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_galerie2" [ngClass]="galerie ? 'colorCheck' : ''">
+                        <p class="text_check">Tableau d'affichage</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class=" col-sm-4"><label class="tab_ajouter" >Onglet vie scolaire</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Emplois du temps</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="emploi" id="check_emploi2" ngModel [(ngModel)]="emploi"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_emploi2" [ngClass]="emploi ? 'colorCheck' : ''">
+                        <p class="text_check">Emplois du temps des classes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Réservation de locaux et matériaux</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="reservation" id="check_reservation2" ngModel [(ngModel)]="reservation"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_reservation2" [ngClass]="reservation ? 'colorCheck' : ''">
+                        <p class="text_check">Réservation de locaux et matériaux</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Documents Pédagogiques-cours</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="cours" id="check_cours2" ngModel [(ngModel)]="cours"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_cours2" [ngClass]="cours ? 'colorCheck' : ''">
+                        <p class="text_check">Documents Pédagogiques-cours</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Travaux à rendre</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="traveauxARendre" id="check_traveauxARendre2" ngModel [(ngModel)]="traveauxARendre"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_traveauxARendre2" [ngClass]="traveauxARendre ? 'colorCheck' : ''">
+                        <p class="text_check">Travaux à rendre</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Abscences et retards</label> </div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="appelEnSalle" id="check_appelEnSalle2" ngModel [(ngModel)]="appelEnSalle"><span class="Wcheckmark" ></span></label>
+
+                      <label class="form_08" id="" [ngClass]="appelEnSalle ? 'colorCheck' : ''">
+                        <p class="text_check">Appel en salle</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="suivieJustif" id="check_suivieJustif2" ngModel [(ngModel)]="suivieJustif" ><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_appelEnSalle2" [ngClass]="suivieJustif ? 'colorCheck' : ''">
+                        <p class="text_check">Suivie des justificatifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="saisieJustif" id="check_saisieJustif2"  [(ngModel)]="saisieJustif"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_suivieJustif2" [ngClass]="saisieJustif ? 'colorCheck' : ''">
+                        <p class="text_check">Saisie des justificatifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bilanAbsence" id="check_bilanAbsence2" ngModel [(ngModel)]="bilanAbsence"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_saisieJustif2" [ngClass]="bilanAbsence ? 'colorCheck' : ''">
+                        <p class="text_check">Bilan des abscences</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="absencePersScol" id="check_absencePersScol2" ngModel [(ngModel)]="absencePersScol" ><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bilanAbsence2" [ngClass]="absencePersScol ? 'colorCheck' : ''">
+                        <p class="text_check">Abscences personnels scolaire </p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Carnet de correspondance</label></div>
+                    <div class=" col-sm-4">
+
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="sanctions" id="check_sanctions2" ngModel [(ngModel)]="sanctions"><span class="Wcheckmark" ></span></label>
+
+                      <label class="form_08" id="input_absencePersScol2" [ngClass]="sanctions ? 'colorCheck' : ''">
+                        <p class="text_check">Observations et sanctions</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="suivieEleves" id="check_suivieEleves2" ngModel [(ngModel)]="suivieEleves"><span class="Wcheckmark" ></span></label>
+
+                      <label class="form_08" id="input_sanctions2" [ngClass]="suivieEleves ? 'colorCheck' : ''">
+                        <p class="text_check">Suivi des élèves</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Notes</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="notes" id="check_notes2" ngModel [(ngModel)]="notes"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_suivieEleves2" [ngClass]="notes ? 'colorCheck' : ''">
+                        <p class="text_check">Notes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bilannotes" id="check_bilannotes2" ngModel [(ngModel)]="bilannotes"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_notes2" [ngClass]="bilannotes ? 'colorCheck' : ''">
+                        <p class="text_check">Bilan des notes</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Bulletins</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="conseilClasse" id="check_conseilClasse2" ngModel [(ngModel)]="conseilClasse"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bilannotes2" [ngClass]="conseilClasse ? 'colorCheck' : ''">
+                        <p class="text_check">Conseil de classe</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bulletinsEleves" id="check_bulletinsEleves2" ngModel [(ngModel)]="bulletinsEleves" ><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bulletinsEleves2" [ngClass]="bulletinsEleves ? 'colorCheck' : ''">
+                        <p class="text_check">Bulletins des élèves</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" ></label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bulletinsclasses" id="check_bulletinsclasses2" ngModel [(ngModel)]="bulletinsclasses"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_bulletinsclasses2" [ngClass]="bulletinsclasses ? 'colorCheck' : ''">
+                        <p class="text_check">Bulletins des classes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Infirmerie</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="infirmerie" id="check_infirmerie2" ngModel [(ngModel)]="infirmerie"><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_infirmerie2" [ngClass]="infirmerie ? 'colorCheck' : ''">
+                        <p class="text_check">Infirmerie</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Dictionnaire*</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="dictionnaire" id="check_dictionnaire2" ngModel [(ngModel)]="dictionnaire"><span class="Wcheckmark" checked></span></label>
+
+                      <label class="form_08" id="input_dictionnaire2" [ngClass]="dictionnaire ? 'colorCheck' : ''">
+                        <p class="text_check">Dictionnaire</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Wiki*</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="wiki" id="check_wiki2" ngModel [(ngModel)]="wiki" ><span class="Wcheckmark"  ></span></label>
+
+                      <label class="form_08" id="input_wiki2" [ngClass]="wiki ? 'colorCheck' : ''">
+                        <p class="text_check">Wiki</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Mon drive</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="drive" id="check_drive2" ngModel [(ngModel)]="drive" ><span class="Wcheckmark" checked></span></label>
+
+                      <label class="form_08" id="input_drive2" [ngClass]="drive ? 'colorCheck' : ''">
+                        <p class="text_check">Mon drive</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class=" col-sm-4"><label class="text_form" >Mon office</label></div>
+                    <div class=" col-sm-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_office2" ngModel [(ngModel)]="office"><span class="Wcheckmark" checked></span></label>
+
+                      <label class="form_08" id="input_office2" [ngClass]="office ? 'colorCheck' : ''">
+                        <p class="text_check">Mon office</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class=" col-sm-4">
+                      <label class="text_form"><input type="submit" (click)="viderForm2()"  value="Annuler" data-dismiss="modal" class="btn_en_fiche" style="width: 200px"></label>
+                    </div>
+                    <div class=" col-sm-3"></div>
+                    <div class=" col-sm-4">
+                      <label class="text_form"><input type="submit" data-dismiss="modal"   value="Enregistrer la fiche" (click)="modifierPersonnelScolaire(monFormModif.value)"      style="width: 300px" class="btn_en_fiche" [disabled]="!monFormModif.valid || password!=password2"></label>
+                    </div>
+                  </div>
+
+
+
+
+
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+
+
+      </form>
+
+
+    </div>
+  </div>
+</div>
+<div id="SupPersonnel" class="modal fade" role="dialog">
+  <div class="modal-dialog modal_Notif">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <label class="notif_01"> êtes-vous sûr(e) de vouloir supprimer   «{{tmppersonel.nom}}»  ? </label>
+        <label class="groupeNotif_btn">
+            <input type="submit"  class="btn_N_01" value="Non" data-dismiss="modal">
+            <input type="submit"  class="btn_N_02" value="Oui" (click)="DeletePersonnel(tmppersonel.id)" data-dismiss="modal">
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+</div>

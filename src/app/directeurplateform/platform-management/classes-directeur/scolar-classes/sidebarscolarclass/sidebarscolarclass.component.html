@@ -1,0 +1,196 @@
+<div class="col-md-12 Dr_titre_sideMD" *ngIf="!updateC"  >
+  Ajouter une fiche classe
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+<div class="col-md-12 Dr_titre_sideMD" *ngIf="updateC"  >
+    Mise à jours classe
+    <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+  </div>
+<div class=" col-xs-12 col-md-12 top_br ">
+  <div class="col-xs-4 col-md-4">Icône</div>
+
+  <div class="col-xs-8 col-md-8 "  >
+   <div class="Dr_icon_MD" [style.background-image]="newclass.icone!=''?('url('+ newclass.icone+')'):('url(../../assets/images/directeur/avatar.png)')  ">
+      <input autocomplete="off" class="file_input_Dr" type="file"
+      name="input-file-preview" (change)="onAvatarSelected($event)" />
+   </div>
+
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Nom de la classe*</div>
+  <div class="col-xs-8 col-md-8">
+    <input autocomplete="off" type="text" [(ngModel)]="newclass.nomC" name="nomc" class="form-control Dr_input">
+    <ul style="padding-left: 20px;" *ngIf="errclass.nomC">
+        <li style="color: #b7402c;" >Ce champ est obligatoire</li>
+      </ul>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Abrégé*</div>
+  <div class="col-xs-8 col-md-8">
+      <input autocomplete="off"type="text" [(ngModel)]="newclass.abrege"  name="abrege" class="form-control Dr_input">
+
+    <ul style="padding-left: 20px;" *ngIf="errclass.abrege">
+        <li style="color: #b7402c;" >Ce champ est obligatoire</li>
+      </ul>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Niveau d’apprentissage*</div>
+  <div class="col-xs-8 col-md-8">
+
+    <input autocomplete="off"[(ngModel)]="newclass.lab" name="label" class="form-control Dr_input Dr_select" [readonly]="true" (click)="nivSelect=!nivSelect">
+    <div class="myadminclassselect" *ngIf="nivSelect">
+      <p class="text-center" *ngIf="niveaux.length==0">Rien à afficher</p>
+      <div *ngFor="let dec of niveaux;let j=index">
+        <p class="titleniveau" (click)="aff[j]=!aff[j]" *ngIf="dec.Sections.length>0">
+          <span class="numberNiv">{{dec.Sections.length}}</span>
+          {{dec.libelleN}}
+          <i class="fa fa-sort-desc flecheniv" *ngIf="aff[j]" aria-hidden="true"></i>
+          <i class="fa fa-caret-right flecheniv" *ngIf="!aff[j]" aria-hidden="true"></i>
+        </p>
+        <div class="titlesection" *ngIf="aff[j]">
+          <div class="sectionselect" *ngFor="let sec of dec.Sections" (click)="newclass.niveau=dec.id;newclass.section=sec.id;newclass.lab=sec.libelleS;nivSelect=!nivSelect">{{sec.libelleS}}</div>
+        </div>
+        <div class="sectionselect" *ngIf="dec.Sections.length==0" class="titleniveau" (click)="newclass.niveau=dec.id;newclass.section=null;newclass.lab=dec.libelleN;nivSelect=!nivSelect">{{dec.libelleN}}</div>
+      </div>
+    </div>
+    <ul style="padding-left: 20px;" *ngIf="errclass.lab">
+        <li style="color: #b7402c;" >Ce champ est obligatoire</li>
+      </ul>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Découpage*</div>
+  <div class="col-xs-8 col-md-8">
+    <select autocomplete="off" [(ngModel)]="newclass.idDecoupage" class="form-control Dr_input Dr_select">
+      <option value="null"></option>
+      <option *ngFor="let dec of decoupages" [value]="dec.id">{{dec.libelleD}}</option>
+    </select>
+    <ul style="padding-left: 20px;" *ngIf="errclass.idDecoupage">
+        <li style="color: #b7402c;" >Ce champ est obligatoire</li>
+      </ul>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Format de notation*</div>
+  <div class="col-xs-8 col-md-8">
+    <select autocomplete="off" [(ngModel)]="newclass.formatNotation" class="form-control Dr_input Dr_select">
+      <option value="null"></option>
+      <option value="Alphabétique">Alphabétique</option>
+      <option value="Numérique">Numérique</option>
+    </select>
+    <ul style="padding-left: 20px;" *ngIf="errclass.formatNotation">
+        <li style="color: #b7402c;" >Ce champ est obligatoire</li>
+      </ul>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-8 col-md-8 Dr_bold">Matières enseignées</div>
+
+</div>
+<div class="table-responsive-sm top_br">
+  <table class="table ">
+    <tbody class="">
+      <tr>
+        <td></td>
+        <td class="Dr_titreTabMD border_td ">Matière</td>
+        <td class="Dr_titreTabMD border_td">Coef</td>
+        <td class="Dr_titreTabMD border_td">Enseignant</td>
+        <td class="Dr_titreTabMD border_td">Co-enseignant</td>
+        <td class="border_td"></td>
+      </tr>
+
+      <tr *ngFor="let col of newclass.matiere_ens;let i=index">
+        <td></td>
+        <td class=" border_td ">
+          <select autocomplete="off" class="form-control Dr_input Dr_select" [(ngModel)]="col.idMatiere" [disabled]="true" name="matieresss{{i}}">
+            <option value="null"></option>
+            <option *ngFor="let mat of matieres" value="{{mat.id}}">
+              {{mat.nomMatiere}}
+            </option>
+          </select>
+        </td>
+        <td class=" border_td Dr_input_co">
+          <input autocomplete="off"type="number" style="padding: 3px;" min="0" class="C_01" [disabled]="true" [(ngModel)]="col.coef" name="coef{{i}}" class="form-control Dr_input">
+        </td>
+        <td class=" border_td Dr_input_co">
+          <select autocomplete="off" class="form-control Dr_input Dr_select" [disabled]="true" (change)="changeteacher(col)" [(ngModel)]="col.enseig" name="ens{{i}}">
+            <option value="null"></option>
+
+            <option *ngFor="let en of enseignantsp" value="{{en.id}}">
+              {{en.nom}} {{en.prenom}}
+            </option>
+          </select>
+        </td>
+        <td class=" border_td">
+          <select autocomplete="off" class="form-control Dr_input Dr_select" [disabled]="true" (change)="changeteacher(col)" [(ngModel)]="col.co_enseig" name="coens{{i}}">
+            <option *ngFor="let en of coenseignants" value="{{en.id}}">
+              {{en.nom}} {{en.prenom}}
+            </option>
+            <option value="null"></option>
+          </select>
+        </td>
+        <td class="border_td">
+          <button type="submit" (click)="delete(i)" class="icon_supp  "></button>
+        </td>
+      </tr>
+      <!-- row add matiere -->
+      <tr>
+        <td></td>
+        <td class=" border_td ">
+          <select autocomplete="off" class="form-control Dr_input " [(ngModel)]="matiere.idMatiere"  name="matieresss">
+            <option value="null"></option>
+            <option *ngFor="let mat of matieres" value="{{mat.id}}">
+              {{mat.nomMatiere}}
+            </option>
+          </select>
+        </td>
+        <td class=" border_td Dr_input_co">
+          <input autocomplete="off" type="number" style="padding: 3px;" min="0" class="C_01"  [(ngModel)]="matiere.coef" name="coef" class="form-control Dr_input">
+        </td>
+        <td class=" border_td Dr_input_co">
+          <select autocomplete="off" class="form-control Dr_input "  [(ngModel)]="matiere.enseig" name="ens">
+            <option value="null"></option>
+            <option *ngFor="let en of enseignantsp" value="{{en.id}}">
+              {{en.nom}} {{en.prenom}}
+            </option>
+          </select>
+        </td>
+        <td class=" border_td">
+          <select autocomplete="off" class="form-control Dr_input "  [(ngModel)]="matiere.co_enseig" name="coens">
+            <option value="null"></option>
+            <option *ngFor="let en of coenseignants" value="{{en.id}}">
+              {{en.nom}} {{en.prenom}}
+            </option>
+          </select>
+        </td>
+        <td class="border_td">
+          <button type="submit" (click)="addmat()" class="Dr_icon_ok">OK</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- <div class="col-xs-12 col-md-12 ">
+  <div class="col-xs-8 col-md-8 Dr_text_Imprim">+ Rattacher une matière</div>
+
+</div> -->
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control Dr_btn_02" closeSidebar>Annuler</button>
+  </div>
+  <div class="col-xs-4 col-md-4">
+    <!-- <button type="submit" (click)="showClassErrors()" *ngIf="!errclass.errorExist" class="form-control DrBtn">Enregistrer1</button> -->
+    <button type="submit" (click)="create()" [disabled]="saving"  class="form-control DrBtn">Enregistrer</button>
+  </div>
+</div>

@@ -1,0 +1,735 @@
+<div class="col-md-12 Dr_titre_sideMD" >
+  Ajouter une fiche enseignant
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-6 col-md-6">
+    <button type="submit" class="form-control Dr_btn_02 btn_add"  (click)="InfoGeneral=true;droits=false;" >Informations générales</button>
+  </div>
+  <div class="col-xs-6 col-md-6">
+    <button type="submit" class="form-control Dr_btn_02"  (click)="droits=true;InfoGeneral=false" >Droits de publication</button>
+  </div>
+</div>
+
+<form #formulaire="ngForm" >
+  <div *ngIf="InfoGeneral">
+
+    <div class=" col-xs-12 col-md-12 top_br ">
+      <div class="col-xs-4 col-md-4">Photo de profil ou avatar</div>
+      <div class="col-xs-8 col-md-8">
+        <div class="Dr_icon_MD" [style.background-image]="enseignant.avatar!=''?('url('+ enseignant.avatar+')'):('url(../../assets/images/directeur/avatar.png)')  ">
+          <input class="file_input_Dr" type="file"
+                 name="input-file-preview" (change)="onAvatarSelected($event)" />
+        </div>
+      </div>
+    </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Civilitée*
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input"  name="civilite" [(ngModel)]="enseignant.civilite" required>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Nom*
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="nom" [(ngModel)]="enseignant.nom" required>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Prénom*
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="prenom" [(ngModel)]="enseignant.prenom" required>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Fonction*
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="fonction" [(ngModel)]="enseignant.fonction" required>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Administrateur</div>
+    <div class="col-xs-8 col-md-8">
+
+      <material-slide-toggle
+        (change)="enseignant.estAdmin=$event" [disabled]="false"
+        [checked]="enseignant.estAdmin" name="estAdmin"
+      >
+      </material-slide-toggle>
+
+
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8 Dr_bold">Coordonnées</div>
+
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Tel1
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="tel1"  [(ngModel)]="enseignant.tel1">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Tel2
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="tel2"  [(ngModel)]="enseignant.tel2">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Adresse postale
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="adressePostale"  [(ngModel)]="enseignant.adressePostale">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Complément d'adresse
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="complement_adresse"  [(ngModel)]="enseignant.complement_adresse">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+      Ville
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="ville" [(ngModel)]="enseignant.ville">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+        Code postale
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="code_postal"  [(ngModel)]="enseignant.code_postal">
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+        Email*
+      </label>
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="email"  [(ngModel)]="enseignant.email" required>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8 Dr_bold">Matières - classes</div>
+
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8">
+
+        Liste des matières
+
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form">
+        Classes enseignées
+      </label>
+    </div>
+  </div>
+
+    <div class="col-xs-12 col-md-12 ">
+
+    <div class="col-xs-8 col-md-8 " >
+      <div class="col-xs-12 col-md-12 top_br" *ngFor="let itemrow of listMatieres; let i=index">
+      <div class="col-xs-11 col-md-11 Dr_pd_left " >
+        <input class="form-control Dr_input Dr_size_Side"  type="text" name="item{{i}}" [(ngModel)]="itemrow.nomMatiere">
+      </div>
+      <div  class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+        <button  class="icon_supp right" type="submit" (click)="deleteRow(i)"></button>
+      </div>
+      </div>
+      <div class="col-xs-12 col-md-12 top_br">
+        <div class="col-xs-11 col-md-11 Dr_pd_left " >
+          <select class="form-control Dr_input " name="idMatiere"  [(ngModel)]="myMatiere">
+            <option >Ajouter une matière</option>
+            <option  *ngFor=" let mat of matieres"  [ngValue]="mat"> {{mat.nomMatiere}}</option>
+          </select>
+        </div>
+        <div  class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+          <button  class="Dr_icon_ok  " type="submit" (click)="addNewRow()" >OK</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-4 col-md-4 Dr_pd_left "  >
+      <div class="col-xs-12 col-md-12 top_br" *ngFor="let itemroww of listClasses; let j=index">
+      <div class="col-xs-11 col-md-11 Dr_pd_left ">
+        <input class="form-control Dr_input Dr_size_Side"  type="text"  name="item1{{j}}" [(ngModel)]="itemroww.nomC">
+      </div>
+      <div  class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+        <button  class="icon_supp  " type="submit" (click)="deleteRowClass(j)"></button>
+      </div>
+      </div>
+      <div class="col-xs-12 col-md-12 top_br">
+        <div class="col-xs-11 col-md-11 Dr_pd_left ">
+          <select class="form-control Dr_input " name="nomC" [(ngModel)]="myClasses" >
+            <option >Ajouter classe</option>
+            <option  *ngFor=" let class of classes"    [ngValue]="class"> {{class.nomC}}</option>
+          </select>
+        </div>
+        <div  class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+          <button  class="Dr_icon_ok  " type="submit" (click)="addNewRowClass()" >OK</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8 Dr_text_Imprim"  >
+        + Ajouter une matière
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_add_form Dr_text_Imprim">
+        + Ajouter une classe
+      </label>
+    </div>
+  </div>
+  <pre style="display: block;" >{{listMatieres | json}}</pre>
+  <pre style="display: block;" >{{listClasses  | json}}</pre>
+
+  <input type="hidden" class="input_01" name="affichMatieres" [(ngModel)]="listMatieres" ngModel>
+  <input type="hidden" class="input_01" name="affichClasses" [(ngModel)]="listClasses" ngModel>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='update'">Annuler</button>
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='create'" (click)="formulaire.reset()">Annuler</button>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn"  closeSidebar  (click)="ajouterEnseignant(formulaire.value);formulaire.reset();" >Enregistrer</button>
+    </div>
+  </div>
+
+  </div>
+
+<div class="Dr_sideContent" *ngIf="droits">
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Menu</label></div>
+    <div class="col-xs-8 col-md-8">
+      <label class="">Sous-menu</label>
+      <label class="Dr_add_form">Affichage</label>
+    </div>
+  </div>
+
+
+    <div id="input_Calender" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.accueil?'Dr_Active_ligne':''" >
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Page d'accueil</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input type="checkbox"   class=" " name="acceuil" id="check_accueil"   ngModel  [(ngModel)]="enseignant.accueil"  >
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <div id="input_messagerieInt" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.messagerieInt?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Messagerie</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label >Interne</label>
+        <label class="Dr_add_form" >
+          <input type="checkbox"  class=""  name="messagerieInt"   id="check_messagerieInt" value="1"  ngModel [(ngModel)]="enseignant.messagerieInt"  checked>
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <div id="input_messagerieExt" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.messagerieExt?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Messagerie</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label >Externe</label>
+        <label class="Dr_add_form" >
+          <input type="checkbox"  class="" name="messagerieExt"  [(ngModel)]="enseignant.messagerieExt"  id="check_messagerieExt" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <!-- *** -->
+    <div id="input_rdv" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="isCheked_rdv?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Mes rendez-vous</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input type="checkbox"    name="rdv" [(ngModel)]="isCheked_rdv"   id="check_rdv" ngModel >
+
+        </label>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-12 " >
+      <label > Onglet administration</label>
+
+    </div>
+
+
+    <div id="input_calendrierScol" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.calendrierScol?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Calendrier scolaire</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input type="checkbox"   name="calendrierScol" [(ngModel)]="enseignant.calendrierScol"  checked  id="check_CalendrierScol" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="enseignant.docAdm?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002"></div>
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Documents administratifs</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">********</div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01">
+          Documents Administratifs
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_docAdm" [ngClass]="enseignant.docAdm?'Dr_Active_ligne':''">
+          Documents Renvoyés signés
+          <label class="Dr_add_form" >
+            <input type="checkbox"   name="docAdm" [(ngModel)]="enseignant.docAdm"  checked id="check_docAdm" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_docAdmRenvoy" [ngClass]="enseignant.docAdmRenvoy?'Dr_Active_ligne':''">
+          Documents reçus signés
+          <label class="Dr_add_form" >
+            <input type="checkbox"    name="docAdmRenvoy" [(ngModel)]="enseignant.docAdmRenvoy"  checked   id="check_docAdmRenvoy" ngModel>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div id="input_tabAff" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.tabAff?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Tableau d'affichage</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label class="Dr_add_form" >
+          <input type="checkbox"  name="tabAff" [(ngModel)]="enseignant.tabAff"  checked id="check_tabAff" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+
+    <div id="input_galerie" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="isCheked_galerie?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Galerie</label></div>
+      <div class="col-xs-8 col-md-8">
+        <label >photos et vidéos</label>
+        <label class="Dr_add_form" >
+          <input type="checkbox"    name="galerie" [(ngModel)]="isCheked_galerie" id="check_galerie2" ngModel >
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div class="col-md-12 " >
+      <label > Onglet vie scolaire</label>
+
+    </div>
+
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="enseignant.emploi?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Emplois du temps</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01">
+          Emploi du temps des classes
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_emploi" [ngClass]="enseignant.emploi?'Dr_Active_ligne':''">
+          Emplois du temps des classes
+          <label class="Dr_add_form" >
+            <input type="checkbox" name="emploi" [(ngModel)]="enseignant.emploi"  checked id="check_emploi" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_reservation" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.reservation?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Réservation de locaux et matériaux</label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"   name="reservation" [(ngModel)]="enseignant.reservation"   id="check_reservation" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_cours" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.cours?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Documents Pédagogiques</label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"    name="cours" [(ngModel)]="enseignant.cours"  id="check_cours" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_traveauxARendre" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.traveauxARendre?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Travaux à rendre </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"    name="traveauxARendre" [(ngModel)]="enseignant.traveauxARendre"  id="check_traveauxARendre" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(enseignant.appelEnSalle||enseignant.suivieJustif)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Abscences et retards</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_appelEnSalle" [ngClass]="enseignant.appelEnSalle?'Dr_Active_ligne':''">
+          Appel en salle
+          <label class="Dr_add_form" >
+            <input type="checkbox"    name="appelEnSalle" [(ngModel)]="enseignant.appelEnSalle"  id="check_appelEnSalle" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_suivieJustif" [ngClass]="enseignant.suivieJustif?'Dr_Active_ligne':''">
+          Suivie des justificatifs
+          <label class="Dr_add_form" >
+            <input type="checkbox"    name="suivieJustif" [(ngModel)]="enseignant.suivieJustif"  id="check_suivieJustif" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(enseignant.saisieJustif||enseignant.bilanAbsence)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Abscences et retards</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_saisieJustif" [ngClass]="enseignant.saisieJustif?'Dr_Active_ligne':''">
+          Saisie des justificatifs
+          <label class="Dr_add_form" >
+            <input type="checkbox"   name="saisieJustif"  [(ngModel)]="enseignant.saisieJustif"  id="check_saisieJustif" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bilanAbsence" [ngClass]="enseignant.bilanAbsence?'Dr_Active_ligne':''">
+          Bilan des abscences
+          <label class="Dr_add_form" >
+            <input type="checkbox"  name="bilanAbsence" [(ngModel)]="enseignant.bilanAbsence"   id="check_bilanAbsence" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_absencePersScol" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.absencePersScol?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Abscences enseignants scolaire </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"   [(ngModel)]="enseignant.absencePersScol"   name="absencePersScol" id="check_absencePersScol" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(enseignant.sanctions||enseignant.suivieEleves)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Carnet de correspondance</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_sanctions" [ngClass]="enseignant.sanctions?'Dr_Active_ligne':''">
+          Observations et sanctions
+          <label class="Dr_add_form" >
+            <input type="checkbox"   name="sanctions" [(ngModel)]="enseignant.sanctions" id="check_sanctions" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_suivieEleves" [ngClass]="enseignant.suivieEleves?'Dr_Active_ligne':''">
+          Suivi des élèves
+          <label class="Dr_add_form" >
+            <input type="checkbox" name="suivieEleves" [(ngModel)]="enseignant.suivieEleves" id="check_suivieEleves" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002" [ngClass]="(enseignant.notes||enseignant.bilannotes)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Notes </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">
+        </div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_notes" [ngClass]="enseignant.notes?'Dr_Active_ligne':''">
+          Notes
+          <label class="Dr_add_form" >
+            <input type="checkbox"  name="notes" [(ngModel)]="enseignant.notes" id="check_notes" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bilannotes" [ngClass]="enseignant.bilannotes?'Dr_Active_ligne':''">
+          Bilan des notes
+          <label class="Dr_add_form" >
+            <input type="checkbox" name="bilannotes" [(ngModel)]="enseignant.bilannotes" id="check_bilannotes" ngModel>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div  class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" >
+
+      <div class="col-xs-4 col-md-4 Dr_padding_002"  [ngClass]="(enseignant.conseilClasse||enseignant.bulletinsEleves||enseignant.bulletinsclasses)?'Dr_Active_ligne':''">
+        <div class="col-md-12 Dr_padding_002">--</div>
+        <div class="col-md-12 Dr_padding_002">
+          <label class="Dr_add_form">Bulletins</label>
+        </div>
+        <div class="col-md-12 Dr_padding_002">--</div>
+      </div>
+      <div class="col-xs-8 col-md-8">
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_conseilClasse" [ngClass]="enseignant.conseilClasse?'Dr_Active_ligne':''">
+          Conseil de classe
+          <label class="Dr_add_form" >
+            <input type="checkbox"  name="conseilClasse" [(ngModel)]="enseignant.conseilClasse" id="check_conseilClasse" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bulletinsEleves" [ngClass]="enseignant.bulletinsEleves?'Dr_Active_ligne':''">
+          Bulletins des élèves
+          <label class="Dr_add_form" >
+            <input type="checkbox"   name="bulletinsEleves" [(ngModel)]="enseignant.bulletinsEleves"  id="check_bulletinsEleves" ngModel>
+          </label>
+        </div>
+        <div class="col-md-12 Dr_padding_002 Dr_paddinR01" id="input_bulletinsclasses" [ngClass]="enseignant.bulletinsclasses?'Dr_Active_ligne':''">
+          Bulletins des classes
+          <label class="Dr_add_form" >
+            <input type="checkbox"    name="bulletinsclasses" [(ngModel)]="enseignant.bulletinsclasses" id="check_bulletinsclasses" ngModel>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-12 " >
+      <label > Onglet </label>
+
+    </div>
+
+
+    <div id="input_infirmerie" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.infirmerie?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Infirmerie </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"  name="infirmerie" [(ngModel)]="enseignant.infirmerie"  id="check_infirmerie" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_dictionnaire" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.dictionnaire?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Dictionnaire </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"   name="dictionnaire" [(ngModel)]="enseignant.dictionnaire"  checked  id="check_dictionnaire" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_wiki" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.wiki?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Wiki </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"   name="wiki" [(ngModel)]="enseignant.wiki"  checked  id="check_wiki" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_drive" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.drive?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Mon drive </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"    name="drive" [(ngModel)]="enseignant.drive"  checked   id="check_drive" ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div id="input_office" class="col-xs-12 col-md-12 top_br Dr_padding_002 Dr_color_ligne" [ngClass]="enseignant.office?'Dr_Active_ligne':''">
+
+      <div class="col-xs-4 col-md-4"><label class="Dr_add_form">Mon office </label></div>
+      <div class="col-xs-8 col-md-8">
+
+        <label class="Dr_add_form" >
+          <input type="checkbox"   name="office" id="check_office" [(ngModel)]="enseignant.office"  checked ngModel>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+
+    <div class="col-xs-8 col-md-8">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='update'">Annuler</button>
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='create'" (click)="formulaire.reset()">Annuler</button>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <button type="submit" class="form-control Dr_btn_02" (click)="reinitialiser()" >Réintialiser par défaut</button>
+      </div>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar [disabled]="formulaire.invalid"  (click)="ajouterEnseignant(formulaire.value);formulaire.reset();"  >Enregistrer</button>
+    </div>
+  </div>
+
+
+</form>

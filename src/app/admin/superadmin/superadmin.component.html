@@ -1,0 +1,716 @@
+<div class="col-md-9 col-md-offset-3 AdTop">
+  <br>
+
+  <div class="row">
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="float: right;">
+      <p class="Dconnexion">Dernière Connexion : {{dateDeconx}} </p>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-md-4">
+      <button type="submit" class="btnAdd01 Ad_plus" data-toggle="modal" data-target="#AddSuperAd" (click)="myobject={idE:selectModel};password='';password2=''">
+         Ajouter un superAdmin</button>
+
+    </div>
+    <div class="col-md-6">
+      <div class="R_01">
+        <select class="select-ecole" [(ngModel)]="selectModel" (change)="viewListSuperAdmin(selectModel)">
+          <option [value]="null"> Sélectionner une école</option>
+          <option *ngFor=" let ecole of ecoles" [value]="ecole.id" [selected]="isSelected(ecole.id)"> {{ecole.nomE}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="" class="form-control" style="float:right;height: 38px;width: 250px;border: 1px solid #ccc!important;margin-top: 22px "
+             [(ngModel)]="term">
+      <img src="../../../assets/images/admin/fermer.png" alt="" class="img_fermer" (click)="Effacer_RechercheAdmin()">
+      <img src="../../../assets/images/admin/picto_recherche.png" alt="" class="img_recherche">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <label class="alert_V">{{successAdd}}</label>
+    </div>
+  </div>
+  <div *ngIf="loader" class="text-center loader-div" >
+    <img  src="../../../assets/images/admin/loader.gif">
+  </div>
+  <table class="table" [mfData]="data| dataFilter : term" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <tbody class="top_10">
+    <tr *ngFor="let super of mf.data">
+      <td class="col-md-1">
+        <div class="img_liste Ad_img" [style.background]="super.avatar!=''?('url(/'+ super.avatar+')'):('url(../../../assets/images/admin/superAd.png)')  ">
+        </div>
+      </td>
+      <td class="col-md-3 ">
+        <label style="margin-top: 10px" class="text_label text-center">{{super.nom}} {{super.prenom}}</label>
+      </td>
+
+
+      <div *ngIf="super.nombreEcole &gt; 1 ; then Blocktest else elseBlockytest"></div>
+      <ng-template #elseBlockytest>
+        <td class="col-md-3">
+          <label style="margin-top: 10px" class="text_label text-center">{{super.nombreEcole}} école</label>
+        </td>
+      </ng-template>
+      <ng-template #Blocktest>
+        <td class="col-md-3">
+          <label style="margin-top: 10px" class="text_label text-center">{{super.nombreEcole}} écoles</label>
+        </td>
+      </ng-template>
+
+
+      <td class="col-md-3 ">
+        <label style="margin-top: 10px" class="text_label text-center">{{super.login}}</label>
+      </td>
+      <td class="col-md-2">
+        <label style="margin-top: 10px" class="text_label text-center">{{super.tel1}}</label>
+      </td>
+      <td>
+        <div class="icon_L_ajouter">
+          <input type="submit" value="" class="btn_up" data-toggle="modal" data-target="#UpSuperAd" (click)="editSupAd(super.idCompteUser,super.id,super.nom,super.prenom,super.avatar,super.civilite,
+          super.fonction,super.estAdmin,super.tel1,super.tel2,super.adressePostale,super.complement_adresse,super.ville,super.codePostal,super.email,super.password);editEcole(super.idCompteUser)">
+          <input type="submit" value="" class="btn_sup" data-toggle="modal" data-target="#SuppSuperAd" (click)="modalSupp(super)">
+        </div>
+      </td>
+    </tr>
+
+    <tr *ngIf="data.length==0&&!loader">
+      <td colspan="6" class="text-center nothingToshow">
+        Aucune résultat à afficher
+      </td>
+    </tr>
+
+    </tbody>
+    <tfoot class="footer-table">
+    <tr *ngIf="data.length>5">
+      <td colspan="6">
+        <mfBootstrapPaginator></mfBootstrapPaginator>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+  <div *ngIf="data.length!=0&&!loader" class="col-md-12" style="margin-top: 50px">
+    <div class=" col-md-2"></div>
+    <div class=" col-md-4">
+      <input type="submit" name="" class="btn_bas Ad_right" value="Imprimer la liste (PDF)" (click)="generationPDF()">
+    </div>
+    <div class=" col-md-4">
+      <input type="submit" name="" class="btn_bas" value="Exporter EXCEL" (click)="exportationExcel()">
+    </div>
+    <div class=" col-md-2"></div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="AddSuperAd" role="dialog">
+  <div class="modal-dialog modal_T">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style=" border-bottom: 1px solid #4ab3cc !important; ">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+        <h4 class="modal-title titre_ajouter"> Ajouter une fiche SuperAdmin </h4>
+      </div>
+
+
+
+      <form accept-charset="UTF-8" #superAdForm="ngForm" name="form" class="form-horizontal  A_form" role="form" method="post">
+
+        <fieldset>
+
+          <div class="modal-body">
+
+
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Photo de profil ou avatar :</label>
+              </div>
+              <div class=" col-sm-4">
+                <div class="input_01" data-toggle="tooltip" title="<img src='tmp/{{pathAvatarSuper}}'width='200px' />" attr.data-original-title="<img src='tmp/{{pathAvatarSuper}}'width='200px' />">
+                  <input type="text" name="imageimageSigniaturee" [(ngModel)]="pathAvatarSuper" style="margin-top: 0px!important;" class=" image-preview-filename inputImg AdInT"
+                         disabled="disabled">
+                  <!-- don't give a name === doesn't send on POST/GET -->
+                  <span class=" spanUpImg">
+                    <div class="btnUploadImg btn-default image-preview-input">
+                      <img src="../../../assets/images/admin/picto_modifier.png" class="file_image" />
+                      <span class="image-preview-input-title"></span>
+                      <div *ngIf="estNonVidee(pathAvatarSuper); then firstEvent else secondEvent"></div>
+
+                      <ng-template #firstEvent>
+                        <img src="tmp/{{pathAvatarSuper}}" name="pathAvatarSuper" [(ngModel)]="pathAvatarSuper" class="file_imgBleu">
+                      </ng-template>
+                      <ng-template #secondEvent>
+                        <img src="../../../assets/images/admin/imgBlanc.png" class="file_imgBleu" disabled="file_imgBleu">
+                      </ng-template>
+
+                      <input style=" position: absolute!important;bottom:15px!important;width: 73%!important;opacity: 0!important;" type="file"
+                             name="input-file-preview" (change)="onAvatarSelected($event)" />
+                      <!-- rename it -->
+                    </div>
+                  </span>
+                </div>
+                <input type="hidden" name="avatar" [(ngModel)]="pathAvatarSuper" ngModel/>
+              </div>
+
+            </div>
+
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Civilité*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="civilite" ngModel required #civ="ngModel">
+              </div>
+              <show-errors [control]="civ"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Nom*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="nom" ngModel required #nomm="ngModel">
+              </div>
+              <show-errors [control]="nomm"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <!--       <input type="hidden" class="input_01"      [(ngModel)]="idEcole" ngModel  >-->
+
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Prénom*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="prenom" ngModel #prenomm="ngModel" required>
+              </div>
+              <show-errors [control]="prenomm"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Fonction*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="fonction" #name="ngModel" ngModel required #fn="ngModel">
+              </div>
+              <show-errors [control]="fn"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Administrateur</label>
+              </div>
+              <div class=" col-sm-4">
+                <div class="toggle">
+                  <input type="checkbox" id="alibaba" name="estAdmin" #name="ngModel" ngModel value="1">
+                  <label for="alibaba"></label>
+                </div>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div class="col-md-12 top_br">
+              <div class="col-lg-12">
+                <div class=" col-sm-4">
+                  <label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Informations </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Tel 1</label>
+              </div>
+              <div class=" col-sm-4">
+                <input  type="tel" class="input_01" name="tel1" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Tel 2</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="tel" class="input_01" name="tel2" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Adresse postale</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="adressePostale" ngModel>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Complément d'adresse</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="complement_d_adresse" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Ville</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="ville" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+
+              <div class=" col-sm-4">
+                <label class="text_form">Code postale</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="number" class="input_01" name="code_postale" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Email*</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="email" class="input_01" name="email" ngModel required #mail="ngModel">
+
+              </div>
+              <show-errors [control]="mail"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Mot de passe</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="password" class="input_01" name="password" [(ngModel)]="password" ngModel>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Confirmation mot de passe</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="password" class="input_01" name="password2" [(ngModel)]="password2" ngModel>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div *ngIf="password!=password2">
+              <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                <div class=" col-sm-4"></div>
+                <div class=" col-sm-4">
+                  <span class="alert alert-danger">Confirmation mot de passe incorrect</span>
+                </div>
+                <div class=" col-sm-4"></div>
+              </div>
+            </div>
+
+            <div class="col-md-12 top_br" style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4 ">
+                <label class="text_form"> Liste des écoles rattachées </label>
+              </div>
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div class="col-md-12 top_br" style="margin-left: 20px;margin-top: -10px;">
+              <form>
+                <div>
+                  <div class="row" style="margin-top: 10px;margin-left: -8px;" *ngFor="let itemrow of list; let i=index">
+                    <div class=" col-sm-4"></div>
+                    <div class=" col-sm-4 ">
+                      <input type="text" class="input_01 " name="item{{i}}" [(ngModel)]="list[i].nomE">
+                    </div>
+                    <div class=" col-sm-4 ">
+                      <input type="submit" name="" value="" class="btn_supp" (click)="deleteRow(i)">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+            <div class="row" style="margin-left: 20px;margin-top: 5px">
+              <div class=" col-sm-4"></div>
+              <div class="ol-xs-6 col-sm-4">
+                <select class="input_01 style_select" name="nomE" [(ngModel)]="myselectecole">
+                  <option *ngFor=" let ecole of ecoles" [ngValue]="ecole"> {{ecole.nomE}}</option>
+                </select>
+                <ul style="padding-left: 20px;" *ngIf="list.length==0&&!valid">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+              <div class=" col-sm-4 ">
+                <input type="submit" name="" value="OK" class="btn_ok" (click)="addNewRow()">
+                <ul style="padding-left: 20px;margin-top: -25px;" *ngIf="error">
+                    <li style="color: #b7402c;">Cette ecole est déjà selectionné</li>
+                  </ul>
+              </div>
+            </div>
+
+
+            <pre style="display:none">{{list | json}}</pre>
+            <input type="hidden" class="input_01" name="affichEcoles" [(ngModel)]="list" ngModel>
+          </div>
+
+
+          <div class="row " style="margin-left: 20px;margin-top: 20px">
+            <div class=" col-sm-4">
+              <label class="text_form">
+                <input type="submit" value="Annuler" data-dismiss="modal" class="btn_en_fiche" style="width: 200px">
+              </label>
+            </div>
+            <div class=" col-sm-3"></div>
+            <div class=" col-sm-4">
+              <label class="text_form">
+                <img *ngIf="loadersave" style="width: 30px" src="../../../assets/images/admin/loader.gif">
+                <input  value="Enregistrer la fiche superadmin" style="width: 300px" class="btn_en_fiche"
+                        (click)="ajouterSuperAdmin(superAdForm.value)" [disabled]="!superAdForm.valid||password!=password2">
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="UpSuperAd" role="dialog">
+  <div class="modal-dialog modal_T">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="">
+      <div class="modal-header" style=" border-bottom: 1px solid #4ab3cc !important; ">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+        <h4 class="modal-title titre_ajouter"> Modifier une fiche SuperAdmin </h4>
+      </div>
+
+
+
+      <form accept-charset="UTF-8" #superUpForm="ngForm" name="form" class="form-horizontal  A_form" role="form" method="post">
+
+        <fieldset>
+          <div class="modal-body">
+
+            <div class="row row_01" style="margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form" style="margin-left: 85px !important;">Photo de profil ou avatar : </label>
+              </div>
+              <div class=" col-sm-4" style="padding-left: 44px;">
+                <div class="input_01" data-toggle="tooltipu" title="<img src='{{tmp}}/{{pathupAvatarSuper}}'width='200px' />" attr.data-original-title="<img src='{{tmp}}/{{pathupAvatarSuper}}'width='200px' />">
+                  <input type="text" name="imageimageSigniaturee" [(ngModel)]="pathupAvatarSuper" style="margin-top: 0px!important;" class="image-preview-filename inputImg"
+                         disabled="disabled">
+                  <!-- don't give a name === doesn't send on POST/GET -->
+                  <span class="spanUpImg">
+                    <div class="btnUploadImg btn-default image-preview-input">
+                      <img src="../../../assets/images/admin/picto_modifier.png" class="file_image" />
+                      <span class="image-preview-input-title"></span>
+
+                      <div *ngIf="estNonVidee(pathupAvatarSuper); then upFEvent else ipSEvent"></div>
+                      <ng-template #upFEvent>
+                        <img src="{{tmp}}/{{pathupAvatarSuper}}" [(ngModel)]="pathupAvatarSuper" name="pathupAvatarSuper" class="file_imgBleu">
+                      </ng-template>
+                      <ng-template #ipSEvent>
+                        <img src="../../../assets/images/admin/imgBlanc.png" class="file_imgBleu" disabled="file_imgBleu">
+                      </ng-template>
+
+                      <input style=" position: absolute!important;bottom:15px!important;width: 73%!important;opacity: 0!important;" type="file"
+                             name="input-file-preview" (change)="updateAvatar($event)" />
+                      <!-- rename it -->
+                    </div>
+                  </span>
+                </div>
+                <input type="hidden" name="avatar" [(ngModel)]="pathupAvatarSuper" ngModel/>
+              </div>
+            </div>
+
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Civilité*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="civilite" ngModel [(ngModel)]="civilite" required #civ2="ngModel">
+              </div>
+              <show-errors [control]="civ2"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Nom*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="nom" [(ngModel)]="nom" ngModel required #nomm2="ngModel">
+              </div>
+              <show-errors [control]="nomm2"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <!--       <input type="hidden" class="input_01"      [(ngModel)]="idEcole" ngModel  >-->
+
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Prénom*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" name="prenom" [(ngModel)]="prenom" ngModel #prenomm2="ngModel" required>
+              </div>
+              <show-errors [control]="prenomm2"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Fonction*:</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" [(ngModel)]="fonction" name="fonction" #name="ngModel" ngModel required #fn2="ngModel">
+              </div>
+              <show-errors [control]="fn2"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row" style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Administrateur</label>
+              </div>
+              <div class=" col-sm-4">
+                <div class="toggle">
+                  <input type="checkbox" id="alibaba2" [(ngModel)]="estAdmin" name="estAdmin" #name="ngModel" ngModel value="1">
+                  <label for="alibaba2"></label>
+                </div>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class=" col-sm-4">
+                  <label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Informations </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Tel 1</label>
+              </div>
+              <div class=" col-sm-4">
+                <input  type="tel" class="input_01" [(ngModel)]="tel1" name="tel1" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Tel 2</label>
+              </div>
+              <div class=" col-sm-4">
+                <input  type="tel" class="input_01" [(ngModel)]="tel2" name="tel2" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Adresse postale</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" [(ngModel)]="adressePostale" name="adressePostale" ngModel>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Complément d'adresse</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" [(ngModel)]="complement_adresse" name="complement_d_adresse" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Ville</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="text" class="input_01" [(ngModel)]="ville" name="ville" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+              <div class=" col-sm-4">
+                <label class="text_form">Code postale</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="number" class="input_01" [(ngModel)]="codePostal" name="code_postale" #name="ngModel" ngModel>
+              </div>
+              <show-errors [control]=""></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <input type="hidden" class="input_01" [(ngModel)]="idCompteUser" name="idCU" ngModel>
+            <input type="hidden" class="input_01" [(ngModel)]="id" name="id" ngModel>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Email*</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="email" class="input_01" name="email" [(ngModel)]="email" ngModel required #mail="ngModel">
+
+              </div>
+              <show-errors [control]="mail"></show-errors>
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Mot de passe</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="password" class="input_01" name="password" [(ngModel)]="password" ngModel>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+            <div class="row " style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4">
+                <label class="text_form">Confirmation mot de passe</label>
+              </div>
+              <div class=" col-sm-4">
+                <input type="password" class="input_01" name="password2" [(ngModel)]="password2" ngModel>
+              </div>
+
+              <div class=" col-sm-4"></div>
+            </div>
+            <div *ngIf="password!=password2">
+              <div class="row " style="margin-left: 20px;margin-top: 20px">
+                <div class=" col-sm-4"></div>
+                <div class=" col-sm-4">
+                  <span class="alert alert-danger">Confirmation mot de passe incorrect</span>
+                </div>
+                <div class=" col-sm-4"></div>
+              </div>
+            </div>
+
+
+            <div class="row" style="margin-left: 20px;margin-top: 20px">
+              <div class=" col-sm-4 ">
+                <label class="text_form"> Liste des écoles rattachées </label>
+              </div>
+              <div class=" col-sm-4"></div>
+            </div>
+
+
+            <div class="row" style="margin-left: 20px;margin-top: -10px;">
+              <form>
+                <div>
+                  <div class="row" style="margin-top: 10px;margin-left: -8px;" *ngFor="let itemrow of dataEco; let i=index">
+                    <div class=" col-sm-4"></div>
+                    <div class=" col-sm-4 ">
+                      <input type="text" class="input_01 " name="item{{i}}" [(ngModel)]="itemrow.nomE">
+                    </div>
+                    <div class=" col-sm-4 ">
+                      <input type="submit" name="" value="" class="btn_supp" (click)="upDeleteRow(i)">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row" style="margin-top: 10px;margin-left: -8px;" *ngFor="let itemrowUp of  listUp; let j=index">
+                    <div class=" col-sm-4"></div>
+                    <div class=" col-sm-4 ">
+                      <input type="text" class="input_01 " name="itemUp{{j}}" [(ngModel)]="itemrowUp.nomE">
+                    </div>
+                    <div class=" col-sm-4 ">
+                      <input type="submit" name="" value="" class="btn_supp" (click)="upDeleteRow2(j)">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="row" style="margin-left: 20px;margin-top: 5px">
+              <div class=" col-sm-4"></div>
+              <div class="ol-xs-6 col-sm-4">
+                <select class="input_01 style_select" name="nomE" [(ngModel)]="Upmyselectecole">
+                  <option *ngFor=" let ecole of ecoles" [ngValue]="ecole"> {{ecole.nomE}}</option>
+                </select>
+                <ul style="padding-left: 20px;" *ngIf="!valid">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+              <div class=" col-sm-4 ">
+                <input type="submit" name="" value="OK" class="btn_ok" (click)="upAddNewRow()">
+                <ul style="padding-left: 20px;margin-top: -25px;" *ngIf="error">
+                    <li style="color: #b7402c;">Cette ecole est déjà selectionné</li>
+                  </ul>
+              </div>
+            </div>
+
+            <pre style="display:none">{{listUp | json}}</pre>
+            <pre style="display:none">{{dataEco | json}}</pre>
+            <input type="hidden" class="input_01" name="listeUpEcoles" [(ngModel)]="listUp" ngModel>
+            <input type="hidden" class="input_01" name="listeUpEcoles2" [(ngModel)]="dataEco" ngModel>
+          </div>
+
+
+          <div class="row " style="margin-left: 20px;margin-top: 20px">
+            <div class=" col-sm-4">
+              <label class="text_form">
+                <input type="submit" value="Annuler" class="btn_en_fiche" style="width: 200px" data-dismiss="modal">
+              </label>
+            </div>
+            <div class=" col-sm-3"></div>
+            <div class=" col-sm-4">
+              <label class="text_form">
+                <img *ngIf="loadersave" style="width: 30px" src="../../../assets/images/admin/loader.gif">
+                <input  value="Enregistrer les modification" style="width: 300px" class="btn_en_fiche"
+                        (click)="ModifierSuperAdmin(superUpForm.value)" [disabled]="!superUpForm.valid||password!=password2">
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+<!-------------------------------------------------------------------------Modal Suppression--------------------------------------------------------------------------------------->
+
+<div id="SuppSuperAd" class="modal fade" role="dialog">
+  <div class="modal-dialog modal_Notif">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <label class="notif_01"> êtes-vous sûr(e) de vouloir supprimer «{{tmpSuperAd.nom}} {{tmpSuperAd.prenom}}» ? </label>
+        <label class="groupeNotif_btn">
+          <input type="submit"  class="btn_N_02" value="Oui" (click)="DeleteSueradmin(tmpSuperAd.id)" data-dismiss="modal">
+          <input type="submit"  class="btn_N_01" value="Non" data-dismiss="modal">
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------------------------------------End Code-------------------------------------------------------------------------------------------->

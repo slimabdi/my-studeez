@@ -1,0 +1,33 @@
+.myadminclassselect {
+ width: 90%;
+  border: 1px solid;
+  position: absolute;
+  background: #fff;
+  z-index: 4;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 11px;
+}
+.myadminclassselect .titleniveau {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.myadminclassselect .titleniveau:hover {
+  color: #ffe3b6  ;
+  cursor: pointer;
+}
+.myadminclassselect .titlesection {
+  padding-left: 37px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.myadminclassselect .sectionselect:hover {
+  background: #ecebeb;
+}
+.myadminclassselect .numberNiv {
+  padding-right: 16px;
+}
+.myadminclassselect .flecheniv {
+  float: right;
+  color: #fdb602 ;
+}

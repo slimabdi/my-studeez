@@ -1,0 +1,22 @@
+
+
+<div class="container-fluid Dr_top_100">
+  <div class="row">
+
+    <div class="col-md-10" >
+
+      <div class="col-md-8 col-lg-offset-5 top_br" >
+
+        <div class="btn-group">
+          <button class="btn  Dr_btnNav left_radius "  [ngClass]="isactive('general-info') ? 'active_tab':''" routerLink="general-info"   >Informations générales</button>
+          <button class="btn Dr_btnNav" [ngClass]="isactive('presentation') ? 'active_tab':''"  routerLink="presentation"  role="button">Présentation plateforme</button>
+          <button class="btn Dr_btnNav" [ngClass]="isactive('periodes') ? 'active_tab':''" routerLink="periodes" role="button">Périodes scolaires</button>
+          <button class="btn  Dr_btnNav right_radius" [ngClass]="isactive('server-info') ? 'active_tab':''"  routerLink="server-info" role="button">Données serveur</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet ></router-outlet>

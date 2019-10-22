@@ -1,0 +1,351 @@
+<!--<aaaaaa></aaaaaa>-->
+<div class="col-md-12 Dr_content_Bcol01">
+  <div class="Dr_titre_sideEmp text-center">
+    Ajouter un cours
+    <ul class="Dr_item_L">
+      <li style="display:flow-root;">
+        <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+      </li>
+      <li style="display:flow-root;padding-top: 18px;" (click)="initFiche()" *ngIf="voir">
+        <button type="submit" class="icon_modif right"  ></button>
+      </li>
+      <li style="display:flow-root;padding-top: 10px;">
+        <button type="submit" class="icon_supp right"></button>
+      </li>
+    </ul>
+
+  </div>
+  <div class="col-xs-10 col-md-6 top_br">
+      <label class="Dr_lb_col01">Informations</label>
+ 
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Classe*</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.Class?.nomC}}</span>
+      <select *ngIf="!voir" [(ngModel)]="course.Class.id" name="class" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Sélectionner</option>
+        <option *ngFor="let class of classes"  value="{{class.id}}"> {{class.nomC}} </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Matière*</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.Matiere?.nomMatiere}}</span>
+      <select *ngIf="!voir" [(ngModel)]="course.Matiere.id" (change)="getEns(course.Matiere.id);getCo_Ens(course.Matiere.id)" name="mat" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Sélectionner</option>
+        <option  *ngFor="let mat of matiere" value="{{mat.id}}"> {{mat.nomMatiere}} </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Enseignant*</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.enseig?.nom}} {{course.enseig?.prenom}}</span>
+      <select *ngIf="!voir" [(ngModel)]="course.enseig.id" name="ens" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Sélectionner</option>
+        <option *ngFor="let e of ens" value="{{e.id}}"> {{e.nom}} {{e.prenom}}  </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br ">
+    <div class="col-xs-2 col-md-2 Dr_pd_left Dr_paddinR01">
+      <label class="Dr_add_form">Co-enseignant</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.co_enseig?.nom}} {{course.co_enseig?.prenom}}</span>
+      <select *ngIf="!voir" [(ngModel)]="course.co_enseig.id" name="coens" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Sélectionner</option>
+        <option *ngFor="let e of co_ens" value="{{e.id}}"> {{e.nom}} {{e.prenom}}  </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Type*</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.typeCreation}}</span>
+      <select *ngIf="!voir" [(ngModel)]="course.typeCreation" name="type" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Sélectionner</option>
+        <option value="cours">Cours </option>
+        <option value="td">td</option>
+        <option value="tp">tp</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Date</label>
+    </div>
+    <div class="col-xs-10 col-md-10" *ngIf="voir">
+      <span *ngIf="voir">{{course.du| amLocale:'fr' | amDateFormat:'DD/MM/YYYY'}} de {{course.Hdebut}} à {{course.Hfin}}</span>
+    </div>
+    <div class="col-xs-10 col-md-10" *ngIf="!voir">
+      <div class="col-xs-8 col-md-6 Dr_pd_left ">
+        <input class="form-control Dr_input Dr_input_size"  bsDatepicker placement="top" bsDatepicker [bsValue]="course.du" name="dstart" type="text">
+      </div>
+      <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+        de
+      </div>
+      <div class="col-xs-2 col-md-2 Dr_pd_left Dr_paddinR01">
+        <input class="form-control Dr_input Dr_input_size" [(ngModel)]="course.Hdebut" name="hstart" type="time">
+      </div>
+      <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01 text-center">
+        à
+      </div>
+      <div class="col-xs-2 col-md-2 Dr_pd_left Dr_paddinR01">
+        <input class="form-control Dr_input Dr_input_size" type="time" [(ngModel)]="course.Hfin" name="hend" type="time">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Fréquence</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <div class="col-xs-2 col-md-2 Dr_pd_left Dr_paddinR01">
+        Tous les
+      </div>
+      <div class="col-xs-10 col-md-10 Dr_paddinR01">
+        <span *ngIf="voir">{{course.frequence}}</span>
+        <select *ngIf="!voir" [(ngModel)]="course.frequence" name="frequence" class="form-control Dr_input Dr_select Dr_input_size">
+          <option value="">Sélectionner</option>
+          <option value="Lundi">Lundi</option>
+          <option value="Mardi">Mardi</option>
+          <option value="Marcredi">Mercredi</option>
+          <option value="Jeudi">Jeudi</option>
+          <option value="Vendredi">Vendredi</option>
+          <option value="Samedi">Samedi</option>
+          <option value="Dimanche">Dimanche</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Groupe</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.Groupe?.nomGpe}}</span>
+      <select *ngIf="!voir"  [(ngModel)]="course.Groupe.nomGpe" name="nomGpe" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Facultatif</option>
+        <option value=""></option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-2 col-md-2">
+      <label class="Dr_add_form">Salle</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <span *ngIf="voir">{{course.Salle?.nomSalle}}</span>
+      <select *ngIf="!voir" [(ngModel)]="course.Salle.nomSalle" name="nomSalle" class="form-control Dr_input Dr_select Dr_input_size">
+        <option value="">Sélectionner</option>
+        <option value=""></option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br" *ngIf="!voir">
+    <div class="col-xs-2 col-md-2 Dr_pd_left Dr_paddinR01">
+      <label class="Dr_add_form">Choix couleur</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+      <div class="col-xs-6 col-md-8 Dr_pd_left Dr_paddinR01">
+        <label class="Dr_container"  *ngFor="let col of colors"   >
+          <input type="radio" [(ngModel)]="course.codeCouleur" value="{{col}}" name="radio">
+          <span class="Dr_radio Dr_C1" [style.background]="col"  ></span>
+        </label>
+      </div>
+      <div class="col-xs-6 col-md-4"    (colorPickerClose)="changecol()"  (colorPickerOpen)="newcolor=course.codeCouleur"  [(colorPicker)]="newcolor"  [cpPosition]="'left'">
+        + de couleurs...
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<div class="col-md-12 Dr_content_Bcol02">
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2">
+      <label class="Dr_lb_col02">Cours</label>
+    </div>
+    <div class="col-xs-8 col-md-10">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2 Dr_pd_left Dr_paddinR01">
+      <label class="Dr_add_form">Titre du cours:</label>
+    </div>
+    <div class="col-xs-10 col-md-10 " *ngIf="voir">
+      <span class="Dr_text_Imprim"> Lorem ipsum </span>
+      <button type="submit" class="icon_Dr_play DrLF0"></button>
+    </div>
+    <div class="col-xs-10 col-md-10 " *ngIf="!voir">
+      <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file">
+        <img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt="">
+      </span>
+      <input type="file" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2 Dr_pd_left Dr_paddinR01">
+      <label class="Dr_add_form">Fichier pédagogique::</label>
+    </div>
+    <div class="col-xs-10 col-md-10 " *ngIf="voir" dropdown>
+      <span class="Dr_text_Imprim"> Lorem ipsum </span>
+      <button type="submit" class="icon_Dr_down DrLF0"></button>
+      <button type="submit" dropdownToggle aria-controls="dropdown-basic" class="Dr_BTNli">Télécharger dans...</button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu DrLLI" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem" class=" Dr_item_add">Bureau</li>
+        <li role="menuitem" class=" Dr_item_add">Mon drive</li>
+
+      </ul>
+
+    </div>
+    <div class="col-xs-10 col-md-10 " *ngIf="!voir">
+      <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file">
+        <img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt="">
+      </span>
+      <input type="file" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg">
+    </div>
+  </div>
+
+
+</div>
+
+
+<div class="col-md-12 Dr_content_Bcol03">
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_lb_col03">Travail à faire</label>
+    </div>
+    <div class="col-xs-10 col-md-10">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2 Dr_pd_left Dr_paddinR01">
+      <label class="Dr_add_form">Titre du travail:</label>
+    </div>
+    <div class="col-xs-10 col-md-10 ">
+      <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file">
+        <img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt="">
+      </span>
+      <input type="file" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2 Dr_pd_left">
+      <label class="Dr_add_form">Fichier pédagogique:</label>
+    </div>
+    <div class="col-xs-10 col-md-10 ">
+      <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file">
+        <img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt="">
+      </span>
+      <input type="file" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg">
+    </div>
+  </div>
+
+</div>
+
+
+<div class="col-md-12 Dr_content_Bcol04">
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">
+      <label class="Dr_lb_col04">Contrôle à venir</label>
+    </div>
+    <div class="col-xs-8 col-md-10">
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2 Dr_pd_left Dr_paddinR01">
+      <label class="Dr_add_form">Titre du contrôle</label>
+    </div>
+    <div class="col-xs-8 col-md-10">
+      <input type="text" class="form-control Dr_input Dr_input_size">
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-2">
+      <label class="Dr_add_form">Date</label>
+    </div>
+    <div class="col-xs-8 col-md-10">
+      <div class="col-xs-8 col-md-6 Dr_pd_left ">
+        <input class="form-control Dr_input Dr_input_size" type="date">
+      </div>
+      <div class="col-xs-8 col-md-1 Dr_pd_left Dr_paddinR01">
+        de
+      </div>
+      <div class="col-xs-8 col-md-2 Dr_pd_left Dr_paddinR01">
+        <input class="form-control Dr_input Dr_input_size" type="time">
+      </div>
+      <div class="col-xs-8 col-md-1 Dr_pd_left Dr_paddinR01 text-center">
+        à
+      </div>
+      <div class="col-xs-8 col-md-2 Dr_pd_left Dr_paddinR01">
+        <input class="form-control Dr_input Dr_input_size" type="time">
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4" *ngIf="!voir"></div>
+    <div class="col-xs-4 col-md-4" *ngIf="!voir">
+      <button type="submit" class="form-control Dr_btn_02" (click)="voir=!voir"  >Annuler</button>
+    </div>
+    <div class="col-xs-4 col-md-8" *ngIf="voir&&!annulation">
+      <span *ngIf="msg"> Voulez-vous vraiment annulerr ce cours ?        
+        <label class="DrON">
+          <span class="DrC1N" (click)="msg=!msg"  >Non</span>
+          <span class="DrC1O" (click)="cancelCourse()" >Oui</span>
+        </label>
+      </span>
+      
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn" *ngIf="!voir">Enregistrer</button>
+      <button type="submit" class="form-control DrBtnRed" *ngIf="voir&&!annulation" (click)="msg=true"> 
+          Annuler le cours
+        </button>
+        <span *ngIf="annulation" >
+            <img style="width:25px;float:left"   src="../../../../assets/images/admin/loader.gif">
+            Annulation en cours ..        
+        </span>
+    </div>
+  </div>
+
+</div>

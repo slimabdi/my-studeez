@@ -1,0 +1,140 @@
+<div class="col-md-12 Dr_titre_sideMD">
+
+  <span *ngIf="mode=='create'" >Ajouter un regroupement  </span>
+  <span *ngIf="mode=='update'" >Modifier un regroupement  </span>
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+<div class=" col-xs-12 col-md-12 top_br ">
+  <div class="col-xs-4 col-md-4">Icône</div>
+  <div class="col-xs-8 col-md-8">
+    <div class="Dr_icon_MD" [style.background-image]="(regroupement.avatar&&regroupement.avatar!='')?('url('+ regroupement.avatar+')'):('url(../../assets/images/directeur/avatar.png)')  ">
+      <input autocomplete="off" class="file_input_Dr" type="file" name="input-file-preview" (change)="onAvatarSelected($event)"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Nom du regroupement*</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text" [(ngModel)]="regroupement.nomReg" name="nomReg" class="form-control Dr_input">
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Abrégé*</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text" [(ngModel)]="regroupement.abregeReg" name="abregeReg" class="form-control Dr_input">
+  </div>
+</div>
+
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-6 col-md-6 Dr_bold">Classes / groupes</div>
+  <div class="col-xs-6 col-md-6 Dr_bold">Matières</div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-6 col-md-6 top_br">
+    <div *ngFor="let item of classesListe;let i= index"   [style.display]="item.Etat=='deleted'?'none':'block'">
+      <div class="col-xs-11 col-md-11 Dr_pd_left ">
+        <select class="form-control Dr_input "  [disabled]="true" [(ngModel)]="item.id" name="Gc{{i}}" >
+          <option value="{{null}}">****</option>
+          <option *ngFor="let c of classes" value="{{c.idC}}"> {{c.nomGpe}}  {{c.nomC}} </option>
+        </select>
+      </div>
+      <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+        <button type="submit" (click)='deleteClass(item)' class="icon_supp right"></button>
+      </div>
+    </div>
+    <div  *ngIf="showadd">
+      <div class="col-xs-11 col-md-11 Dr_pd_left"  >
+        <select class="form-control Dr_input"  [(ngModel)]="classeId" name="Gc" >
+          <option  value="{{null}}">****</option>
+          <option *ngFor="let c of classes" value="{{c.idC}}"> {{c.nomGpe}}  {{c.nomC}} </option>
+        </select>
+      </div>
+      <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+        <button type="submit" class="Dr_icon_ok" (click)="addClass_Groupe()" >OK</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6 col-md-6 top_br" (clickOutside)="listMatCancled()">
+    <div class="col-xs-11 col-md-11 Dr_pd_left ">
+      <input autocomplete="off" name="labelselect" class="form-control Dr_input Dr_select" [readonly]="true" [(ngModel)]="tabMatInput[0]"
+        type="text" (click)="nivSelect=!nivSelect">
+      <div class="myadminclassselect" *ngIf="nivSelect">
+
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class="col-xs-4 col-md-4">Matières</div>
+          <div class="col-xs-8 col-md-8">
+            <select class="form-control Dr_input " [(ngModel)]="regroupementObj.idMatiere" name="idmat" (change)="matChanged(regroupementObj.idMatiere)">
+              <option value="{{null}}"></option>
+              <option *ngFor="let mat of matieres" value="{{mat.id}}"> {{mat.nomMatiere}} </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class="col-xs-4 col-md-4">Enseignant</div>
+          <div class="col-xs-8 col-md-8">
+            <select class="form-control Dr_input " [(ngModel)]="regroupementObj.idEnseig"
+              name="ens">
+              <option value="{{null}}"></option>
+              <option *ngFor="let en of ens" value="{{en.id}}"> {{en.nom}} {{en.prenom}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class="col-xs-4 col-md-4">Co-enseignant</div>
+          <div class="col-xs-8 col-md-8">
+            <select class="form-control Dr_input" [(ngModel)]="regroupementObj.coEnseig"
+              name="coens">
+              <option value="{{null}}"></option>
+              <option *ngFor="let en of co_ens" value="{{en.id}}"> {{en.nom}} {{en.prenom}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class="col-xs-4 col-md-4">Coef</div>
+          <div class="col-xs-8 col-md-8">
+            <input type="number" [(ngModel)]="regroupementObj.coefMat"  name="coefMat" class="form-control Dr_input">
+
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class="col-xs-2 col-md-2"></div>
+          <div class="col-xs-5 col-md-5">
+            <button type="submit" class="form-control Dr_btn_02" (click)="listMatCancled()">Annuler</button>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <button type="submit" type="submit" (click)="saveMatList()" class="Dr_icon_ok">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-1 col-md-1 Dr_pd_left Dr_paddinR01">
+      <button type="submit" (click)="deleteMat()" class="icon_supp right"></button>
+    </div>
+
+
+  </div>
+
+</div>
+
+<div class="col-xs-12 col-md-12 ">
+  <div class="col-xs-8 col-md-8 Dr_text_Imprim"  *ngIf="!showadd" (click)="show()" >+ Ajouter une classe / groupe</div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control Dr_btn_02">Annuler</button>
+  </div>
+  <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn" *ngIf="!saving" (click)="save()">Enregistrer</button>
+      <button class="form-control btn_loader" *ngIf="saving">
+        <img [style.width]="'27px'" src="../../assets/images/directeur/spinner.gif"> Enregistrer
+      </button>
+  </div>
+</div>

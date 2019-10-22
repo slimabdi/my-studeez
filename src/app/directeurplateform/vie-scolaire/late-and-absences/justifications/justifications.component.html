@@ -1,0 +1,333 @@
+
+
+<div class="Dr_sidemodal">
+
+
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+      <app-sibebarjustification ></app-sibebarjustification>
+
+    </ng-sidebar>
+
+
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+      <div class="container-fluid Dr_top_100">
+        <div class="row">
+
+          <div class="col-md-10">
+            <div class="col-md-8 col-md-offset-3 col-lg-offset-3 top_br text-center">
+
+              <div class="btn-group">
+                <button class="btn  Dr_btnNav left_radius Dr_pdBT">Appel en salle </button>
+                <button class="btn Dr_btnNav Dr_pdBT">Justificatifs</button>
+                <button class="btn  Dr_btnNav right_radius Dr_pdBT02" >Bilan des absences</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 top_br">
+            <div class="form-group has-feedback">
+
+              <input type="text" class="form-control" id="inputSuccess2" placeholder="Rechercher par nom " name="" >
+
+              <span class="glyphicon glyphicon-search form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container" >
+        <div class="row top_br">
+          <div class="col-md-4">
+            <span class="titre_table Dr_cr" > Justificatifs >   </span>
+
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-4">
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-2" style="height: 34px">
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-1"> Date</div>
+          <div class="col-md-2" >Heure de début / fin </div>
+          <div class="col-md-1"> </div>
+          <div class="col-md-2 Dr_w3"> Nom</div>
+          <div class="col-md-1"> Classe</div>
+          <div class="col-md-1"> Matière</div>
+          <div class="col-md-1"> Type d’absence</div>
+          <div class="col-md-1"> Enseignant</div>
+          <div class="col-md-2 text-center"> Statut</div>
+          <div class="col-md-1"> </div>
+
+        </div>
+
+        <div class="col-md-12 top_br Dr_C_ligne">
+          <div class="col-md-1 Dr_pd_left"><label  class="text_label Dr_label " > 12/05/2018</label></div>
+          <div class="col-md-2 Dr_w3">
+            <label  class="text_label Dr_label " >
+              9:00
+            </label>
+            <label  class="text_label Dr_label right" >
+              9:55
+            </label>
+          </div>
+
+          <div class="col-md-1">
+            <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+          </div>
+
+          <div class="col-md-2 ">
+            <label  class="text_label Dr_label ">
+              Nom de l’élève
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Classe
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Matière
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label Dr_CAB">
+              Absent
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Enseignant
+            </label>
+          </div>
+          <div class="col-md-2 Dr_pd_left">
+            <label  class="text_label Dr_label" >
+              <span  class="Dr_sp" (click)="_toggleSidebar()">Saisir un Justificatif</span>
+              <button  class="icon_Dr_poly" type="submit"></button>
+
+            </label>
+          </div>
+          <div class=" Dr_pd_left">
+            <label class="text_label Dr_label">
+              <button type="submit" class="icon_supp  " ></button>
+            </label>
+          </div>
+
+
+
+
+
+        </div>
+
+
+
+        <div class="col-md-12 top_br Dr_C_ligne">
+          <div class="col-md-1 Dr_pd_left"><label  class="text_label Dr_label " > 12/05/2018</label></div>
+          <div class="col-md-2 Dr_w3">
+            <label  class="text_label Dr_label " >
+              9:00
+            </label>
+            <label  class="text_label Dr_label right" >
+              9:55
+            </label>
+          </div>
+
+          <div class="col-md-1">
+            <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+          </div>
+
+          <div class="col-md-2 ">
+            <label  class="text_label Dr_label ">
+              Nom de l’élève
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Classe
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Matière
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label Dr_CA">
+              Présent
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Enseignant
+            </label>
+          </div>
+          <div class="col-md-2 Dr_pd_left">
+            <label  class="text_label Dr_label">
+              <span  class="Dr_VR">Justifié</span>
+              <button  class="icon_Dr_Valide" type="submit"></button>
+              <button type="submit" class="icon_modif right Dr_Lf1" ></button>
+
+            </label>
+          </div>
+          <div class=" Dr_pd_left">
+            <label class="text_label Dr_label">
+              <button type="submit" class="icon_supp  " ></button>
+            </label>
+          </div>
+
+
+
+
+
+        </div>
+
+
+
+        <div class="col-md-12 top_br Dr_C_ligne">
+          <div class="col-md-1 Dr_pd_left"><label  class="text_label Dr_label " > 12/05/2018</label></div>
+          <div class="col-md-2 Dr_w3">
+            <label  class="text_label Dr_label " >
+              9:00
+            </label>
+            <label  class="text_label Dr_label right" >
+              9:55
+            </label>
+          </div>
+
+          <div class="col-md-1">
+            <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+          </div>
+
+          <div class="col-md-2 ">
+            <label  class="text_label Dr_label ">
+              Nom de l’élève
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Classe
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Matière
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label Dr_EX">
+              Exclu
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Enseignant
+            </label>
+          </div>
+          <div class="col-md-2 Dr_pd_left">
+            <label  class="text_label Dr_label">
+              <span  class="Dr_VR">Justifié</span>
+              <button  class="icon_Dr_Valide" type="submit"></button>
+              <button type="submit" class="icon_modif right Dr_Lf1" ></button>
+
+            </label>
+          </div>
+          <div class=" Dr_pd_left">
+            <label class="text_label Dr_label">
+              <button type="submit" class="icon_supp  " ></button>
+            </label>
+          </div>
+
+
+
+
+
+        </div>
+
+
+
+
+        <div class="col-md-12 top_br Dr_C_ligne">
+          <div class="col-md-1 Dr_pd_left"><label  class="text_label Dr_label " > 12/05/2018</label></div>
+          <div class="col-md-2 Dr_w3">
+            <label  class="text_label Dr_label " >
+              9:00
+            </label>
+            <label  class="text_label Dr_label right" >
+              9:55
+            </label>
+          </div>
+
+          <div class="col-md-1">
+            <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+          </div>
+
+          <div class="col-md-2 ">
+            <label  class="text_label Dr_label ">
+              Nom de l’élève
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Classe
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Matière
+            </label>
+          </div>
+          <div class="col-md-1 ">
+            <label  class="text_label Dr_label Dr_CRE">
+              En retard
+            </label>
+          </div>
+          <div class="col-md-1">
+            <label  class="text_label Dr_label ">
+              Enseignant
+            </label>
+          </div>
+          <div class="col-md-2 Dr_pd_left">
+            <label  class="text_label Dr_label" >
+              <span  class="Dr_sp" (click)="_toggleSidebar()">Saisir un Justificatif</span>
+              <button  class="icon_Dr_poly" type="submit"></button>
+
+            </label>
+          </div>
+          <div class=" Dr_pd_left">
+            <label class="text_label Dr_label">
+              <button type="submit" class="icon_supp  " ></button>
+            </label>
+          </div>
+
+
+
+
+
+        </div>
+
+
+      </div>
+
+
+
+
+
+
+
+
+    </div>
+  </ng-sidebar-container>
+
+</div>
+

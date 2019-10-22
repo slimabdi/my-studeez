@@ -1,0 +1,466 @@
+
+
+<div class="Dr_sidemodal">
+
+
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+      <app-sidebarcalls ></app-sidebarcalls>
+
+    </ng-sidebar>
+
+
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+<div class="container-fluid Dr_top_100">
+  <div class="row">
+
+    <div class="col-md-10">
+      <div class="col-md-8 col-md-offset-3 col-lg-offset-3 top_br text-center">
+
+        <div class="btn-group">
+          <button class="btn  Dr_btnNav left_radius Dr_pdBT">Appel en salle </button>
+          <button class="btn Dr_btnNav Dr_pdBT">Justificatifs</button>
+          <button class="btn  Dr_btnNav right_radius Dr_pdBT02" >Bilan des absences</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 top_br">
+      <div class="form-group has-feedback">
+        <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+        <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+        <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container" *ngIf="liste">
+  <div class="row top_br">
+    <div class="col-md-4"><span class="titre_table Dr_cr" > Listes d’appel   </span>  </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-4">
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-2">
+      <div class="" dropdown>
+        <button type="submit" dropdownToggle aria-controls="dropdown-basic" class="form-control btn_add" >  Ajouter </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu Dr_add_cl" role="menu" aria-labelledby="button-basic">
+          <li role="menuitem"  class=" Dr_item_add" (click)="_toggleSidebar()"> Faire l’appel</li>
+          <li role="menuitem"  class=" Dr_item_add" (click)="Add=true;liste=false">Ajoutrer une absence</li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive-sm top_br">
+    <table class="table   " [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="3">
+      <tbody class="">
+      <tr>
+        <td class="border_td">Début</td>
+        <td class="titre_table border_td ">Fin</td>
+        <td class="titre_table border_td">Classe/Regroupement</td>
+        <td class="titre_table border_td">Matière</td>
+        <td class="titre_table border_td">Enseignant </td>
+        <td class="border_td">Statut</td>
+        <td class="border_td"></td>
+      </tr>
+      <tr *ngFor="let class of mf.data;let i=index" class="border_col">
+        <td >
+          <label  class="text_label Dr_label">
+          9:00
+          </label>
+        </td>
+        <td >
+          <label  class="text_label Dr_label">
+            9:55
+          </label>
+        </td>
+        <td >
+          <label  class="text_label Dr_label">
+            {{class.name}}
+          </label>
+        </td>
+
+
+
+        <td class="col-md-2">
+          <label  class="text_label Dr_label">
+            <span class="Dr_sp01">Consulter</span>
+            <button type="submit" class="icon_Dr_Valide" ></button>
+          </label>
+
+        </td>
+        <td>
+          <label  class="text_label Dr_label">
+            <button type="submit" class="icon_modif right Dr_Lf" ></button>
+            <button type="submit" class="icon_Dr_print  "  ></button>
+
+          </label>
+
+        </td>
+        <td class="col-md-2">
+          <label class="text_label Dr_label">
+            <span class="Dr_sp" (click)="S_appel=true;liste=false">Saisir l’appel</span>
+          <button type="submit" class="icon_Dr_poly" ></button>
+
+          </label>
+
+        </td>
+
+        <td class="col-md-1 ">
+          <label  class="text_label Dr_label">
+            <button type="submit" class="form-control DrBtn Dr_btnR"  > Rappel</button>
+
+          </label>
+
+        </td>
+
+      </tr>
+      <tr *ngIf="data.length==0">
+        <td colspan="6" class="text-center nothingToshow">
+          Aucune résultat à afficher
+        </td>
+      </tr>
+      </tbody>
+      <tfoot *ngIf="data.length!=0">
+      <tr>
+        <td colspan="6">
+          <div class="row btn_Bas">
+            <div class=" col-md-3"></div>
+            <div class="col-xs-8 col-md-6" >
+              <div class="Dr_pagination text-center">
+                <mfBootstrapPaginator></mfBootstrapPaginator>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="row btn_Bas">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" >
+      <button type="submit" class="Impr_btn">Imprimer la liste</button>
+      <button type="submit" class="Expo_btn">Export EXCEL</button>
+    </div>
+
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="container" *ngIf="S_appel">
+  <div class="row top_br">
+    <div class="col-md-4">
+      <span class="titre_table Dr_cr" > Listes d’appel  > Feuille d’appel 4ème7 - Français </span>
+      <label  class="text_label Dr_label">
+      <button type="submit" class="icon_modif " ></button>
+      </label>
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-4">
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-2" style="height: 34px">
+
+    </div>
+  </div>
+
+<div class="col-md-12">
+<div class="col-md-2 Dr_w5"> 8:00 - 9:30</div>
+<div class="col-md-2 Dr_HL" > </div>
+<div class="col-md-2 Dr_w3"> Tout cocher
+  <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+</div>
+</div>
+
+<div class="col-md-12 top_br Dr_C_ligne">
+<div class="col-md-1"> <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle"></div>
+<div class="col-md-3 Dr_w4">
+  <label  class="text_label Dr_label">
+  Nom de l’élève
+  </label>
+</div>
+
+  <div class="col-md-1 Dr_w3 Dr_CA Dr_P1">
+    Présent
+    <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+  </div>
+
+  <div class="col-md-2 Dr_w3 Dr_CRE Dr_P1">
+      En retard
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+  </div>
+
+  <div class="col-md-2 Dr_pd_left Dr_P1">
+      Arrivé(e) à <input type="time">
+  </div>
+
+  <div class="col-md-1 Dr_w3 Dr_CAB Dr_P1">
+      Absent
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+  </div>
+
+  <div class="col-md-2 Dr_w3 Dr_P1 Dr_EX">
+      Exclu
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+  </div>
+
+</div>
+  <div class="col-md-12 top_br Dr_C_ligne">
+    <div class="col-md-1"> <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle"></div>
+    <div class="col-md-3 Dr_w4">
+      <label  class="text_label Dr_label">
+        Nom de l’élève
+      </label>
+    </div>
+
+    <div class="col-md-1 Dr_w3 Dr_CA Dr_P1">
+      Présent
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+    </div>
+
+    <div class="col-md-2 Dr_w3 Dr_CRE Dr_P1">
+      En retard
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+    </div>
+
+    <div class="col-md-2 Dr_pd_left Dr_P1">
+      Arrivé(e) à <input type="time">
+    </div>
+
+    <div class="col-md-1 Dr_w3 Dr_CAB Dr_P1">
+      Absent
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+    </div>
+
+    <div class="col-md-2 Dr_w3 Dr_P1">
+      Exclu
+      <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-12 top_br">
+    <div class="col-md-3"></div>
+    <div class="col-md-5" >
+      <button type="submit" class="Impr_btn">Annuler</button>
+      <button type="submit" class="Expo_btn DrBtn">Enregistrer </button>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+      <div class="container" *ngIf="Add">
+        <div class="row top_br">
+          <div class="col-md-4">
+            <span class="titre_table Dr_cr" > Listes d’appel  >  ajouter une absence  </span>
+
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-4">
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-2" style="height: 34px">
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-1"> </div>
+          <div class="col-md-4" >Nom de la classe </div>
+          <div class="col-md-5"> Abrégé</div>
+          <div class="col-md-2 text-center"> Nombre d’élèves</div>
+        </div>
+
+        <div class="col-md-12 top_br Dr_C_ligne">
+          <div class="col-md-1"> <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle"></div>
+          <div class="col-md-4">
+            <label  class="text_label Dr_label Dr_CJ" (click)="Liste_E=true;Add=false">
+              Nom de la classe
+            </label>
+          </div>
+
+          <div class="col-md-5">
+            <label  class="text_label Dr_label ">
+              CM2C
+            </label>
+          </div>
+
+          <div class="col-md-2 text-center">
+            <label  class="text_label Dr_label ">
+            7
+            </label>
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="col-md-12 top_br Dr_C_ligne">
+          <div class="col-md-1"> <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle"></div>
+          <div class="col-md-4">
+            <label  class="text_label Dr_label Dr_CJ" (click)="Liste_E=true;Add=false">
+              Nom de la classe
+            </label>
+          </div>
+
+          <div class="col-md-5">
+            <label  class="text_label Dr_label ">
+              CM2C
+            </label>
+          </div>
+
+          <div class="col-md-2 text-center">
+            <label  class="text_label Dr_label ">
+              7
+            </label>
+          </div>
+        </div>
+        </div>
+
+
+
+
+      <div class="container" *ngIf="Liste_E">
+        <div class="row top_br">
+          <div class="col-md-4">
+            <span class="titre_table Dr_cr" > Listes d’appel  >  ajouter une absence  </span>
+
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-4">
+
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-4" style="height: 34px">
+            Sélectionnez le ou les élèves concernés
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-3 Dr_pd_left">
+            <div class="col-md-11">
+            6éme1
+            <span class="right">Tout cocher</span>
+            </div>
+            <div class="col-md-1 Dr_pd_left ">
+              <label  class="text_label Dr_label" >
+                <input type="checkbox" class="Dr_ckM">
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12 top_br ">
+          <div class="col-md-3 Dr_pd_left top_br">
+          <div class="col-md-11 Dr_C_ligne Dr_CC02" (click)="_toggleSidebar()">
+            <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+              Nom de la classe
+
+          </div>
+          <div class="col-md-1 Dr_pd_left ">
+            <label  class="text_label Dr_label" >
+            <input type="checkbox" class="Dr_ckM">
+            </label>
+          </div>
+          </div>
+
+          <div class="col-md-3 Dr_pd_left top_br">
+            <div class="col-md-11 Dr_C_ligne">
+              <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+                Nom de la classe
+            </div>
+            <div class="col-md-1 Dr_pd_left ">
+              <label  class="text_label Dr_label" >
+                <input type="checkbox" class="Dr_ckM">
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-3 Dr_pd_left top_br">
+            <div class="col-md-11 Dr_C_ligne">
+              <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+                Nom de la classe
+            </div>
+            <div class="col-md-1 Dr_pd_left ">
+              <label  class="text_label Dr_label" >
+                <input type="checkbox" class="Dr_ckM">
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-3 Dr_pd_left top_br">
+            <div class="col-md-11 Dr_C_ligne">
+              <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+                Nom de la class
+            </div>
+            <div class="col-md-1 Dr_pd_left ">
+              <label  class="text_label Dr_label" >
+                <input type="checkbox" class="Dr_ckM">
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-3 Dr_pd_left top_br">
+            <div class="col-md-11 Dr_C_ligne">
+              <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+                Nom de la class
+            </div>
+            <div class="col-md-1 Dr_pd_left">
+              <label  class="text_label Dr_label" >
+                <input type="checkbox" class="Dr_ckM">
+              </label>
+            </div>
+          </div>
+
+          </div>
+
+
+
+      </div>
+
+
+
+    </div>
+  </ng-sidebar-container>
+
+</div>
+

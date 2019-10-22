@@ -1,0 +1,109 @@
+
+
+
+ <div class="container" >
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 "><label class="Dr_titre_filtre">Informations générales</label></div>
+  </div>
+   <form #formulaire="ngForm">
+   <input type="text"  class="form-control Dr_input" name="id" [(ngModel)]="ecole.id"  hidden style="display: none">
+   <input type="text"  class="form-control Dr_input" name="nomGroupe" [(ngModel)]="ecole.groupeScolaire"  hidden style="display: none">
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Nom de l’établissement</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="nomE" [(ngModel)]="ecole.nomE" ></div>
+  </div>
+
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Groupe scolaire*</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="nomGroupee" ngModel readonly  [(ngModel)]="nomGroupe" ></div>
+  </div>
+
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 "><label class="Dr_titre_filtre">Informations</label></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Adresse postale</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input"  name="adressePostale" [(ngModel)]="ecole.adressePostale" ></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Ville</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="ville" [(ngModel)]="ecole.ville" ></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Code postal</label></div>
+    <div class="col-md-6"><input type="number" class="form-control Dr_input" name="codePostal" [(ngModel)]="ecole.codePostal"></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Pays</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="pays" [(ngModel)]="ecole.pays"> </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Tel 1</label></div>
+    <div class="col-md-6"><input type="number" class="form-control Dr_input" name="tel1" [(ngModel)]="ecole.tel1"></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Tel 2</label></div>
+    <div class="col-md-6"><input type="email1" class="form-control Dr_input" name="tel2" [(ngModel)]="ecole.tel2"></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Email 1</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="email1" [(ngModel)]="ecole.email1"></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Email 2</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="email2" [(ngModel)]="ecole.email2"></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Site web</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="siteWeb" [(ngModel)]="ecole.siteWeb"></div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form">Chef de l’établissemnt</label></div>
+    <div class="col-md-6"><input type="text" class="form-control Dr_input" name="chefEtablissement"  [(ngModel)]="ecole.chefEtablissement"></div>
+  </div>
+
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 "><label class="Dr_titre_filtre">Signature officielle </label></div>
+  </div>
+
+
+  <div class="row top_br ">
+    <div class="col-md-4 "><label class="Dr_add_form"> Insérer une image</label></div>
+    <div class="col-md-6"><textarea  class="form-control Dr_input" >
+
+
+
+    </textarea></div>
+  </div>
+
+  <div class="row  Dr_top_100">
+    <div class="col-md-4 "></div>
+    <div class="col-md-6">
+      <div class="col-md-4">
+        <button type="submit" class="form-control Dr_btn_02 " closeSidebar >Annuler</button>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <button type="submit" class="form-control btn_add"  closeSidebar (click)="updateInfoGenerale(formulaire.value)">Enregistrer</button>
+      </div>
+
+    </div>
+    <div class="row top_br Dr_top_100 ">
+  </div>
+
+</div>
+   </form>
+
+</div>

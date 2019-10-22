@@ -1,0 +1,834 @@
+<div class="col-md-9  AdTop" style="margin-left: 22%;">
+  <br>
+
+
+  <div class="row">
+    <div class=" col-md-6">
+
+
+
+    </div>
+    <div class="col-md-6" style="float: right;">
+      <p class="Dconnexion"> Derniére Connexion : {{dateDeconx}} </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs tab_pos mytabclass">
+        <li [ngClass]="!class?'active A_classe':''" (click)="openNiv()">
+          <a class="nav_tab_ajouter nav_ajout_1">Niveaux d’apprentissage</a>
+        </li>
+        <li [ngClass]="class?'active A_classe':''" (click)="openClass()">
+          <a class="nav_tab_ajouter nav_ajout_2"> Classes</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="tab-content tab_class">
+    <div *ngIf="!class">
+      <!-- -------------------------------------------------------------------------------------------  -->
+      <div class="row ">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+          <div class="R_01">
+            <select class="select-ecole" [(ngModel)]="selectModel" (change)="viewListCours(selectModel)">
+              <option [value]="null"> Sélectionner une école</option>
+              <option *ngFor=" let ecole of ecoles" [value]="ecole.id"> {{ecole.nomE}}</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <br>
+      <div class="row">
+        <div class=" col-md-12">
+          <label class="text_form tab_ajouter T_classe">Ajouter les niveaux d’apprentissage : </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="alert_V"> {{successAddNiv}} </label>
+        </div>
+      </div>
+      <br>
+      <div class="row ">
+        <div class=" col-md-4">
+          <label class="text_form">Nombre de niveau d’apprentissage </label>
+        </div>
+        <div class=" col-md-4 ">
+          <input type="text" class="input_01" [(ngModel)]="ngniv">
+        </div>
+        <div class=" col-md-4">
+          <input type="submit" class="btn_valider"   (click)="initNiv(ngniv)">
+        </div>
+      </div>
+      <div class="row" *ngIf="!sortable&&ecoleNiv.length>0">
+        <div class="col-md-4 col-md-offset-4 top_br">
+          <input type="submit" style="margin-right: -28px;" (click)="sortable=!sortable" value="Modifier l'ordre" class="btn_annuler R_btn_annuler pull-right">
+        </div>
+      </div>
+      <!-- niveaux d'apprentissage -->
+      <div style="margin-top: 65px;">
+        <div *ngIf="loadernivpage" class="text-center loader-div">
+          <img src="../../../assets/images/admin/loader.gif">
+        </div>
+        <!-- sortable -->
+        <ul class="list-group" dnd-sortable-container [sortableData]="ecoleNiv">
+          <li *ngFor="let n of ecoleNiv; let activeNivpage = index" [ngClass]="sortable?'sortable':''" [dragEnabled]="sortable" [dropEnabled]="sortable"
+              (onDragSuccess)='onDragSuccess($event)' dnd-sortable [sortableIndex]="activeNivpage">
+            <div class="row top_br">
+              <div class=" col-md-4">
+                <label class="text_form">Titre niveau {{activeNivpage + 1}} </label>
+              </div>
+              <div class=" col-md-5">
+                <input type="text" [(ngModel)]="n.name" [disabled]="true" name="nivname{{activeNivpage}}" class="input_01">
+              </div>
+              <div class=" col-md-2">
+              <input type="submit" value="" class="btn_up " data-toggle="modal" data-target="#modalAddNiveau" (click)="openupdateNiv(activeNivpage)">
+              </div>
+            </div>
+            <!-- Creation de section -->
+            <div class="sectiondiv" *ngFor="let section of n.sections;let i=index" [style.display]="section.state=='delete'?'none':'block'">
+              <div class="row top_br">
+                <div class=" col-md-4">
+                  <label style="padding-left: 32px" class="text_form">Titre section {{i+1}} </label>
+                </div>
+                <div class=" col-md-5 ">
+                  <input type="text" [disabled]="true" [(ngModel)]="section.name" name="sectionName{{i}}" class="input_01">
+                </div>
+                <div class=" col-md-2">
+                <input type="submit" value="" class="btn_up " data-toggle="modal" data-target="#modalAddNiveau" (click)="openupdateNivsec(activeNivpage,i)">
+                <input class="btn_sup " value=""  (click)="deleteSectionFromNivModal(section,activeNivpage,i)" data-toggle="modal"
+                       data-target="#ModalSuppSec" type="submit">
+                </div>
+              </div>
+            </div>
+            <div class="row top_br" *ngIf="ecoleNiv.length>0">
+              <div class="col-md-4">
+                <label class="text_plus" style="padding-left: 65px;" data-toggle="modal" data-target="#modalAddNiveau" (click)="openupdateNivNewsec(activeNivpage)">+ Ajouter une section - option </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- niveaux d'apprentissage -->
+      <div class="row top_br">
+        <div class=" col-md-4">
+          <img src="../../../assets/images/admin/plus.png" alt="" style="margin-left: 12% ">
+          <label class="text_plus" (click)="initNiv(1)"> Ajouter un niveau </label>
+        </div>
+        <div class=" col-md-4 ">
+        </div>
+      </div>
+      <div class="row" *ngIf="ecoleNiv.length>0">
+        <div class="col-md-6 col-md-offset-1 top_br">
+            <img *ngIf="updatework" style="width: 30px;float: right" src="../../../assets/images/admin/loader.gif">
+          <input type="submit" style="margin-right: -28px" [disabled]="updatework" value="Enregister" (click)="updateNiveaux()" class="btn_en_fiche btn_sm_studeez pull-right">
+          <input type="submit"  *ngIf="!updatework" value="Annuler" class="btn_en_fiche btn_sm_studeez pull-right">
+        </div>
+      </div>
+      <!-- -------------------------------------------------------------------------------------------  -->
+    </div>
+
+    <div *ngIf="class">
+      <div class="row ">
+        <div (click)="newclass={matiere_ens:[]}" class="col-md-4">
+          <button type="submit" class="btnAdd01 Ad_plus" (click)="opencreateclasse()" [disabled]="!selectModel" data-toggle="modal"
+                  data-target="#modalAdd">
+             Ajouter une classe</button>
+
+
+        </div>
+        <div class="col-md-6">
+          <div class="R_01">
+            <select class="select-ecole" [(ngModel)]="selectModel" (change)="viewListCours(selectModel)">
+              <option [value]="null"> Sélectionner une école</option>
+              <option *ngFor=" let ecole of ecoles" [value]="ecole.id"> {{ecole.nomE}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="" class="form-control" style="float:right;height: 38px;width: 250px;border: 1px solid #ccc!important;margin-top: 22px "
+                 [(ngModel)]="filterQuery">
+          <img src="../../../assets/images/admin/fermer.png" alt="" class="img_fermer" (click)="Effacer_Recherche()">
+          <img src="../../../assets/images/admin/picto_recherche.png" alt="" class="img_recherche">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="alert_V"> {{successAdd}} </label>
+        </div>
+      </div>
+      <br>
+      <table class="table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <tbody class="top_10">
+        <tr *ngFor="let class of mf.data">
+          <td class="col-md-1">
+            <div class="img_liste Ad_img" [style.background]="class.icone!=''?('url('+ class.icone+')'):('url(../../../assets/images/admin/iconeGroupe.png)')  ">
+            </div>
+          </td>
+          <td class="col-md-2">
+            <label style="margin-top: 10px" class="text_label  text-center">
+              {{class.nomC}}
+            </label>
+          </td>
+          <td class="col-md-2">
+            <label style="margin-top: 10px" class="text_label  text-center">
+              {{class.abrege}}
+            </label>
+          </td>
+
+          <td class="col-md-2">
+            <label style="margin-top: 10px" class="text_label  text-center">{{class.libelleD}}</label>
+          </td>
+          <td class="col-md-2">
+              <label style="margin-top: 10px" class="text_label  text-center"> {{class.formatNotation}}</label>
+            </td>
+          <td class="col-md-2">
+            <label style="margin-left: 50px ;margin-top: 10px"> </label>
+          </td>
+          <td class="col-md-1">
+            <div class="icon_L_ajouter">
+              <input type="submit" value="" class="btn_up " data-toggle="modal" data-target="#modalAdd" (click)="openupdateclassModal(class)">
+              <input class="btn_sup " value="" (click)="openupdateclassModal(class)" data-toggle="modal" data-target="#ModalSupp" type="submit">
+            </div>
+          </td>
+        </tr>
+
+
+        <tr *ngIf="data.length==0&&!loader">
+          <td colspan="6" class="text-center nothingToshow">
+            Aucune résultat à afficher
+          </td>
+        </tr>
+        </tbody>
+        <tfoot *ngIf="data.length!=0">
+        <tr>
+          <td colspan="6">
+            <mfBootstrapPaginator></mfBootstrapPaginator>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+      <div *ngIf="loader" class="text-center loader-div">
+        <img src="../../../assets/images/admin/loader.gif">
+      </div>
+      <div class="row" style="margin-top: 50px" *ngIf="data.length!=0&&!loader">
+        <div class=" col-md-2"></div>
+        <div class=" col-md-4">
+          <input type="submit"  name="" class="btn_bas Ad_right" (click)="generationPDF()" value="Imprimer la liste (PDF)">
+        </div>
+        <div class=" col-md-4">
+          <input type="submit"  name="" class="btn_bas" (click)="exportationExcel()" value="Exporter EXCEL">
+        </div>
+        <div class=" col-md-2"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ***** -->
+
+<!-- modal de suppression de session -->
+<div id="ModalSuppSec" class="modal fade" role="dialog">
+  <div class="modal-dialog modal_Notif">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body" *ngIf="!sectionFordelete.section.delete&&!secDelLoader">
+
+        <label class="notif_01"> Impossible de supprimer «{{sectionFordelete.section?.name}}» </label>
+        <label class="groupeNotif_btn">
+          <input type="submit" class="btn_N_02" style="margin-right: 0px!important;" value="Ok" data-dismiss="modal">
+        </label>
+      </div>
+
+      <div class="modal-body" *ngIf="sectionFordelete.section.delete&&!secDelLoader">
+        <label class="notif_01"> êtes-vous sûr(e) de vouloir supprimer «{{sectionFordelete.section?.name}}» ? </label>
+        <label class="groupeNotif_btn">
+          <input type="submit" class="btn_N_01" value="Non" data-dismiss="modal">
+          <input type="submit" class="btn_N_02" value="Oui" (click)="deleteSecFromNiv()" data-dismiss="modal">
+
+        </label>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="secDelLoader" class="text-center loader-div">
+          <img src="../../../assets/images/admin/loader.gif">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- modal de suppression de classe -->
+<div id="ModalSupp" class="modal fade" role="dialog">
+  <div class="modal-dialog modal_Notif">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+
+
+      </div>
+
+      <div class="modal-body">
+        <label class="notif_01"> êtes-vous sûr(e) de vouloir supprimer «{{newclass.nomC}}» ? </label>
+        <label class="groupeNotif_btn">
+          <input type="submit" class="btn_N_01" value="Non" data-dismiss="modal">
+          <input type="submit" class="btn_N_02" value="Oui" (click)="deleteClasse(newclass.id)" data-dismiss="modal">
+
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -------------------------------------------------------------------------------------------  -->
+<!-- modal create + update class -->
+<div class="modal fade" id="modalAdd" role="dialog">
+
+  <div class="modal-dialog  modal_T R_modal-dialog">
+
+    <div class="modal-content R_tab-content">
+
+      <div class="modal-header">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+
+        <h4 *ngIf="!updateC" class="modal-title titre_ajouter">Ajouter une classe</h4>
+        <h4 *ngIf="updateC" class="modal-title titre_ajouter">Mise à jours classe</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="panel-body">
+
+          <div class="tab-content ">
+            <form class="form-horizontal A_form">
+              <div class="row">
+                <br>
+                <br>
+
+                <div class=" col-md-4">
+                  <label class="text_form">Nom de la classe *: </label>
+                </div>
+                <div class=" col-md-4">
+                  <input [(ngModel)]="newclass.nomC" type="text" name="nomG" class="input_01" placeholder="Nom de la classe">
+                </div>
+                <ul style="padding-left: 20px;" *ngIf="errclass.nomC">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+
+              <br>
+
+
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="text_form">Abrégé *: </label>
+                </div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="newclass.abrege" type="text" name="abrege" class="input_01" placeholder="Abrégé">
+                </div>
+                <ul style="padding-left: 20px;" *ngIf="errclass.abrege">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+              <br>
+
+
+
+
+
+              <div class="row top_br">
+                <div class="col-md-4">
+                  <label class="text_form">Insérer une icône : </label>
+                </div>
+                <div class="col-sm-4">
+                  <div class="input_01" data-toggle="tooltip" title="<img src='{{tmp}}/{{pathAvatarSuper}}'width='200px' />" attr.data-original-title="<img src='{{tmp}}/{{pathAvatarSuper}}'width='200px' />">
+                    <input type="text" name="imageimageSigniaturee" [(ngModel)]="pathAvatarSuper" style="margin-top: 0px!important;" class=" image-preview-filename inputImg AdInT" disabled="disabled">
+                    <span class=" spanUpImg">
+                      <div class="btnUploadImg btn-default image-preview-input">
+                        <img src="../../../assets/images/admin/picto_modifier.png" class="file_image" />
+                        <span class="image-preview-input-title"></span>
+                        <div *ngIf="newclass.icone!=''" style="float: right;">
+                          <img src="{{tmp}}/{{pathAvatarSuper}}" [(ngModel)]="pathAvatarSuper" name="pathAvatarSuper" class="file_imgBleu">
+                        </div>
+                        <div *ngIf="newclass.icone==''" style="float: right;">
+                          <img src="../../../assets/images/admin/imgBlanc.png" class="file_imgBleu myimg" disabled="file_imgBleu">
+                        </div>
+                        <input style=" position: absolute!important;bottom:15px!important;width: 73%!important;opacity: 0!important;" type="file"
+                               name="input-file-preview" (change)="onAvatarSelected($event)" />
+                        <!-- rename it -->
+                      </div>
+                    </span>
+                  </div>
+                  <input type="hidden" name="avatar" [(ngModel)]="pathAvatarSuper" />
+                </div>
+              </div>
+
+
+
+
+              <div class="row top_br">
+
+
+                <div class="col-md-4">
+                  <label class="text_form">Niveau d’apprentissage*: </label>
+                </div>
+
+                <div class="col-md-4">
+
+                  <input [(ngModel)]="newclass.lab"  name="label" autocomplete="off" class="input_01 ng-pristine ng-valid ng-touched"  [readonly]="true" (click)="nivSelect=!nivSelect">
+                  <div class="myadminclassselect" *ngIf="nivSelect">
+                    <p class="text-center" *ngIf="niveaux.length==0">Rien à afficher</p>
+                    <div *ngFor="let dec of niveaux;let j=index">
+                      <p class="titleniveau" (click)="aff[j]=!aff[j]" *ngIf="dec.Sections.length>0">
+                        <span class="numberNiv">{{dec.Sections.length}}</span>
+                        {{dec.libelleN}}
+                        <i class="fa fa-sort-desc flecheniv" *ngIf="aff[j]" aria-hidden="true"></i>
+                        <i class="fa fa-caret-right flecheniv" *ngIf="!aff[j]" aria-hidden="true"></i>
+                      </p>
+                      <div class="titlesection" *ngIf="aff[j]">
+                        <div class="sectionselect" *ngFor="let sec of dec.Sections" (click)="newclass.niveau=dec.id;newclass.section=sec.id;newclass.lab=sec.libelleS;nivSelect=!nivSelect">{{sec.libelleS}}</div>
+                      </div>
+                      <div class="sectionselect" *ngIf="dec.Sections.length==0" class="titleniveau" (click)="newclass.niveau=dec.id;newclass.section=null;newclass.lab=dec.libelleN;nivSelect=!nivSelect">{{dec.libelleN}}</div>
+                    </div>
+                  </div>
+
+
+                </div>
+                <ul style="padding-left: 20px;" *ngIf="errclass.lab">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+              <div class="row top_br">
+                <div class="col-md-4">
+                  <label class="text_form">Découpage*:</label>
+                </div>
+                <div class="col-md-4">
+                  <select id="Select2" [(ngModel)]="newclass.idDecoupage" class="input_01  style_select" name="libelleD">
+                    <option *ngFor="let dec of decoupages" value="{{dec.id}}">{{dec.libelleD}}</option>
+                  </select>
+                </div>
+                <ul style="padding-left: 20px;" *ngIf="errclass.idDecoupage">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+              <div class="row top_br">
+                <div class="col-md-4">
+                  <label class="text_form">Format de notation*: </label>
+                </div>
+                <div class="col-md-4">
+                  <select id="Select3" [(ngModel)]="newclass.formatNotation" class="input_01  style_select" name="libelleD">
+                    <option value="Numérique">Numérique</option>
+                    <option value="Alphabétique">Alphabétique</option>
+                  </select>
+                </div>
+                <ul style="padding-left: 20px;" *ngIf="errclass.formatNotation">
+                  <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                </ul>
+              </div>
+              <div class="row top_br">
+                <div class="col-md-12">
+                  <div class="col-md-4">
+                    <label class="tab_ajouter">Personnalisation externe </label>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div *ngIf="matloader" class="text-center loader-div">
+                <img src="../../../assets/images/admin/loader.gif">
+              </div>
+              <div class="row top_br" [style.display]="col.state=='delete'?'none':'block'" *ngFor="let col of newclass.matiere_ens;let i=index">
+                <div class="col-md-4" style="padding-left: 64px;">
+                  <select class="input_01 style_select" [(ngModel)]="col.idMatiere" [disabled]="true" name="matieresss{{i}}">
+                    <option *ngFor="let mat of matieres" value="{{mat.id}}">
+                      {{mat.nomMatiere}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+
+                  <input type="number" min="0" class="C_01" [disabled]="true" [(ngModel)]="col.coef" name="coef{{i}}">
+
+                  <select class="input_01 C_01 E_01 style_select" (change)="changeteacher(col)" [(ngModel)]="col.enseig" name="ens{{i}}">
+                    <option *ngFor="let en of enseignantsp" value="{{en.id}}">
+                      {{en.nom}} {{en.prenom}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select class="input_01 C_01 E_01" (change)="changeteacher(col)" [(ngModel)]="col.co_enseig" name="coens{{i}}">
+                    <option *ngFor="let en of coenseignants" value="{{en.id}}">
+                      {{en.nom}} {{en.prenom}}
+                    </option>
+                  </select>
+                  <input class="btn_supp btn_01" name="" (click)="delete(i)" type="submit" value="">
+                </div>
+              </div>
+              <div class="row top_br">
+                <div class="col-md-4" style="padding-left: 64px;">
+                  <select class="input_01 style_select" [(ngModel)]="matiere.idMatiere" name="matiereobj">
+                    <option *ngFor="let mat of matieres" value="{{mat.id}}">
+                      {{mat.nomMatiere}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <input type="number" min="0" class="C_01" [(ngModel)]="matiere.coef" name="coefobj">
+                  <select class="input_01 C_01 E_01 style_select" [(ngModel)]="matiere.enseig" name="enseigobj">
+                    <option *ngFor="let en of enseignantsp" value="{{en.id}}">
+                      {{en.nom}} {{en.prenom}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select class="input_01 C_01 E_01 style_select" [(ngModel)]="matiere.co_enseig" name="co-ens-obj">
+                    <option *ngFor="let en of coenseignants" value="{{en.id}}">
+                      {{en.nom}} {{en.prenom}}
+                    </option>
+                  </select>
+                  <input (click)="addmat()" class="btn_ok btn_02" name="" type="submit" value="OK">
+                </div>
+              </div>
+              <br>
+              <div class="row ">
+                <div class="col-md-4">
+                  <label>
+                    <input type="submit" name="" value="Annuler" class="btn_annuler R_btn_annuler" data-dismiss="modal">
+                  </label>
+                </div>
+                <div class=" col-md-4"></div>
+                <div class="col-md-4">
+                  <label>
+                    <img *ngIf="saving" style="width: 30px" src="../../../assets/images/admin/loader.gif">
+                    <input type="submit" (click)="create()" [disabled]="saving" value="Enregistrer la classe" class="btn_en_fiche">
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- -------------------------------------------------------------------------------------------  -->
+
+
+<!-- modal add niveau -->
+<div class="modal fade" id="modalAddNiveau" role="dialog">
+
+  <div class="modal-dialog  modal_T R_modal-dialog">
+    <div class="modal-content R_tab-content">
+      <div class="modal-header top_modal">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+        <h4 *ngIf="!updateniveau&&!updateniveausec&&!createniveausec" class="modal-title titre_ajouter">Ajouter un niveau</h4>
+        <h4 *ngIf="updateniveau||updateniveausec||createniveausec" class="modal-title titre_ajouter">Mise à jours un niveau</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+          <div *ngIf="createniveausec">
+            <div class="row top_br">
+              <div class=" col-md-4">
+                <label class="text_form">Titre niveau {{activeNivindex + 1}} * </label>
+              </div>
+              <div class=" col-md-4" *ngIf="monNivSecNew[activeNiv]">
+                <input type="text" (change)="niverr=((monNivSecNew[activeNiv].name==''&&createniveausec))" [disabled]="true" [(ngModel)]="monNivSecNew[activeNiv].name"
+                       name="nivname{{activeNiv}}" class="input_01">
+              </div>
+              <ul style="padding-left: 20px;" *ngIf="niverr">
+                <li style="color: #b7402c;">Ce champ est obligatoire</li>
+              </ul>
+            </div>
+
+            <!-- Creation de section -->
+            <div *ngIf="monNivSecNew[activeNiv]">
+              <div class="sectiondiv" *ngFor="let section of monNivSecNew[activeNiv].sections;let i=index">
+                <div>
+                  <div class="row top_br">
+                    <div class=" col-md-4">
+                      <label class="text_form">Titre section {{indexSecActive}}* </label>
+                    </div>
+                    <div class=" col-md-4 ">
+                      <input type="text" [(ngModel)]="section.name" (change)="section.err=(section.name=='');monNivSecNew[activeNiv].err=(section.name=='')"
+                             class="input_01">
+                      <ul style="padding-left: 20px;" *ngIf="section.err">
+                        <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                      </ul>
+                    </div>
+
+                    <i class="fa fa-sort-asc sort_icon sort_icon_asc" (click)="open[i]=!open[i]" *ngIf="open[i]&&!updateniveausec&&!createniveausec"
+                       aria-hidden="true"></i>
+                    <i class="fa fa-sort-desc sort_icon" *ngIf="!open[i]&&!updateniveausec&&!createniveausec" (click)="open[i]=!open[i]" aria-hidden="true"></i>
+
+                  </div>
+                  <div class="panel-body" *ngIf="open[i]">
+                    <div class="row " *ngIf="section.matieres.length>0">
+                      <div class="col-md-4">
+                        <label class="text_form tab_ajouter">Matières enseignées</label>
+                      </div>
+                      <div class="col-md-4">
+                        <label style="font-size: 20px!important;font-weight: 500!important;padding-left: 36px;">cofficient</label>
+                      </div>
+                    </div>
+                    <div style="margin-left: 50px;">
+                      <div class="row top_br" *ngFor="let matList of section.matieres;let x=index">
+                        <div class="col-md-4">
+                          <select class="input_01 style_select" name="matieres_select{{x}}" [(ngModel)]="matList.idmat" disabled>
+                            <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <input class="C_01" [(ngModel)]="matList.coef" name="cofoeee" type="number" min="0">
+                          <input class="btn_supp btn_01" (click)="deleteNivfromSec(x,i,section.matieres,activeNiv)" name="" type="">
+                        </div>
+                        <div class="col-md-4"></div>
+                      </div>
+                      <div class="row top_br" *ngIf="shownewmatrowsec[i]&&newsectionmatrow[i]">
+                        <div class="col-md-4">
+                          <select class="input_01 style_select" name="newsectionmatrow[i]" [(ngModel)]="newsectionmatrow[i].idmat">
+                            <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <input class="C_01" type="number" min="0" name="coefsecmat" [(ngModel)]="newsectionmatrow[i].coef">
+                          <input _ngcontent-c5="" (click)="addmatnivTosection(section,i)" class="btn_ok btn_02" name="" type="submit" value="OK">
+                        </div>
+                        <div class="col-md-4"></div>
+                      </div>
+                      <div class="row top_br">
+                        <div class="col-md-4">
+                          <label class="text_plus" (click)="shownewmatrowsec[i]=true;newsectionmatrow[i]={}">+ Ajouter une matière</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row top_br">
+              <div class=" col-md-4">
+                <label class="text_form">
+                  <input class="btn_en_fiche" style="width: 200px" type="submit" data-dismiss="modal" value="Annuler">
+                </label>
+              </div>
+              <div class=" col-md-3"></div>
+              <div class=" col-md-4">
+                <label class="text_form">
+                  <input class="btn_en_fiche" id="clickInfo" (click)="addSectiontoNiv();" [disabled]="!selectModel"   style="width: 300px" type="submit" value="Valider">
+
+                </label>
+              </div>
+            </div>
+            <!-- ----- -->
+          </div>
+          <div *ngIf="niveau[activeNiv]&&!createniveausec">
+            <div class="row top_br">
+              <div class=" col-md-4">
+                <label class="text_form">Titre niveau {{activeNivindex + 1}} * </label>
+              </div>
+              <div class=" col-md-4">
+                <input type="text" (change)="niverr=(niveau[activeNiv].name=='')" [disabled]="updateniveausec" [(ngModel)]="niveau[activeNiv].name"
+                       name="nivname{{activeNiv}}" class="input_01">
+              </div>
+              <ul style="padding-left: 20px;" *ngIf="niverr">
+                <li style="color: #b7402c;">Ce champ est obligatoire</li>
+              </ul>
+            </div>
+            <div class="row top_br" *ngIf="!updateniveau&&!updateniveausec">
+              <div class=" col-md-4">
+                <label class="text_form tab_ajouter">Ajouter les matières </label>
+              </div>
+              <div class=" col-md-4 ">
+                <ng-select class="form-control bootstrap style_select" *ngIf="matieresss.length>0"  (deselected)="removed(activeNiv,$event)" (selected)="showselected(activeNiv)" [(ngModel)]="matListNiveau[activeNiv]"
+                           notFoundMsg="aucune resultat" [options]="matieresss" [multiple]="true" name="add2"></ng-select>
+                <select *ngIf="matieresss.length==0" class="input_01 style_select" disabled>
+                  <option>aucune resultat</option>
+                </select>
+              </div>
+            </div>
+            <div class="row top_br" *ngIf="!updateniveausec">
+              <div class="panel panel-default">
+
+                <div class="panel-body">
+
+                  <div class="row " *ngIf="niveau[activeNiv].matieres.length>0">
+                    <div class="col-md-4">
+                      <label class="text_form tab_ajouter">Matières enseignées</label>
+                    </div>
+                    <div class="col-md-4">
+                      <label style="font-size: 20px!important;font-weight: 500!important;padding-left: 36px;">cofficient</label>
+                    </div>
+                  </div>
+
+                  <div style="margin-left: 50px;">
+                    <div class="row top_br" *ngFor="let matList of niveau[activeNiv].matieres;let i=index" [style.display]="matList.state=='delete'?'none':'block'">
+
+                      <div class="col-md-4">
+                        <select class="input_01 style_select" name="matieres{{i}}" [(ngModel)]="matList.idmat" disabled>
+                          <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <input class="C_01" [(ngModel)]='matList.coef' type="number" min="0">
+                        <input class="btn_supp btn_01" (click)="deletematNiv(i,activeNiv)">
+                      </div>
+                      <div class="col-md-4"></div>
+
+                    </div>
+
+                    <div class="row top_br" *ngIf="shownewmatrow">
+
+                      <div class="col-md-4">
+                        <select class="input_01 style_select" name="newmatrow" [(ngModel)]="newmatrow.idmat">
+                          <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <input class="C_01" type="number" min="0" [(ngModel)]="newmatrow.coef">
+                        <input _ngcontent-c5="" (click)="addmatniv(activeNiv)" class="btn_ok btn_02" name="" type="submit" value="OK">
+                      </div>
+                      <div class="col-md-4"></div>
+
+                    </div>
+
+                    <div class="row top_br">
+                      <div class="col-md-4">
+                        <label class="text_plus" (click)="shownewmatrow=true;newmatrow={}">+ Ajouter une matière</label>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            <!-- Creation de section -->
+            <div *ngIf="!updateniveau">
+              <div class="sectiondiv" *ngFor="let section of niveau[activeNiv].sections;let i=index">
+                <div *ngIf="updateniveausec&&open[i]||(!updateniveausec&&!updateniveau)">
+                  <div class="row top_br">
+                    <div class=" col-md-4">
+                      <label class="text_form">Titre section {{i+1}}* </label>
+                    </div>
+                    <div class=" col-md-4 ">
+                      <input type="text" [(ngModel)]="section.name" (change)="section.state='update';section.err=(section.name=='');niveau[activeNiv].err=(section.name=='')"
+                             class="input_01">
+                      <ul style="padding-left: 20px;" *ngIf="section.err">
+                        <li style="color: #b7402c;">Ce champ est obligatoire</li>
+                      </ul>
+                    </div>
+                    <i class="fa fa-sort-asc sort_icon sort_icon_asc" (click)="open[i]=!open[i]" *ngIf="open[i]&&!updateniveausec&&!createniveausec"
+                       aria-hidden="true"></i>
+                    <i class="fa fa-sort-desc sort_icon" *ngIf="!open[i]&&!updateniveausec&&!createniveausec" (click)="open[i]=!open[i]" aria-hidden="true"></i>
+
+                  </div>
+                  <div class="panel-body" *ngIf="open[i]">
+                    <div class="row " *ngIf="section.matieres&&section.matieres.length>0">
+                      <div class="col-md-4">
+                        <label class="text_form tab_ajouter">Matières enseignées</label>
+                      </div>
+                      <div class="col-md-4">
+                        <label style="font-size: 20px!important;font-weight: 500!important;padding-left: 36px;">cofficient</label>
+                      </div>
+                    </div>
+                    <div style="margin-left: 50px;">
+                      <div class="row top_br" *ngFor="let matList of section.matieres;let x=index" [style.display]="matList.state=='delete'?'none':'block'">
+                        <div class="col-md-4">
+                          <select class="input_01 style_select" name="matieres_select{{x}}" [(ngModel)]="matList.idmat" disabled>
+                            <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <input class="C_01" [(ngModel)]="matList.coef" name="cofoeee" type="number" min="0">
+                          <input class="btn_supp btn_01" (click)="deleteNivfromSec(x,i,section.matieres,activeNiv)" name="" type="">
+                        </div>
+                        <div class="col-md-4"></div>
+                      </div>
+                      <div class="row top_br" *ngIf="shownewmatrowsec[i]&&newsectionmatrow[i]">
+                        <div class="col-md-4">
+                          <select class="input_01 style_select" name="newsectionmatrow[i]" [(ngModel)]="newsectionmatrow[i].idmat">
+                            <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <input class="C_01" type="number" min="0" name="coefsecmat" [(ngModel)]="newsectionmatrow[i].coef">
+                          <input _ngcontent-c5="" (click)="addmatnivTosection(section,i)" class="btn_ok btn_02" name="" type="submit" value="OK">
+                        </div>
+                        <div class="col-md-4"></div>
+                      </div>
+                      <div class="row top_br">
+                        <div class="col-md-4">
+                          <label class="text_plus" (click)="shownewmatrowsec[i]=true;newsectionmatrow[i]={}">+ Ajouter une matière</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row top_br" *ngIf="(!updateniveau&&!updateniveausec)||createniveausec">
+              <div class="col-md-4">
+                <label class="text_orange" (click)="addSection(activeNiv)">+ Ajouter une section - option </label>
+              </div>
+            </div>
+            <div class="row top_br">
+              <div class=" col-md-4">
+                <label class="text_form" *ngIf="activeNiv == 0">
+                  <input class="btn_en_fiche" style="width: 200px" type="submit" data-dismiss="modal" value="Annuler">
+                </label>
+                <label class="text_form greenbtn" (click)="precedent()" *ngIf="activeNiv >0">
+                  < Précèdent Niveau {{activeNiv}} </label>
+
+              </div>
+              <div class=" col-md-3"></div>
+              <div class=" col-md-4">
+                <label class="text_form" *ngIf="activeNiv == (niveau.length-1)">
+                  <input class="btn_en_fiche" id="clickInfo" (click)="createNiveau()" style="width: 300px" type="submit" value="Valider">
+                </label>
+                <label class="text_form greenbtn" (click)="next();" *ngIf="(activeNiv < (niveau.length-1))">
+                  Niveau {{activeNiv+2}} suivant >
+                </label>
+
+              </div>
+            </div>
+            <!-- ----- -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

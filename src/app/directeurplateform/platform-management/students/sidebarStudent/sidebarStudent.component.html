@@ -1,0 +1,323 @@
+<div class="col-md-12 Dr_titre_sideMD"  >
+  <span *ngIf="mode=='create'" >  Ajouter une fiche élève</span>
+  <span *ngIf="mode=='update'" >  Modifier une fiche élève</span>
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+
+<form #formulaire="ngForm">
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+
+    <div class="col-xs-4 col-md-4">Identifiant de connexion</div>
+    <div class="col-xs-8 col-md-8">
+        <input type="email"  class="form-control Dr_input" name="login" [(ngModel)]="eleve.login" required>
+    </div>
+  </div>
+
+  <input type="text"  class="form-control Dr_input" name="id" [(ngModel)]="eleve.id"  *ngIf="mode=='update'" hidden  style="display: none;" readonly>
+  <input type="text"  class="form-control Dr_input" name="idCU" [(ngModel)]="eleve.idCU" *ngIf="mode=='update'" hidden style="display: none" readonly >
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Photo de profil ou avatar</div>
+  <div class="col-xs-8 col-md-8">
+    <div class="Dr_icon_MD" [style.background-image]="eleve.avatar!=''?('url('+ eleve.avatar+')'):('url(../../assets/images/directeur/avatar.png)')  "  >
+      <input autocomplete="off" class="file_input_Dr" type="file"
+             name="input-file-preview" (change)="onAvatarSelected($event)" />
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Nom *</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text"  class="form-control Dr_input" name="nom" [(ngModel)]="eleve.nom" required (change)="selectNom($event)">
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Prénom *</div>
+  <div class="col-xs-8 col-md-8">
+    <input type="text"  class="form-control Dr_input" name="prenom" [(ngModel)]="eleve.prenom" required>
+
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Genre *</div>
+  <div class="col-xs-8 col-md-8">
+
+    <select class="form-control Dr_input"   name="genre" [(ngModel)]="eleve.genre" required>
+      <option value="garçon"> Garçon </option>
+      <option value="fille"> Fille </option>
+    </select>
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Date de naissance</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="date"  class="form-control Dr_input" name="dateN" [(ngModel)]="eleve.dateN" >
+
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Adresse postale</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="adressePostale" [(ngModel)]="eleve.adressePostale" >
+
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Complément d'adresse</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="ComplementAdresse" [(ngModel)]="eleve.ComplementAdresse" >
+  </div>
+</div>
+
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Ville</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="ville" [(ngModel)]="eleve.ville" >
+
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Code postal</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="codePostal" [(ngModel)]="eleve.codePostal" >
+  </div>
+</div>
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">INE</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="INE" [(ngModel)]="eleve.INE" >
+
+  </div>
+</div>
+
+<!--<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Ecole *</div>
+  <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input" name="nomE" [(ngModel)]="eleve.nomE" required >
+    </div>
+</div>-->
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Classe *</div>
+  <div class="col-xs-8 col-md-8">
+
+    <select class="form-control Dr_input"   name="abrege" [(ngModel)]="eleve.abrege" required>
+      <option selected [ngValue]="null" > {{eleve.nomC}} </option>
+      <option *ngFor=" let classe of listClasses "  [ngValue]="classe.id" class="label_model"> {{classe.nomC}}</option>
+    </select>
+
+    </div>
+</div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4">Redoublant</div>
+  <div class="col-xs-8 col-md-8">
+    <div class="toggle" >
+      <input type="checkbox"  class="form-control Dr_input" name="redoublant"  [(ngModel)]="eleve.redoublant"  id="alibaba"  >
+      <label for="alibaba" style="background: #fdb602 !important"></label>
+    </div>
+    </div>
+</div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Provenance </div>
+    <div class="col-xs-8 col-md-8">
+        <input type="text"  class="form-control Dr_input" name="provenance" [(ngModel)]="eleve.provenance" >
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Date d'entrée</div>
+    <div class="col-xs-8 col-md-8">
+        <input type="date"  class="form-control Dr_input" name="dateEntree" [(ngModel)]="eleve.dateEntree" >
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Date de sortie</div>
+    <div class="col-xs-8 col-md-8">
+        <input type="date"  class="form-control Dr_input" name="dateSortie" [(ngModel)]="eleve.dateSortie" >
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Motif</div>
+    <div class="col-xs-8 col-md-8">
+        <input type="text"  class="form-control Dr_input" name="motifSortie" [(ngModel)]="eleve.motifSortie" >
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Mot de passe</div>
+    <div class="col-xs-8 col-md-8">
+        <input type="password"  class="form-control Dr_input" name="password" [(ngModel)]="eleve.password" required>
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4">Confirmation mot de passe</div>
+    <div class="col-xs-8 col-md-8">
+        <input type="password"  class="form-control Dr_input" name="password2" [(ngModel)]="eleve.password" required>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br">
+    <div  class="col-xs-8 col-md-8 Dr_bold">Matières Optionnelles</div>
+
+  </div>
+
+<div *ngIf="mode=='update'" >
+
+  <div class="col-xs-12 col-md-12 top_br" *ngFor="let mat of dataMatieres; let k=index" >
+    <div class="col-xs-4 col-md-4"> </div>
+    <div class="col-xs-7 col-md-7">
+      <input type="text"  class="form-control Dr_input"  name="itemUp{{k}}" [(ngModel)]="mat.nomMatiere" >
+    </div>
+    <div class="col-xs-1 col-md-1 Dr_pd_left">
+      <button class="icon_supp  " type="submit" (click)="deleteRowUp(k)"></button>
+    </div>
+  </div>
+</div>
+
+  <div class="col-xs-12 col-md-12 top_br" *ngFor="let itemrow of list; let i=index">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-7 col-md-7">
+      <input type="text"  class="form-control Dr_input"  name="item{{i}}" [(ngModel)]="itemrow.nomMatiere" >
+    </div>
+    <div class="col-xs-1 col-md-1 Dr_pd_left">
+      <button class="icon_supp  " type="submit" (click)="deleteRow(i)"></button>
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-7 col-md-7">
+      <select class="form-control Dr_input"   [(ngModel)]="myselectmatiere"  name="idMatiere">
+        <option value="null"> Sélèctionner une matiére </option>
+        <option  *ngFor=" let matiere of listMatieresOptionnels"    [ngValue]="matiere"> {{matiere.nomMatiere}}</option>
+      </select>
+    </div>
+    <div class="col-xs-1 col-md-1 Dr_pd_left">
+      <button   class="Dr_icon_ok  " type="submit" (click)="addNewRow()">OK</button>
+
+    </div>
+  </div>
+
+
+
+  <pre style="display: block;"   ngModel *ngIf="mode=='create'">{{list| json}}</pre>
+  <pre style="display: block;"  *ngIf="mode=='update'"  >{{list| json}}</pre>
+  <pre style="display: block;"  *ngIf="mode=='update'"  >{{dataMatieres| json}}</pre>
+
+
+  <input type="hidden" class="input_01" name="ListMatieresOPt" [(ngModel)]="list" ngModel *ngIf="mode=='create'" >
+  <input type="hidden" class="input_01" name="listeUpMatieres1" [(ngModel)]="list" ngModel *ngIf="mode=='update'" >
+  <input type="hidden" class="input_01" name="listeUpMatieres2" [(ngModel)]="dataMatieres" ngModel *ngIf="mode=='update'" >
+
+
+  <div  class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-8 col-md-8 Dr_bold">Compte Parents</div>
+
+  </div>
+
+
+  <div  class="table-responsive-sm top_br">
+    <table class="table ">
+      <tbody  class="">
+      <tr  *ngFor="let parent of dataParents; let p=index" >
+        <td>
+        </td>
+        <td  class=" border_td ">
+          <img alt="" class="rounded-circle" src="../../../assets/images/admin/avatar_parent.png" width="47px">
+        </td>
+        <td class=" border_td"> {{parent.nomP}} {{parent.prenomP}}</td>
+        <td class=" border_td"></td>
+        <td  class=" border_td"> {{parent.emailP}}</td>
+        <td  class="border_td">
+          <label class="text_label Dr_label">
+            <button type="submit" class="icon_supp right "   ></button>
+          </label>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+    <table class="table ">
+      <tbody  class="">
+      <tr  *ngFor="let itemrowP of listParent; let p=index" >
+        <td>
+        </td>
+        <td  class=" border_td ">
+          <img alt="" class="rounded-circle" src="../../../assets/images/admin/avatar_parent.png" width="47px">
+        </td>
+        <td class=" border_td">{{selectedNom}}  </td>
+        <td class=" border_td"></td>
+        <td  class=" border_td"> {{itemrowP}}</td>
+        <td  class="border_td">
+          <label class="text_label Dr_label">
+            <button type="submit" class="icon_supp right "  (click)="deleteRowParent(p)" ></button>
+          </label>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text"  class="form-control Dr_input"   name="idParent"   [(ngModel)]="selectedEmail">
+    </div>
+  </div>
+  <pre style="display:none "  ngModel *ngIf="mode=='create'"  >{{listParent| json}}</pre>
+
+
+  <input type="hidden" class="input_01" name="ListParentsEleve" [(ngModel)]="listParent" ngModel  ngModel *ngIf="mode=='create'">
+
+
+
+
+  <pre style="display:none" ngModel *ngIf="mode=='update'" >{{dataParents | json}}</pre>
+  <pre style="display:none" ngModel *ngIf="mode=='update'" >{{listParent| json}}</pre>
+  <input type="hidden" class="input_01" name="listParentEleve1" [(ngModel)]="dataParents" ngModel ngModel *ngIf="mode=='update'" >
+  <input type="hidden" class="input_01" name="listParentEleve2" [(ngModel)]="listParent" ngModel ngModel *ngIf="mode=='update'" >
+
+
+
+  <div  class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-8 Dr_text_Imprim">
+
+    <button class ="Dr_btn_add" style="margin-right: 15px;" (click)="addNewParent()" >
+  <i class="fa fa-plus"></i>
+    </button >
+      + Ajouter un parent
+
+    </div>
+    <div  class="col-xs-4 col-md-4">
+
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-4 col-md-4"></div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='update'">Annuler</button>
+      <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="mode=='create'" (click)="formulaire.reset()">Annuler</button>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <button type="submit" class="form-control DrBtn"  closeSidebar   (click)="ajouterEleve(formulaire.value);formulaire.reset();">Enregistrer</button>
+    </div>
+  </div>
+</form>

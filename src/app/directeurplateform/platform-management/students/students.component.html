@@ -1,0 +1,157 @@
+<div class="Dr_sidemodal">
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+      <app-sidebarStudent *ngIf="ready"  [eleve]="eleve"  [mode]="mode" ></app-sidebarStudent>
+
+    </ng-sidebar>
+    <div ng-sidebar-content>
+
+      <div class="container-fluid Dr_top_100" >
+        <div class="row">
+
+          <div class="col-md-10" >
+            <div class="col-md-4 col-lg-offset-5 top_br text-center" >
+              <span class="Dr_titre_01 ">Liste des élèves</span>
+            </div>
+          </div>
+          <div class="col-md-2 top_br" >
+            <div class="form-group has-feedback">
+              <input type="text" class="form-control Dr_rech" id="inputSuccess2" placeholder="Rechercher par nom " [(ngModel)]="term" />
+              <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+              <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4">
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-3">
+            <button type="submit" class="form-control btn_add DrBTeleve" (click)="_toggleSidebar();initialiseSidebar()">    Ajouter un élève </button>
+
+          </div>
+        </div>
+        <div class="table-responsive-sm top_br" >
+          <table class="table" [mfData]="data  | eleves:term" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <tbody class="">
+            <tr>
+              <td class="border_td"></td>
+              <td class="titre_table border_td ">Nom</td>
+              <td class="titre_table border_td">Classe </td>
+              <td class="titre_table border_td">Parent(s)</td>
+              <td class="border_td"></td>
+            </tr>
+            <tr class="border_col" *ngFor="let eleve of mf.data" >
+              <td class="td_dir-img" >
+                <div class="img_liste" [style.background-image]="eleve.avatar!=''?('url('+ eleve.avatar+')'):('url(../assets/images/admin/iconeGroupe.png)')  ">
+                </div>
+              </td>
+              <td >
+                <label  class="text_label Dr_label">
+                  {{eleve.nom}} {{eleve.prenom}}
+                </label>
+              </td>
+              <td >
+                <label  class="text_label Dr_label">
+                  {{eleve.nomC}}
+                </label>
+              </td>
+              <td >
+                  <div *ngIf="estNonVidee(eleve.Parents?.avatarParents ); then thenBlock1 else elseBlock1"></div>
+                  <ng-template #thenBlock1>
+                    <img class="img_liste" src="../../../assets/uploads/{{eleve.Parents?.avatarParents}}" >
+                  </ng-template>
+                  <ng-template #elseBlock1>
+                    <img src="../../../../assets/images/admin/avatar_parent.png" alt="" width="47px" class="rounded-circle">
+                  </ng-template>
+              </td>
+
+              <td >
+                <label class="text_label Dr_label">
+
+                </label>
+              </td>
+
+              <td >
+                <label  class="text_label Dr_label">
+                  <button type="submit" class="icon_modif right "   (click)="_toggleSidebar();getEleve(eleve);" ></button>
+                </label>
+
+              </td>
+              <td class="w_01 ">
+                <label class="text_label Dr_label">
+                  <button type="submit" class="icon_supp right "  data-toggle="modal" data-target="#ModalSupp"  (click)="modalSupp(eleve)"></button>
+                </label>
+
+              </td>
+
+            </tr>
+            <tr *ngIf="data.length==0">
+              <td colspan="6" class="text-center nothingToshow">
+                Aucune résultat à afficher
+              </td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="data.length!=0">
+            <tr>
+              <td colspan="6">
+                <div class="row btn_Bas">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-6" >
+                    <div class="Dr_pagination text-center">
+                      <mfBootstrapPaginator></mfBootstrapPaginator>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2"></div>
+                </div>
+
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="row btn_Bas">
+          <div class="col-md-3"></div>
+          <div class="col-md-6" >
+            <button type="submit" class="Impr_btn" (click)="generationPDF()" >Imprimer la liste</button>
+            <button type="submit" class="Expo_btn" (click)="exportationExcel()"> Export EXCEL</button>
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+  </ng-sidebar-container>
+</div>
+
+
+<div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal">Etes vous sur(e) de supprimer l'élève « {{tmpeleve.nom}} {{tmpeleve.prenom}}»?  </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp "  data-dismiss="modal"  value="OUI" (click)="supprimerEleve(tmpeleve.id)">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

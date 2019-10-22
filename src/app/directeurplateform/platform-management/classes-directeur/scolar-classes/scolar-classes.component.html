@@ -1,0 +1,171 @@
+<div class="Dr_sidemodal" >
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right">
+      <app-sidebarscolarclass  (update)="updated()" ></app-sidebarscolarclass>
+    </ng-sidebar>
+    <div ng-sidebar-content  >
+        <div class="container-fluid Dr_top_100">
+            <div class="row">
+
+              <div class="col-xs-9 col-md-10" >
+                <div class="col-md-4 col-xs-offset-5 top_br" >
+                  <button type="submit" class="ang_nav left_radius active_ang"   [routerLink]="['/directeurplateform/platform-management/classes/scolar-class']" >Classes</button>
+                  <button type="submit" class="ang_nav right_radius "  [routerLink]="['/directeurplateform/platform-management/classes/scolar-level']" >Niveaux</button>
+                </div>
+              </div>
+              <div class="col-md-2 top_br" >
+                <div class="form-group has-feedback">
+                  <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+                  <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+                  <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4">
+            <span class="titre_table"> Nom du dossier </span> >
+            <span class="titre_table"> Nom du dossier</span>
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-3">
+            <button type="submit" class="form-control btn_add DrBTClass" (click)="initClass()" >
+               Ajouter une classe</button>
+          </div>
+        </div>
+        <div class="table-responsive-sm top_br" style="position: relative;z-index: 1;">
+          <table class="table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <tbody class="">
+              <tr>
+                <td class="border_td"></td>
+                <td class="titre_table border_td">
+                  Nom
+                </td>
+                <td class="titre_table border_td">
+                   Abrégé
+                </td>
+                <td class="titre_table border_td">Niveau d’Apprentissage</td>
+                <td class="titre_table border_td">Découpage</td>
+                <td class="titre_table border_td">Format de notation</td>
+                <td class="titre_table border_td">Nombres d’élèves</td>
+                <td class="titre_table border_td">Connection parents</td>
+                <td class="border_td"></td>
+              </tr>
+              <tr *ngFor="let class of mf.data;let i=index" class="border_col">
+                <td>
+                  <div class="img_liste" [style.background-image]="class.icone!=''?('url('+ class.icone+')'):('url(../assets/images/admin/iconeGroupe.png)')  ">
+                  </div>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{class.nomC}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{class.abrege}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{class.Niveaux?.libelleN}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{class.Decoupages?.libelleD}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{class.formatNotation}}
+                  </label>
+                </td>
+                <td>
+                  <label style="margin-top: 10px" class="text_label Dr_label">
+                    {{class.nombreEleves}}
+                  </label>
+                </td>
+                <td>
+                  <ngx-gauge [type]="gaugeType" [value]="class.conx_parent" [label]="gaugeLabel" [append]="gaugeAppendText" [size]="gaugeSize">
+                  </ngx-gauge>
+                </td>
+                <td (click)='generateFicheClass(class)'>
+                  <label style="margin-top: 10px" class="text_label Dr_label Dr_text_Imprim">
+                    Imprimer
+                  </label>
+                </td>
+
+
+                <td>
+                  <button type="submit" (click)="openupdateclassModal(class)" class="icon_modif right"></button>
+                </td>
+                <td class="w_01 ">
+                  <button type="submit" class="icon_supp right"  data-toggle="modal" data-target="#ModalSupp" (click)="opendeleteclassModal(class)"></button>
+                </td>
+
+              </tr>
+              <tr *ngIf="data.length==0">
+                <td colspan="8" class="text-center nothingToshow">
+                  Aucune résultat à afficher
+                </td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="data.length!=0">
+              <tr>
+                <td colspan="11">
+                  <div class="row btn_Bas">
+                    <div class="col-xs-2 col-md-2"></div>
+                    <div class="col-xs-6 col-md-6">
+                      <div class="Dr_pagination text-center">
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="row btn_Bas" *ngIf="data.length!=0">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <button type="submit" (click)="generationPDF()" class="Impr_btn">Imprimer la liste</button>
+            <button type="submit" (click)="exportationExcel()" class="Expo_btn">Export EXCEL</button>
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+
+  </ng-sidebar-container>
+</div>
+
+ <!-- delete Modal -->
+ <div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+    <div class="modal-dialog ">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+
+        </div>
+
+        <div class="modal-body text-center">
+          <label class="Dr_lab_Modal"> êtes-vous sûr(e) de vouloir supprimer «{{newclass.nomC}}» ?   </label>
+          <div class="Dr_listeBtnModal">
+            <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+            <input type="submit" name="" class="Dr_btn_Msupp "  (click)="deleteClasse(newclass.id)" data-dismiss="modal"   value="OUI">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>

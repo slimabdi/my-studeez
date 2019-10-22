@@ -1,0 +1,264 @@
+<div class="col-md-12 Dr_titre_sideMD">
+  <span *ngIf="!updateniveau&&!updateniveausec&&!createniveausec">Ajouter un niveau</span>
+  <span *ngIf="updateniveau||updateniveausec||createniveausec">Mise à jours un niveau</span>
+  <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i>
+</div>
+<div *ngIf="createniveausec">
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class=" col-xs-4 col-md-4">
+      Titre niveau {{activeNivindex + 1}} *
+    </div>
+    <div class="col-xs-8 col-md-8" *ngIf="monNivSecNew[activeNiv]">
+      <input type="text" (change)="niverr=((monNivSecNew[activeNiv].name==''&&createniveausec))" [disabled]="true" [(ngModel)]="monNivSecNew[activeNiv].name"
+        name="nivname{{activeNiv}}" class="form-control Dr_input">
+      <ul style="padding-left: 20px;" *ngIf="niverr">
+        <li style="color: #b7402c;">Ce champ est obligatoire</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- Creation de section -->
+  <div *ngIf="monNivSecNew[activeNiv]">
+    <div class="sectiondiv" *ngFor="let section of monNivSecNew[activeNiv].sections;let i=index">
+      <div>
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class=" col-xs-4 col-md-4">
+            Titre section {{indexSecActive}}*
+          </div>
+          <div class="col-xs-7 col-md-8">
+            <input type="text" [(ngModel)]="section.name" (change)="section.err=(section.name=='');monNivSecNew[activeNiv].err=(section.name=='')"
+              class="form-control Dr_input">
+            <ul style="padding-left: 20px;" *ngIf="section.err">
+              <li style="color: #b7402c;">Ce champ est obligatoire</li>
+            </ul>
+          </div>
+
+          <i class="fa fa-sort-asc sort_icon_Dr sort_icon_asc" (click)="open[i]=!open[i]" *ngIf="open[i]&&!updateniveausec&&!createniveausec"
+            aria-hidden="true"></i>
+          <i class="fa fa-sort-desc sort_icon_Dr" *ngIf="!open[i]&&!updateniveausec&&!createniveausec" (click)="open[i]=!open[i]" aria-hidden="true"></i>
+
+        </div>
+        <div class="panel-body" *ngIf="open[i]">
+          <div class="col-md-12 col-xs-12" *ngIf="section.matieres.length>0">
+            <div class="col-xs-7 col-md-7">
+              Matières enseignées
+            </div>
+            <div class="col-xs-3">
+              cofficient
+            </div>
+          </div>
+          <div>
+            <div class="col-xs-12 col-md-12 top_br" *ngFor="let matList of section.matieres;let x=index">
+              <div class="col-xs-7 col-md-7">
+                <select class="form-control Dr_input  " name="matieres_select{{x}}" [(ngModel)]="matList.idmat" disabled>
+                  <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                </select>
+              </div>
+              <div class="col-xs-3">
+                <input class="form-control Dr_input" [(ngModel)]="matList.coef" name="cofoeee" type="number" min="0">
+              </div>
+              <div  class="col-xs-2">
+                  <input class="btn_supp btn_01" (click)="deleteNivfromSec(x,i,section.matieres,activeNiv)" name="" type="">
+
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-12 top_br" *ngIf="shownewmatrowsec[i]&&newsectionmatrow[i]">
+              <div class="col-xs-7 col-md-7">
+                <select class="form-control Dr_input  " name="newsectionmatrow[i]" [(ngModel)]="newsectionmatrow[i].idmat">
+                  <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-md-3">
+                <input class="form-control Dr_input" type="number" min="0" name="coefsecmat" [(ngModel)]="newsectionmatrow[i].coef">
+              </div>
+              <div  class="col-xs-2">
+                  <input _ngcontent-c5="" (click)="addmatnivTosection(section,i)" class="Dr_icon_ok pull-right" name="" type="submit" value="OK">
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-12 top_br">
+              <label class="Dr_text_Imprim" (click)="shownewmatrowsec[i]=true;newsectionmatrow[i]={}">+ Ajouter une matière</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+
+    <div class="col-xs-6">
+      <button type="submit" class="form-control Dr_btn_02" closeSidebar>Annuler</button>
+    </div>
+
+    <div class="col-xs-6">
+      <button type="submit" (click)="addSectiontoNiv()" class="form-control btn_add" closeSidebar>Enregistrer</button>
+    </div>
+  </div>
+  <!-- ----- -->
+</div>
+<div *ngIf="niveau[activeNiv]&&!createniveausec">
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class=" col-xs-4 col-md-4">
+      Titre niveau {{activeNivindex + 1}} *
+    </div>
+    <div class="col-xs-8 col-md-8">
+      <input type="text" (change)="niverr=(niveau[activeNiv].name=='')" [disabled]="updateniveausec" [(ngModel)]="niveau[activeNiv].name"
+        name="nivname{{activeNiv}}" class="form-control Dr_input">
+      <ul style="padding-left: 20px;" *ngIf="niverr">
+        <li style="color: #b7402c;">Ce champ est obligatoire</li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="col-xs-12 col-md-12 top_br" *ngIf="!updateniveau&&!updateniveausec">
+    <div class=" col-xs-4 col-md-4">
+      Ajouter les matières
+    </div>
+    <div class="col-xs-8 col-md-8 ">
+      <ng-select class="Dr_input " *ngIf="matieresss.length>0"  (deselected)="removed(activeNiv,$event)" (selected)="showselected(activeNiv)" [(ngModel)]="matListNiveau[activeNiv]"
+          notFoundMsg="aucune resultat" [options]="matieresss" [multiple]="true" name="add2"></ng-select>
+<select *ngIf="matieresss.length==0" class="input_01 style_select" disabled>
+ <option>aucune resultat</option>
+</select>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 top_br" *ngIf="!updateniveausec">
+    <div class="panel panel-default">
+
+      <div class="panel-body">
+
+        <div class="row " *ngIf="niveau[activeNiv].matieres.length>0">
+          <div class="col-xs-7 col-md-7">
+            Matières enseignées
+          </div>
+          <div class="col-xs-3">
+           cofficient
+          </div>
+        </div>
+
+        <div >
+          <div class="row top_br" *ngFor="let matList of niveau[activeNiv].matieres;let i=index" [style.display]="matList.state=='delete'?'none':'block'">
+
+            <div class="col-xs-7 col-md-7">
+              <select class="form-control Dr_input  " name="matieres{{i}}" [(ngModel)]="matList.idmat" disabled>
+                <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3">
+              <input class="form-control Dr_input" [(ngModel)]='matList.coef' type="number" min="0">
+            </div>
+            <div  class="col-xs-2">
+              <input class="btn_supp btn_01" (click)="deletematNiv(i,activeNiv)">
+            </div>
+          </div>
+
+          <div class="row top_br" *ngIf="shownewmatrow">
+
+            <div class="col-xs-7 col-md-7">
+              <select class="form-control Dr_input  " name="newmatrow" [(ngModel)]="newmatrow.idmat">
+                <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <input class="form-control Dr_input" type="number" min="0" [(ngModel)]="newmatrow.coef">
+            </div>
+<div  class="col-xs-2">
+  <input  (click)="addmatniv(activeNiv)" class="pull-right Dr_icon_ok" name="" type="submit" value="OK">
+</div>
+          </div>
+
+          <div class="col-xs-12 col-md-12 top_br">
+            <label class="Dr_text_Imprim" (click)="shownewmatrow=true;newmatrow={}">+ Ajouter une matière</label>
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- Creation de section -->
+  <div *ngIf="!updateniveau">
+    <div class="sectiondiv" *ngFor="let section of niveau[activeNiv].sections;let i=index">
+      <div *ngIf="updateniveausec&&open[i]||(!updateniveausec&&!updateniveau)">
+        <div class="col-xs-12 col-md-12 top_br">
+          <div class=" col-xs-4 col-md-4">
+            Titre section {{i+1}}*
+          </div>
+          <div class="col-xs-7 col-md-7">
+            <input type="text" [(ngModel)]="section.name" (change)="section.state='update';section.err=(section.name=='');niveau[activeNiv].err=(section.name=='')"
+              class="form-control Dr_input">
+            <ul style="padding-left: 20px;" *ngIf="section.err">
+              <li style="color: #b7402c;">Ce champ est obligatoire</li>
+            </ul>
+          </div>
+          <i class="fa fa-sort-asc sort_icon_Dr sort_icon_asc" (click)="open[i]=!open[i]" *ngIf="open[i]&&!updateniveausec&&!createniveausec"
+            aria-hidden="true"></i>
+          <i class="fa fa-sort-desc sort_icon_Dr" *ngIf="!open[i]&&!updateniveausec&&!createniveausec" (click)="open[i]=!open[i]" aria-hidden="true"></i>
+
+        </div>
+        <div class="panel-body" *ngIf="open[i]">
+          <div class="row " *ngIf="section.matieres&&section.matieres.length>0">
+            <div class="col-xs-7 col-md-7">
+              Matières enseignées
+            </div>
+            <div class="col-xs-3">
+              cofficient
+            </div>
+          </div>
+          <div  class="top_br">
+            <div class="row" *ngFor="let matList of section.matieres;let x=index" [style.display]="matList.state=='delete'?'none':'block'">
+              <div class="col-xs-7 col-md-7 ">
+                <select class="form-control Dr_input  " name="matieres_select{{x}}" [(ngModel)]="matList.idmat" disabled>
+                  <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                </select>
+              </div>
+              <div class="col-xs-3 ">
+                <input class="form-control Dr_input" [(ngModel)]="matList.coef" name="cofoeee" type="number" min="0">
+              </div>
+              <div class="col-xs-2 ">
+                  <input class="btn_supp btn_01" (click)="deleteNivfromSec(x,i,section.matieres,activeNiv)" name="" type="">
+              </div>
+            </div>
+            <div class="row top_br" *ngIf="shownewmatrowsec[i]&&newsectionmatrow[i]">
+              <div class="col-xs-7 top_br">
+                <select class="form-control Dr_input  " name="{{newsectionmatrow[i]}}" [(ngModel)]="newsectionmatrow[i].idmat">
+                  <option *ngFor=" let mati of matieres" [value]="mati.id"> {{mati.nomMatiere}}</option>
+                </select>
+              </div>
+              <div class="col-xs-3 col-md-3 top_br">
+                <input class="form-control Dr_input" type="number" min="0" name="coefsecmat" [(ngModel)]="newsectionmatrow[i].coef">
+              </div>
+              <div  class="col-xs-2 top_br">
+                <input (click)="addmatnivTosection(section,i)"  class="pull-right Dr_icon_ok" name="" type="submit" value="OK">
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-12 top_br">
+              <label class="Dr_text_Imprim" (click)="shownewmatrowsec[i]=true;newsectionmatrow[i]={}">+ Ajouter une matière</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br" *ngIf="(!updateniveau&&!updateniveausec)||createniveausec">
+    <label class="Dr_text_Imprim" (click)="addSection(activeNiv)">+ Ajouter une section - option </label>
+  </div>
+
+  <div class="col-xs-12 col-md-12 top_br">
+    <div class="col-xs-6">
+      <button type="submit" *ngIf="activeNiv == 0" class="form-control Dr_btn_02" closeSidebar>Annuler</button>
+      <button type="submit" *ngIf="activeNiv > 0" (click)="precedent()" class="form-control Dr_btn_02">
+        < Précèdent Niveau {{activeNiv}}</button>
+    </div>
+
+    <div class="col-xs-6">
+      <button type="submit" (click)="createNiveau()" *ngIf="activeNiv == (niveau.length-1)" class="form-control DrBtn" closeSidebar >Enregistrer</button>
+      <button type="submit" (click)="next();" *ngIf="(activeNiv < (niveau.length-1))" class="form-control DrBtn"> Niveau {{activeNiv+2}} suivant ></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="col-md-9 col-md-offset-3 AdTop"  >
+  <br>
+
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="float: right;"><p  class="Dconnexion">Dernière Connexion  : {{dateDeconx}} </p></div>
+  </div>
+
+  <br>
+  <!--- -- -->
+  <div class="row" >
+    <div class=" col-md-12"><label class="text_form tab_ajouter" >Étape 1: </label></div>
+  </div>
+
+  <div class="row" >
+    <div class=" col-md-12"><label class="  text_form" >Sélectionner un Groupe Scolaire  </label></div>
+    </div>
+
+    <div class="row">
+      <div class=" col-md-12"> <label class="text_form tab_ajouter" >Étape 2: </label></div>
+    </div>
+
+    <div class="row">
+      <div class=" col-md-12"><label class="text_form" >Sélectionner une école   </label></div>
+    </div>
+
+      <div class="row">
+        <div class=" col-md-12"><label class="text_form tab_ajouter" >Étape 3: </label></div>
+      </div>
+  <div class="row">
+    <div class=" col-md-12"><label class="text_form" >Saisir les correspondances    </label></div>
+  </div>
+  <div class="row">
+    <div class=" col-md-12"><label class="text_form tab_ajouter" >Étape 4: </label></div>
+  </div>
+<div class="row">
+<div class=" col-md-12"><label class="text_form" >Importer un fichier    </label></div>
+</div>
+  <br>
+  <br>
+  <br>
+  <form  >
+
+  <div class="row " >
+    <div class=" col-md-4"><label class="text_form" >Choisir un groupe</label></div>
+    <div class=" col-md-4">
+<select  class="input_01 style_select" [(ngModel)]="nameGroupe" name="nameGroupe" >
+        <option    [value]="nameGroupe" > {{nameGroupe}}  </option>
+      </select>
+    </div>
+    <div class=" col-md-4"></div>
+  </div>
+    <br>
+    <div class="row " >
+      <div class=" col-md-4"><label class="text_form" >Choisir une école</label></div>
+      <div class=" col-md-4">
+        <select name="NameEcole"  class="input_01 style_select" >
+            <option >Nom école</option>
+            <option *ngFor=" let e of ecoles" >  {{e.nomE}}</option>
+        </select>
+      </div>
+      <div class=" col-md-4"></div>
+    </div>
+    <br>
+    <div class="row " >
+      <div class=" col-md-4"><label class="text_form" >Saisir les correspondances</label></div>
+      <div  class="col-md-12" *ngFor="let obj of lstCorrespon;let i=index"  >
+          <div class=" col-md-4"></div>
+        <div class="col-md-3">
+          <ng-select class="input_01 style_select"  style="padding-left: 0px"
+            notFoundMsg="seules les lettres de 'A' à 'Z' sont autorisées" [options]="letters" [(ngModel)]="obj.col" [multiple]="false" name="letters{{i}}"></ng-select>
+        </div>
+
+        <div class="col-md-4">
+          <ng-select class="input_01 style_select"   style="margin-left:40px;padding-left: 0px"
+            notFoundMsg="Cette attribut n'est pas disponible" [options]="lstCorresponPossible" [(ngModel)]="obj.label" [multiple]="false" name="labels{{i}}"></ng-select>
+        </div>
+        <input  class="btn_ok btn_02" name="" type="submit"   (click)="addCorr()" value="OK">
+       </div>
+     <div  class="col-md-12">
+        <div class=" col-md-4"></div>
+      <div class="col-md-3">
+        <ng-select class="input_01 style_select"  style="padding-left: 0px"
+          notFoundMsg="seules les lettres de 'A' à 'Z' sont autorisées" [options]="letters" [(ngModel)]="objCorr.col" [multiple]="false" name="add2"></ng-select>
+      </div>
+
+      <div class="col-md-4">
+        <ng-select class="input_01 style_select"   style="margin-left:40px;padding-left: 0px"
+          notFoundMsg="Cette attribut n'est pas disponible" [options]="lstCorresponPossible" [(ngModel)]="objCorr.label" [multiple]="false" name="add2"></ng-select>
+      </div>
+      <input  class="btn_ok btn_02" name="" type="submit"   (click)="addCorr()" value="OK">
+     </div>
+
+    </div>
+    <br>
+
+    <div class="row " >
+      <div class=" col-md-4"><label class="text_form" >Choisir un fichier</label></div>
+      <div class=" col-md-6">
+        <img src="../../../assets/images/admin/importation.png"  class="img_02 btn"  type="button"  (click)="Upload()">
+        <input type="text" class="input_01 image-preview-filename  Importfile"  [(ngModel)]="fileName" name="fileName"  readonly>
+         <span class="fiche_01 spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                              <span class="image-preview-input-title"></span>
+                             <img src="../../../assets/images/admin/trombone.png"  class="img_01 file_imgImp" disabled="file_imgBleu">
+                              <input  class="file_04" type="file"    name="input-file-preview"  (change)="handleFile($event)" /> <!-- rename it -->
+                          </div>
+                     </span>
+
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </form>
+
+
+
+<div>
+
+
+  <div class="row top_br">
+
+
+  </div>
+
+</div>
+</div>

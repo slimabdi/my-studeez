@@ -1,0 +1,170 @@
+<div class="Dr_sidemodal">
+  <ng-sidebar-container style="height: 100vh;position: absolute">
+    <ng-sidebar [(opened)]="_opened" position="right" >
+
+      <app-sidebarparent *ngIf="ready"  [parent]="parent"  [mode]="mode" ></app-sidebarparent>
+
+    </ng-sidebar>
+    <div ng-sidebar-content>
+
+      <div class="container-fluid Dr_top_100" >
+        <div class="row">
+
+          <div class="col-md-10" >
+            <div class="col-md-4 col-lg-offset-5 top_br text-center" >
+              <span class="Dr_titre_01 ">Liste des parents</span>
+            </div>
+          </div>
+          <div class="col-md-2 top_br" >
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+              <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+              <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row top_br">
+          <div class="col-md-4">
+          </div>
+        </div>
+        <div class="row top_br">
+          <div class="col-md-3">
+
+          </div>
+        </div>
+        <div class="table-responsive-sm top_br" >
+          <table class="table   " [mfData]="data | parents:termP" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <tbody class="">
+            <tr>
+              <td class="border_td"></td>
+              <td class="titre_table border_td ">Nom</td>
+              <td class="titre_table border_td">Télèphone </td>
+              <td class="titre_table border_td">Email </td>
+              <td class="titre_table border_td">Lien parenté </td>
+              <td class="titre_table border_td">Elève(s) rattaché(s)</td>
+              <td class="border_td"></td>
+            </tr>
+            <tr class="border_col" *ngFor="let parent of mf.data " >
+
+              <td class="td_dir-img" >
+                <div class="img_liste" [style.background-image]="parent.avatar!=''?('url('+ parent.avatar+')'):('url(../assets/images/admin/iconeGroupe.png)')  ">
+                </div>
+              </td>
+              <td >
+                <label class="text_label Dr_label">
+                  {{parent.nomP}} {{parent.prenomP}}
+                </label>
+              </td>
+              <td >
+                <label  class="text_label Dr_label">
+                  {{parent.tel1}}
+                </label>
+              </td>
+              <td >
+                <label  class="text_label Dr_label">
+                  {{parent.emailP}}
+                </label>
+              </td>
+              <td >
+                <label  class="text_label Dr_label">
+                  {{parent.lienPrente}}
+                </label>
+              </td>
+              <td >
+                <div *ngIf="estNonVidee(parent.Eleves?.avatarEleves ); then thenBlock1 else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                  <img class="img_liste" src="../../../assets/uploads/{{parent.Eleves?.avatarEleves}}" >
+                </ng-template>
+                <ng-template #elseBlock1>
+                  <img src="../../../../assets/images/admin/avatar_eleve.png" alt="" width="47px" class="Dr-cercle_img">
+                </ng-template>
+              </td>
+
+              <td >
+                <label  class="text_label Dr_label">
+
+                </label>
+              </td>
+
+              <td >
+                <label  class="text_label Dr_label">
+                  <button type="submit" class="icon_modif right "   (click)="_toggleSidebar();getParent(parent);" ></button>
+                </label>
+
+              </td>
+              <td class="w_01 ">
+                <label  class="text_label Dr_label">
+                  <button type="submit" class="icon_supp right " data-toggle="modal" data-target="#ModalSuppParent" (click)="modalSupp(parent);"></button>
+
+                </label>
+
+              </td>
+
+            </tr>
+            <tr *ngIf="data.length==0">
+              <td colspan="6" class="text-center nothingToshow">
+                Aucune résultat à afficher
+              </td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="data.length!=0">
+            <tr>
+              <td colspan="6">
+                <div class="row btn_Bas">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-6" >
+                    <div class="Dr_pagination text-center">
+                      <mfBootstrapPaginator></mfBootstrapPaginator>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2"></div>
+                </div>
+
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="row btn_Bas">
+          <div class="col-md-3"></div>
+          <div class="col-md-6" >
+            <button type="submit" class="Impr_btn" (click)="generationPDF()" >Imprimer la liste</button>
+            <button type="submit" class="Expo_btn" (click)="exportationExcel()"> Export EXCEL</button>
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+  </ng-sidebar-container>
+</div>
+
+
+<div id="ModalSuppParent" class="modal fade Dr_modal_supp" role="dialog">
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+
+      </div>
+      <div class="modal-body text-center">
+        <label class="Dr_lab_Modal">Etes vous sur(e) de supprimer le parent « {{tmpparent.nomP}} {{tmpparent.prenomP}}»?  </label>
+        <div class="Dr_listeBtnModal">
+          <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal"   value="Annuler">
+
+          <input type="submit" name="" class="Dr_btn_Msupp "  data-dismiss="modal"  value="OUI" (click)="supprimerparent(tmpparent.id)">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

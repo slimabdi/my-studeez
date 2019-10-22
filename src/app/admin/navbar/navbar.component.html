@@ -1,0 +1,299 @@
+<nav class="navbar navbar-inverse navbar-fixed-top nav_001" >
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand"   ><img src="../../../assets/images/admin/logo.png" width="60%" class="img_logo"></a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-right top-nav menuTop">
+        <li class="dropdown">
+          <a    style="color: #fff;margin-top:5px;font-family: FuturaPT-Medium;font-size: 20px;">{{nom}} {{prenom}}</a>
+        </li>
+        <li class="w3-dropdown-hover">
+          <a    class="w3-button w3-black " data-toggle="collapse" href="#collapseProfile" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <div class="icon_profil" (click)="ModalAfficheUser(id,nom,prenom,avatar,login)"></div>
+          </a>
+        </li>
+        <li class="w3-dropdown-hover">
+          <a    class="w3-button w3-black" data-toggle="dropdown"><div class="icon_setting"></div></a>
+          <div class="w3-dropdown-content w3-bar-block w3-border">
+            <a    class="w3-bar-item w3-button" data-toggle="modal" data-target="#modalPers">Personnaliser 1ère page</a>
+
+          </div>
+
+        </li>
+        <li class="w3-dropdown-hover">
+          <a    class="w3-button w3-black" data-toggle="dropdown"><div class="caret"></div></a>
+          <div class="w3-dropdown-content w3-bar-block w3-border">
+            <a    class="w3-bar-item w3-button Btn_profil">Mon profil</a>
+            <a    (click)="logoutClicked($event)" class="w3-bar-item w3-button Btn_logout">Déconnexion</a>
+          </div>
+
+        </li>
+      </ul>
+
+      <form class="navbar-form navbar-right selectContent" >
+        <select name="SelectName"  (change)="onChange(groupename)"   [(ngModel)]="groupename" name="sel2" class="select-group">
+          <option value="null" >Groupe scolaire : sélectionner  un groupe</option>
+          <option  *ngFor="let g of groupeScolaires | async"  [value]="g.nomBase"> {{g.nomG}} </option>
+        </select>
+      </form>
+
+    </div>
+    <div class="collapse" id="collapseProfile" >
+      <div class="Ad_profil">
+        <div class="col-md-12 top_br" >
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <img src="../../../assets/images/admin/avatar_eleve.png" alt="" width="90px" class="Ad_img_cercle">
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+        <form class="form-horizontal" role="form"   #g="ngForm"   method="post" class="A_form" >
+          <input type="text" hidden    class="control-label label-text input-model"  name="id" ngModel [(ngModel)]="id">
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4">Nom :</div>
+            <div class="col-md-8"><input type="text" class=" Ad_input_profil" name="nom" ngModel [(ngModel)]="nom"></div>
+          </div>
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4">Prénom :</div>
+            <div class="col-md-8"><input type="text" class=" Ad_input_profil" name="prenom" ngModel [(ngModel)]="prenom"></div>
+          </div>
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4">Login :</div>
+            <div class="col-md-8"><input type="text" class=" Ad_input_profil" name="login" ngModel [(ngModel)]="login"></div>
+          </div>
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4">Mot de Passe :</div>
+            <div class="col-md-8"><input type="password" class=" Ad_input_profil"  name="OldPwd" ngModel   [(ngModel)]="OldPwd" required></div>
+          </div>
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4">Nouveau Mot de passe</div>
+            <div class="col-md-8"><input type="password" class=" Ad_input_profil" name="NewPwd" ngModel   [(ngModel)]="NewPwd" required></div>
+          </div>
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4">Confirmer Mot de Passe</div>
+            <div class="col-md-8"><input type="password" class=" Ad_input_profil" name="ConfirmPwd" ngModel   [(ngModel)]="ConfirmPwd" required></div>
+          </div>
+          <div class="col-md-12 top_br"*ngIf="NewPwd!=ConfirmPwd && ConfirmPwd!='' " >
+            <div class="col-md-4"></div>
+            <div class="col-md-8">   <span class="alert alert-danger" >Confirmation mot de passe incorrect</span></div>
+          </div>
+
+
+          <div class="col-md-12 top_br" >
+            <div class="col-md-4"><button type="submit" class="Ad_Annuler">Annuler</button></div>
+            <div class="col-md-8">
+              <button type="submit" class="Ad_btn" (click)="updateUser(g.value)"  [disabled]="!g.valid || NewPwd!=ConfirmPwd" >Modifier</button></div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</nav>
+
+<div class="modal fade" id="modalPers" role="dialog">
+
+  <div class="modal-dialog modal_T R_modal-dialog"  >
+
+    <div class="modal-content R_tab-content" >
+      <div class="modal-header">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+        <h4 class="modal-title titre_ajouter">Personalisation Studeez</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+
+          <div class="tab-content ">
+
+            <form accept-charset="UTF-8"  #p="ngForm"  name="form" id="formAdd" class="form-horizontal A_form" role="form"  method="post" autocomplete="off">
+              <fieldset>
+
+                <div class="row">
+
+                  <div class="col-lg-12">
+                    <div class="col-xs-6 col-sm-4"><label class="tab_ajouter" >Personnalisation externe </label> </div>
+
+                  </div>
+
+                </div>
+                <div class="row row_01" style="margin-top: 20px">
+                  <div class="col-xs-6 col-sm-4"><label class="text_form" >Image page de Connexion:  </label> </div>
+                  <div  class="col-xs-6 col-sm-4">
+                    <div class="input_01 "  data-toggle="tooltip" title="<img src='{{tmp}}/{{pathImagePageCx}}'width='200px' />"  attr.data-original-title="<img src='{{tmp}}/{{pathImagePageCx}}'width='200px' />" >
+                      <input type="text"   name="imageCnx" [(ngModel)]="pathImagePageCx" style="margin-top: 0px!important;"  class=" image-preview-filename inputImg inAjouter" disabled="disabled" ngDefaultControl> <!-- don't give a name === doesn't send on POST/GET -->
+                      <span class=" spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title"></span>
+
+                              <div *ngIf="estNonVidee(pathImagePageCx); then firstImgPcnx else secondImgPcnx "></div>
+                              <ng-template #firstImgPcnx><img src="{{tmp}}/{{pathImagePageCx}}" [(ngModel)]="pathImagePageCx" name="pathImagePageCx2" ngModel  class="file_imgBleu" ngDefaultControl ></ng-template>
+                              <ng-template #secondImgPcnx><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+
+                              <input  style=" position: absolute!important;bottom:15px!important;width: 73%!important;opacity: 0!important;" type="file"  name="input-file-preview"  (change)="onFileSelected($event)"/> <!-- rename it -->
+                          </div>
+                     </span>
+                    </div>
+                    <input type="hidden" name="imgPageCnx" [(ngModel)]="pathImagePageCx"  ngModel ngDefaultControl/>
+                  </div>
+                </div>
+
+                <div class="row row_01" style="margin-top: 20px">
+                  <div class="col-xs-6 col-sm-4"><label class="text_form"  >Logo Page de connexion :   </label> </div>
+                  <div  class="col-xs-6 col-sm-4" >
+                    <div class=" input_01  "  data-toggle="tooltip" title="<img src='{{tmp1}}/{{pathLogoCx}}'width='200px' />"  attr.data-original-title="<img src='{{tmp1}}/{{pathLogoCx}}'width='200px' />"  >
+                      <input type="text"   name="imageLogoCnx" [(ngModel)]="pathLogoCx" style="margin-top: 0px!important;"  class=" image-preview-filename inputImg inAjouter" disabled="disabled" ngDefaultControl> <!-- don't give a name === doesn't send on POST/GET -->
+                      <span class=" spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title"></span>
+
+                              <div *ngIf="estNonVidee(pathLogoCx); then tLogoCnx else NLogoCnx"></div>
+                              <ng-template #tLogoCnx><img src="{{tmp1}}/{{pathLogoCx}}" [(ngModel)]="pathLogoCx" name="pathLogoCx" ngModel class="file_imgBleu" ngDefaultControl></ng-template>
+                              <ng-template #NLogoCnx><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+
+                              <input  style=" position: absolute!important;bottom: 15px!important;width: 73%!important;opacity: 0!important;" type="file"  name="input-file-preview"  (change)="onLogoPageConxSelected($event)"/> <!-- rename it -->
+                          </div>
+                     </span>
+                    </div>
+                    <input type="hidden" name="logoPageCnx" [(ngModel)]="pathLogoCx"  ngModel ngDefaultControl/>
+                  </div>
+                </div>
+
+
+                <br>
+                <div class="row row_01">
+                  <div class="col-xs-6 col-sm-4"><label class="text_form" >Couleur Externe:  </label> </div>
+                  <div class="col-sm-4 color_01">
+                    <div  class="input-group colorpicker-component colorpicker-element input_01 " style="margin-top: 0px!important;"  type="form-control"  >
+                      <label class="form-control ">
+                        <input type="text" [value]="color" class="col-xs-11 col-md-11 Ad_input_color"  disabled>
+                        <button type="submit" [style.background]="color" [(colorPicker)]="color" class="Ad_color" [cpPosition]="'left'" ></button>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+
+                  <div class="col-lg-12">
+                    <div class="col-xs-6 col-sm-4"><label class="tab_ajouter" >Page de présentation </label> </div>
+
+                  </div>
+
+                </div>
+
+                <div class="row " style="margin-left: 20px;margin-top: 20px">
+                  <div class="col-xs-6 col-sm-4" ><label class="text_form" style="margin-left: 15px !important;">Insérer une photo ou une image</label></div>
+                  <div class="col-xs-6 col-sm-4 " >
+                    <input type="text" class="input_01  titrPre"  name="titrePresentation" [(ngModel)]="titrePresentation" ngModel>
+                  </div>
+                  <div class="col-xs-6 col-sm-4"></div>
+                </div>
+
+                <div class="row row_01">
+                  <br>
+                  <div class="col-xs-6 col-sm-4">
+                    <div class=" file_03 file_01 input_file" >
+                      <div *ngIf="estNonVidee(pathPhotoPresentation); then thenBlock else elseBlock"></div>
+                      <ng-template #thenBlock><img src="{{tmp3}}/{{pathPhotoPresentation}}"  style="width: 100%;height: 100%;" name="photoEtablissement1"   [(ngModel)]="pathPhotoPresentation" ngDefaultControl class="uploadImage" disabled="disabled"></ng-template> <!-- don't give a name === doesn't send on POST/GET -->
+                      <ng-template #elseBlock><img src="../../../assets/images/admin/plusss.png" name="photoEtablissement2" style="width: 100%;height: 100%;" class="uploadImage" disabled="disabled"></ng-template> <!-- don't give a name === doesn't send on POST/GET -->
+                      <span class="input-group-btn">
+                          <div class="btn image-preview-input" style="padding-right: 0px;padding-left: 0px;">
+                              <input type="file"  name="input-file-preview" (change)="onPhotoEtablissementSelected($event)" style="opacity: 0;margin-top: -218px!important; padding-left: 119px !important;" /> <!-- rename it -->
+                          </div>
+                        <input hidden type="text" name="photoPresentation" [(ngModel)]="pathPhotoPresentation"  ngModel ngDefaultControl/>
+                          </span>
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-xs-6 col-sm-4">
+                    <textarea style="border: 1px solid #4ab3cc;margin-left: 0px;padding-left: 15px!important;" name="presentation" class="file_03 input_file W_txtArea" [(ngModel)]="presentation"  ngModel></textarea>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-lg-12">
+                    <div class="col-xs-6 col-sm-4"><label class="tab_ajouter" >Personnalisation interne </label> </div>
+                  </div>
+
+                </div>
+
+                <br>
+                <div class="row row_01" style="margin-top: 20px">
+                  <div class="col-xs-6 col-sm-4"><label class="text_form" >Logo barre de tache :  </label> </div>
+                  <div  class="col-xs-6 col-sm-4">
+                    <div class="input_01  "  data-toggle="tooltip" title="<img src='{{tmp2}}/{{pathLogoBtache}}'width='200px' />"  attr.data-original-title="<img src='{{tmp2}}/{{pathLogoBtache}}'width='200px' />" ngDefaultControl>
+                      <input type="text"   name="imgLogoBT" [(ngModel)]="pathLogoBtache" ngModel style="margin-top: 0px!important;"  class=" image-preview-filename inputImg inAjouter" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                      <span class=" spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title"></span>
+
+                              <div *ngIf="estNonVidee(pathLogoBtache); then testBT else NoteBT "></div>
+                              <ng-template #testBT><img src="{{tmp2}}/{{pathLogoBtache}}" name="path" ngModel [(ngModel)]="pathLogoBtache"  class="file_imgBleu" ngDefaultControl ></ng-template>
+                              <ng-template #NoteBT><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+
+                              <input  style=" position: absolute!important;bottom:15px!important;width: 73%!important;opacity: 0!important;" type="file"  name="input-file-preview"  (change)="onLogoBtacheSelected($event)"/> <!-- rename it -->
+                          </div>
+                     </span>
+                    </div>
+                    <input type="hidden" name="logoBarreTache" [(ngModel)]="pathLogoBtache"  ngModel ngDefaultControl/>
+                  </div>
+                </div>
+                <br>
+                <div class="row row_01">
+                  <div class="col-xs-6 col-sm-4"><label class="text_form" >Couleur barre de tâche:  </label> </div>
+                  <div class="col-sm-4 color_01">
+                    <div  class="input-group colorpicker-component colorpicker-element input_01 " style="margin-top: 0px!important;"  type="form-control"  >
+                      <label class="form-control ">
+                        <input type="text" [value]="colorBT" class="col-xs-11 col-md-11 Ad_input_color"  disabled>
+                        <button type="submit" [style.background]="colorBT" [(colorPicker)]="colorBT" class="Ad_color" [cpPosition]="'left'" ></button>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <br><br>
+
+                <div class="row ">
+
+                  <div class="col-xs-6 col-sm-4">
+                    <label><input type="submit" name="" value="Annuler" class="btn_annuler R_btn_annuler" data-dismiss="modal" ></label>
+                  </div>
+                  <div class="col-xs-6 col-sm-4"></div>
+                  <div class="col-xs-6 col-sm-4">
+                    <label><input type="submit"     value="Enregistrer les modifications" class="btn_en_fiche" (click)="editPersonnalisation(p.value)"></label>
+
+                  </div>
+                  <button class="btn btn-danger" #hideModelUpdateP id="delete-nodeee" name="button" data-dismiss="modal" type="submit">Cancelar</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

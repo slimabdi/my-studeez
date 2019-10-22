@@ -1,0 +1,1007 @@
+<div class="col-md-9 col-md-offset-3 AdTop" >
+  <br>
+
+  <div class="row">
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="float: right;"><p  class="Dconnexion">Dernière Connexion  : {{dateDeconx}} </p></div>
+  </div>
+  <div class="row ">
+    <div class="col-md-4">
+      <button type="submit" class="btnAdd01 Ad_plus"  [disabled]="selectGroup==null || selectGroup.toString()=='null'  "data-toggle="modal" data-target="#ModalAdd"  (click)="myobject={idE:selectModel}"> Ajouter un enseignant</button>
+
+    </div>
+    <div class="col-md-6">
+      <div class="R_01">
+        <select class="select-ecole"  [(ngModel)]="selectModel"  (change)="viewListEnseignant(selectModel)"  >
+          <option [value]="null"> Sélectionner une école</option>
+          <option *ngFor=" let ecole of ecoles"   [value]="ecole.id"  [selected]="isSelected(ecole.id)"> {{ecole.nomE}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="" class="form-control" style="float:right;height: 38px;width: 250px;border: 1px solid #ccc!important;margin-top: 22px " [(ngModel)]="term">
+      <img src="../../../assets/images/admin/fermer.png" alt="" class="img_fermer" (click)="Effacer_Recherche()">
+      <img src="../../../assets/images/admin/picto_recherche.png" alt="" class="img_recherche">
+    </div>
+  </div>
+  <br>
+  <div class="row" >
+    <div class="col-md-12"><label style="color: #28c691" class="alert_V">{{successAdd}}</label></div>
+  </div>
+  <table class="table  " [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5"  >
+    <tbody class="top_10">
+    <tr *ngFor="let enseignant of mf.data" >
+      <td class="col-md-1">
+
+        <div class="img_liste Ad_img" [style.background]="enseignant.avatar!=''?('url('+ ecole.photoEtablissement+')'):('url(../../../assets/images/admin/superAd.png)')  ">
+        </div>
+      </td>
+      <td class="col-md-2 " ><label style="margin-top: 10px" class="text_label text-center">{{enseignant.nom}} {{enseignant.prenom}}</label></td>
+      <td class="col-md-2" ><label style="margin-top: 10px" class="text_label text-center">{{enseignant.nomE}}</label></td>
+      <td class="col-md-2 " ><label style="margin-top: 10px" class="text_label text-center">{{enseignant.email}}</label></td>
+      <td class="col-md-3" ><label style="margin-top: 10px" class="text_label text-center">{{enseignant.tel1}}</label></td>
+      <td class="col-md-1">
+        <div class="icon_L_ajouter">
+          <input  type="submit" value="" class="btn_up" data-toggle="modal" data-target="" >
+          <input  type="submit" value="" class="btn_sup" data-toggle="modal" data-target="#SuppSuperAd"  (click)="modalSupp(enseignant)">
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="data.length==0">
+      <td colspan="6" class="text-center nothingToshow">
+        Aucune résultat à afficher
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="footer-table">
+    <tr *ngIf="data.length>5">
+      <td colspan="6">
+        <mfBootstrapPaginator></mfBootstrapPaginator>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+  <div *ngIf="data.length!=0" class="col-md-12" style="margin-top: 50px">
+    <div class="col-xs-6 col-md-2"></div>
+    <div class=" col-md-4"><input type="submit" name="" class="btn_bas Ad_right" value="Imprimer la liste (PDF)" (click)="generationPDF()"></div>
+    <div class=" col-md-4"><input type="submit"  name="" class="btn_bas" value="Exporter EXCEL" (click)="exportationExcel()"></div>
+    <div class="col-xs-6 col-md-2" ></div>
+  </div>
+</div>
+
+<!----------------------------- Modal Supprime----------------------------------------->
+
+<div id="SuppSuperAd" class="modal fade" role="dialog">
+  <div class="modal-dialog modal_Notif">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <label class="notif_01"> êtes-vous sûr(e) de vouloir supprimer «{{tmpEnseignant.nom}} {{tmpEnseignant.prenom}}»  ? </label>
+        <label class="groupeNotif_btn">
+
+          <input type="submit"  class="btn_N_01" value="Non" data-dismiss="modal">
+          <input type="submit"  class="btn_N_02" value="Oui" (click)="DeleteEnseignant(tmpEnseignant.id)" data-dismiss="modal">
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!----------------------------- Modal Ajout ----------------------------------------->
+
+<div id="ModalAdd" class="modal fade" role="dialog">
+  <!-- Modal -->
+  <div class="modal-dialog modal_T"  >
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../../../assets/images/admin/close.png" data-dismiss="modal" class="close_modal">
+        <h4 class="modal-title Wtitre_ajouter"> Ajouter la fiche enseignant </h4>
+      </div>
+      <form  accept-charset="UTF-8" #myForm="ngForm"  name="form"   class="form-horizontal  A_form" role="form"  method="post" countryCity telephoneNumbers  novalidate>
+        <fieldset>
+          <div class="modal-body">
+            <div class="panel-body">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs">
+
+                <li class="active col-md-4" style="padding-right: 0px !important"><a href="#Informations" data-toggle="tab" class="nav_tab_ajouter" style="width: 100%">Informations générales</a>
+                </li>
+
+                <li class="col-md-4" style="padding-left: 0px !important"><a href="#droits" data-toggle="tab" class="nav_tab_ajouter" style="width: 100%">Droits de publication</a>
+                </li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <!-- /////////////////// -->
+                <div class="tab-pane fade active in" id="Informations">
+
+
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Photo de profil ou avatar :</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <div class="input_01"  data-toggle="tooltip" title="<img src='tmp/{{pathAvatarSuper}}'width='200px' />"  attr.data-original-title="<img src='tmp/{{pathAvatarSuper}}'width='200px' />">
+                        <input type="text"   name="imageimageSigniaturee" [(ngModel)]="pathAvatarSuper" style="margin-top: 0px!important;"  class="image-preview-filename inputImg AdInT" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                        <span class="spanUpImg">
+                          <div class="btnUploadImg btn-default image-preview-input"  >
+                            <img src="../../../assets/images/admin/picto_modifier.png" class="file_image"/>
+                              <span class="image-preview-input-title"></span>
+
+                              <div *ngIf="estNonVidee(pathAvatarSuper); then firstEvent else secondEvent"></div>
+                              <ng-template #firstEvent><img src="tmp/{{pathAvatarSuper}}" [(ngModel)]="pathAvatarSuper"  class="file_imgBleu" ></ng-template>
+                              <ng-template #secondEvent><img src="../../../assets/images/admin/imgBlanc.png"  class="file_imgBleu" disabled="file_imgBleu"></ng-template>
+
+                              <input  style=" position: absolute!important;bottom:15px!important;width: 73%!important;opacity: 0!important;" type="file"  name="input-file-preview"  (change)="onAvatarSelected($event)"/> <!-- rename it -->
+                          </div>
+                     </span>
+                      </div>
+                      <input type="hidden" name="avatar" [(ngModel)]="pathAvatarSuper"  ngModel/>
+                    </div>
+                    <show-errors [control]="civ"></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Civilité*:</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="civilite" ngModel  required  #civ="ngModel" >
+                    </div>
+                    <show-errors [control]="civ"></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Nom*:</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="nom" ngModel required #nomm="ngModel" >
+                    </div>
+                    <show-errors [control]="nomm"></show-errors>
+
+                  </div>
+                  <!--       <input type="hidden" class="input_01"      [(ngModel)]="idEcole" ngModel  >-->
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Prénom*:</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="prenom"  ngModel required #prenomm="ngModel" required >
+                    </div>
+                    <show-errors [control]="prenomm"></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br" style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4 "><label class="text_form"> Ecole rattachée *  </label> </div>
+                    <div class="col-xs-12 col-md-4" ><select class="input_01 style_select" name="nomE"  (change)="selectEcole($event,nomE)"  [(ngModel)]="nomE"   required>
+                      <option [value]="null">  Sélèctionner une école </option>
+                      <option *ngFor=" let ecole of ecoles  "  [ngValue]="ecole.id" class="control-label label-text input-model"  [selected]="isSelected(ecole.id)" > {{ecole.nomE}}</option>
+                    </select> </div>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Fonction*</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="fonction" #name="ngModel"  ngModel required  #fn="ngModel"  >
+                    </div>
+                    <show-errors [control]="fn"></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Administrateur</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <div class="toggle">
+                        <input type="checkbox" id="alibaba"   name="estAdmin" #name="ngModel"  ngModel  value="1">
+                        <label for="alibaba"></label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-12 top_br">
+                    <div class="col-md-12">
+                      <div class="col-xs-12 col-md-4"><label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Informations </label> </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Tel 1</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="number" class="input_01"  name="tel1" #name="ngModel"  ngModel  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+                    <
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Tel 2</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="number" class="input_01"  name="tel2" #name="ngModel"  ngModel  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Adresse postale</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="adressePostale"  ngModel   >
+                    </div>
+
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Complément d'adresse</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="complement_adresse" #name="ngModel"  ngModel  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Ville</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="text" class="input_01"  name="ville"   ngModel  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Code postale</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="number" class="input_01"  name="code_postale" #name="ngModel"  ngModel  >
+                    </div>
+                    <show-errors [control]=""></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Email*</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="email" class="input_01"  name="email"   ngModel required  #mail="ngModel">
+
+                    </div>
+                    <show-errors [control]="mail"></show-errors>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Mot de passe</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="password" class="input_01"    name="password" [(ngModel)]="password"   ngModel  >
+                    </div>
+
+                  </div>
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                    <div class="col-xs-12 col-md-4"><label class="text_form">Confirmation mot de passe</label></div>
+                    <div class="col-xs-12 col-md-4">
+                      <input type="password" class="input_01"    name="password2" [(ngModel)]="password2"   ngModel   >
+                    </div>
+                  </div>
+
+                  <div *ngIf="password!=password2 ">
+                    <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+                      <div class="col-xs-12 col-md-4"></div>
+                      <div class="col-xs-12 col-md-4">
+                        <span class="alert alert-danger" >Confirmation mot de passe incorrect</span>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-12 top_br">
+                    <div class="col-md-12">
+                      <div class="col-xs-12 col-md-4"><label class="tab_ajouter" style="margin-top: 10px;margin-left: 70px;">Matières - Classes </label> </div>
+                    </div>
+                  </div>
+
+
+                  <!----------------------------------->
+                  <div class="col-md-12 top_br"  style="margin-left: 20px;margin-top: -10px;" >
+                    <form >
+                      <div >
+                        <div class="col-md-12 top_br"  style="margin-top: 10px;margin-left: -8px;"  >
+                          <div class="col-xs-12 col-md-4">
+                            <div *ngFor="let itemrow of listMatieres; let i=index">
+                              <input type="text" class="input_01 " name="item{{i}}" [(ngModel)]="itemrow.nomMatiere" >
+                              <input  type="submit" name="" value="" class="btn_supp" style="margin-left:12px!important;margin-top: 10px" (click)="deleteRow()" >
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-md-4 " >
+                         <div  *ngFor="let itemroww of listClasses; let j=index" >
+
+                           <input type="text" class="input_01 " name="item1{{j}}" [(ngModel)]="itemroww.nomC" >
+                           <input  type="submit" name="" value="" class="btn_supp" style="margin-left:12px!important;margin-top: 10px" (click)="deleteRowClass()">
+
+                         </div>
+                         </div>
+
+                      </div>
+
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="col-md-12 top_br"  style="margin-left: 20px;margin-top: 20px;">
+                    <div class="col-xs-10 col-md-3" style="padding-left:0px !important;margin-left: 7px !important">
+                      <select class="input_01 style_select" name="idMatiere"  [(ngModel)]="myMatiere" >
+                        <option  >Ajouter une matière</option>
+                        <option  *ngFor=" let matiere of data2"   [ngValue]="matiere"  > {{matiere.nomMatiere}}</option>
+                      </select>
+
+                    </div>
+                    <div class="col-xs-1 col-md-1" style="padding-left:0px !important;margin-left: 7px !important">
+                      <input type="submit"  name="btnOk" value="OK" class="btn_ok" (click)="addNewRow()"  style=" margin-left: 8px!important;">
+                    </div>
+                    <div class="col-xs-10 col-md-3" style="padding-left: 9px!important;">
+                      <select class="input_01 style_select" name="nomC" [(ngModel)]="myClasses">
+                        <option >Ajouter une classe</option>
+                        <option  *ngFor=" let class of classes"    [ngValue]="class"> {{class.nomC}}</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-1 col-md-1" style="padding-left: 9px!important;">
+                      <input type="submit" name="btnOk2" value="OK" class="btn_ok" (click)="addNewRowClass()"  style=" margin-left: 8px!important;">
+                    </div>
+                  </div>
+                  <pre style="display: none;" >{{listMatieres | json}}</pre>
+                  <pre style="display: none;" >{{listClasses| json}}</pre>
+                  <pre style="display: none;"  >{{list| json}}</pre>
+
+
+                  <input type="hidden" class="input_01" name="affichClassesMatieres" [(ngModel)]="list" ngModel>
+
+                  <div class="col-md-12 top_br " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class="col-xs-12 col-md-4">
+                      <input type="submit"  value="Annuler" class="btn_annuler R_btn_annuler" >
+                    </div>
+                    <div class="col-xs-12 col-sm-3"></div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="submit"id="clickInfo" value="Enregistrer la fiche"   class="btn_en_fiche" [disabled]="!myForm.valid || password!=password2 ">
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+
+
+                <div class="tab-pane fade" id="droits">
+                  <br>
+                  <br>
+
+
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="col-xs-6 col-md-4"><label class="tab_ajouter" >Menu </label>
+                      </div>
+                      <div _ngcontent-c3="" class="col-xs-6 col-md-4 col-md-offset-3" style="margin-left: 283px;"><label  class="tab_ajouter">Affichage </label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" > Page d'accueil </label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" >
+                        <input type="checkbox"   class="input_check chk_01 colorCheck" name="acceuil" id="check_accueil"  ngModel value="1" checked="checked">
+                        <span class="Wcheckmark" ></span></label>
+                      <label class="form_08" id="input_accueil">
+                        <p class="text_check">Page d'accueil</p>
+
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Messagerie</label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="messagerieInt" id="check_messagerieInt" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08" id="input_messagerieInt">
+                        <p class="text_check">Interne</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <!-- *** -->
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" > </label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01" name="messagerieExt" id="check_messagerieExt" ngModel >
+                        <span class="Wcheckmark"></span></label>
+                      <label class="form_08" id="input_messagerieExt" >
+                        <p class="text_check">Externe</p>
+
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Mes rendez-vous</label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="rdv" id="check_rdv" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_rdv">
+
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="col-xs-6 col-md-4"><label class="tab_ajouter" >Onglet administration</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Calendrier scolaire</label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="calendrierScol" id="check_CalendrierScol" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_CalendrierScol">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Documents administratifs</label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="docAdm" id="check_docAdm" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_docAdm">
+                        <p class="text_check">Documents administratifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" ><label class="text_form" ></label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="docAdmRenvoy" id="check_docAdmRenvoy" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_docAdmRenvoy">
+                        <p class="text_check">Documents renvoyés signés</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Tableau d'affichage </label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="tabAff" id="check_affichage" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_affichage">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Galerie -Photo et vidéos </label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="galerie" id="check_photo" ngModel >
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_photo">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <!--  <div class="row row_01">
+
+                      <div class="col-xs-6 col-md-4" ><label class="text_form" > </label></div>
+                      <div class="col-xs-6 col-md-4">
+                        <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="galerie" id="check_video" ngModel ><span class="Wcheckmark"></span></label>
+
+                        <label class="form_08"  id="input_video">
+                          <p class="text_check">Vidéo</p>
+                        </label>
+                      </div>
+
+                    </div>-->
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="col-xs-6 col-md-4"><label class="tab_ajouter" >Onglet vie scolaire</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Emplois du temps</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="emploi" id="check_emploi" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_emploi">
+                        <p class="text_check"> Emplois du Temps des classes</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" ><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="emploi" id="check_emploi2" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_emploi2">
+                        <p class="text_check"> Emplois du Temps des professionnel</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Réservation de locaux et matrériaux</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="reservation" id="check_loc" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_loc">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Documents Pédagogiques-cours</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="cours" id="check_cours" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_cours">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4 " style="margin-top: 15px;"><label class="text_form" >Travaux à rendre</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="traveauxARendre" id="check_traveauxARendre" ngModel value="1" checked="checked">
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_traveauxARendre">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Abscences et retards</label> </div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="appelEnSalle" id="check_appelEnSalle" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_appelEnSalle">
+                        <p class="text_check">Appel en salle</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="suivieJustif" id="check_suivieJustif" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_suivieJustif">
+                        <p class="text_check">Suivie des justificatifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="saisieJustif" id="check_saisieJustif" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_saisieJustif">
+                        <p class="text_check">Saisie des justificatifs</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bilanAbsence" id="check_bilanAbsence" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_bilanAbsence">
+                        <p class="text_check">Bilan des abscences</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Carnet de correspondance</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="sanctions" id="check_sanctions" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_sanctions">
+                        <p class="text_check">Observations et sanctions</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="suivieEleves" id="check_suivieEleves" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_suivieEleves">
+                        <p class="text_check">Suivi des élèves</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Notes</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="notes" id="check_notes" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_notes" >
+                        <p class="text_check">Notes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bilannotes" id="check_bilannotes" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_bilannotes">
+                        <p class="text_check">Bilan des notes</p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Bulletins</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="conseilClasse" id="check_conseilClasse" ngModel>
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_conseilClasse">
+                        <p class="text_check">Conseil de classe</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bulletinsEleves" id="check_bulletinsEleves" ngModel>
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_bulletinsEleves">
+                        <p class="text_check">Bulletins des élèves</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="bulletinsclasses" id="check_bulletinsclasses" ngModel>
+                        <span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_bulletinsclasses" >
+                        <p class="text_check">Bulletins des classes</p>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Infirmerie</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="infirmerie" id="check_infirmerie" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_infirmerie">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Dictionnaire</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="dictionnaire" id="check_dictionnaire" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_dictionnaire">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Wiki</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="wiki" id="check_wiki" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_wiki">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Mon Drive</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="drive" id="check_drive" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_drive">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="row row_01">
+
+                    <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Mon Office</label></div>
+                    <div class="col-xs-6 col-md-4">
+                      <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_office" ngModel><span class="Wcheckmark"></span></label>
+
+                      <label class="form_08"  id="input_office">
+                        <p class="text_check"></p>
+                      </label>
+                    </div>
+
+                  </div>
+
+
+                  <!--
+
+                               <div class="row">
+                                 <div class="col-lg-12">
+                                   <div class="col-xs-6 col-md-4"><label class="tab_ajouter" >Onglet </label>
+                                   </div>
+                                 </div>
+                               </div>
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Mon office</label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="wiki" id="check_doc" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"  id="input_doc">
+                                     <p class="text_check">Documents enregistrés</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" >Mon drive</label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="drive" id="check_drive" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08" id="input_drive">
+                                     <p class="text_check">Word</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_excel" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"  id="input_excel" >
+                                     <p class="text_check">Excel</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_ppt" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"  id="input_ppt">
+                                     <p class="text_check">Power Point</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_onenote" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"  id="input_onenote">
+                                     <p class="text_check">One note</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+
+                               <div class="row">
+                                 <div class="col-lg-12">
+                                   <div class="col-xs-6 col-md-4"><label class="tab_ajouter" >Onglet gestion</label>
+                                   </div>
+                                 </div>
+                               </div>
+
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4" style="margin-top: 15px;"><label class="text_form" >Gestion plateforme</label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="wiki" id="check_etablisement" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"  id="input_etablisement">
+                                     <p class="text_check">Etablissement</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="drive" id="check_personnel" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"  id="input_personnel">
+                                     <p class="text_check">Personnel scolaire</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_mat" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08" id="input_mat">
+                                     <p class="text_check">Matières</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_classe" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08" id="input_classe">
+                                     <p class="text_check">Classes</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_eleve" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08" id="input_eleve">
+                                     <p class="text_check">Elèves</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_parent" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08" id="input_parent">
+                                     <p class="text_check">Parents</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+
+                               <div class="row row_01">
+
+                                 <div class="col-xs-6 col-md-4"><label class="text_form" ></label></div>
+                                 <div class="col-xs-6 col-md-4">
+                                   <label class="Wcheck_01 l01" ><input type="checkbox"  class="input_check chk_01"  name="office" id="check_groupe" ngModel><span class="Wcheckmark" checked></span></label>
+
+                                   <label class="form_08"id="input_groupe">
+                                     <p class="text_check">Groupes</p>
+                                   </label>
+                                 </div>
+
+                               </div>
+                  -->
+
+
+                  <div class="row " style="margin-left: 20px;margin-top: 20px">
+
+                    <div class="col-xs-12 col-md-4">
+                      <input type="submit"  value="Annuler" class="btn_annuler R_btn_annuler"  data-dismiss="modal">
+                    </div>
+                    <div class="col-xs-12 col-sm-3"></div>
+                    <div class="col-xs-12 col-md-4"><input type="submit" value="Enregistrer la fiche"
+                                                      (click)="addEnseignant(myForm.value)"  id="buttonAdd" data-dismiss="modal"   class="btn_en_fiche">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

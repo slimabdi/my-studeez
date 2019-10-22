@@ -1,0 +1,281 @@
+.login-block {
+  background: #ffffff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffffff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffffff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  float: left;
+  width: 100%;
+}
+.banner-sec {
+  background: url(https://static.pexels.com/photos/33972/pexels-photo.jpg)
+    no-repeat left bottom;
+  background-size: cover;
+  min-height: 100%;
+  border-radius: 0;
+  padding: 0;
+}
+.container {
+  background: #fff;
+}
+.carousel-inner {
+  border-radius: 0 10px 10px 0;
+}
+.carousel-caption {
+  text-align: left;
+  left: 5%;
+}
+.login-sec {
+  padding: 50px 80px;
+  position: relative;
+  border-width: 1px;
+  border-color: #000000;
+}
+.login-sec .copy-text {
+  position: absolute;
+  width: 80%;
+  bottom: 20px;
+  font-size: 13px;
+  text-align: center;
+}
+.login-sec .copy-text i {
+  color: #feb58a;
+}
+.login-sec .copy-text a {
+  color: #e36262;
+}
+.login-sec h2 {
+  margin-bottom: 30px;
+  font-weight: 800;
+  font-size: 30px;
+  color: #de6262;
+}
+.login-sec h2:after {
+  content: " ";
+  width: 100px;
+  height: 5px;
+  background: #feb58a;
+  display: block;
+  margin-top: 20px;
+  border-radius: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn-login {
+  background: #de6262;
+  color: #fff;
+  font-weight: 600;
+}
+.banner-text {
+  width: 70%;
+  position: absolute;
+  bottom: 40px;
+  padding-left: 20px;
+}
+.banner-text h2 {
+  color: #fff;
+  font-weight: 600;
+}
+.banner-text h2:after {
+  content: " ";
+  width: 100px;
+  height: 5px;
+  background: #fff;
+  display: block;
+  margin-top: 20px;
+  border-radius: 0px;
+}
+.banner-text p {
+  color: #fff;
+}
+
+.carousel-inner img {
+  width: 100%;
+  max-height: 1000px;
+}
+/* Carousel Header Styles */
+.header-text {
+  position: absolute;
+  top: 5%;
+  left: 1.8%;
+  right: auto;
+  width: 96.66666666666666%;
+  color: #e2e2e2;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.header-text h2 {
+  font-size: 50px;
+  color: #fff;
+  font-weight: 600;
+}
+.header-text h2 span {
+  padding: 10px;
+  color: orange;
+}
+.header-text h3 span {
+  padding: 15px;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+/* style glyph */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align glyph */
+.left-addon .glyphicon {
+  left: 0px;
+}
+.right-addon .glyphicon {
+  right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+  padding-left: 30px;
+}
+.right-addon input {
+  padding-right: 30px;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+.left_img2 {
+  margin-left: 18%;
+}
+.left_img1 {
+  margin-left: 20%;
+}
+.content_overflow {
+  overflow: auto;
+  height: 100%;
+}
+.top_logo {
+  margin-top: 35%;
+}
+.support_text {
+  color: #fdb602;
+  text-decoration: underline;
+}
+.content_body {
+  width: 800px;
+  height: 800px;
+  position: absolute;
+  margin-left: 25%;
+  border: 1px solid #888888;
+  margin-top: 50px;
+}
+.logo_app {
+  width: 300px;
+  height: 50px;
+  background-color: #252525;
+  position: absolute;
+  margin-left: 37%;
+  background: url(../../assets/images/admin/logo.jpg) no-repeat;
+  margin-top: 100px;
+}
+.content_connexion {
+  margin-top: 25%;
+}
+.form_con {
+  width: 90%;
+  background-color: transparent;
+  border: none !important;
+  border-bottom: 1px solid #888888 !important;
+  margin-top: 50px;
+  height: 40px;
+  margin-left: 5%;
+}
+#check_form {
+  margin-left: 15%;
+  margin-top: 25px;
+}
+.btn_connexion {
+  width: 80%;
+  height: 45px;
+  background-color: #fdb602;
+  border: none;
+  color: #fff;
+  margin-top: 30px;
+  border-radius: 5px;
+  font-size: 25px;
+  margin-left: 10%;
+}
+#left_03 {
+  margin-left: 50%;
+  color: #fdb602;
+  margin-top: 0px !important;
+}
+#lb_check {
+  color: rgb(102, 102, 102);
+}
+#icon_login {
+  background-image: url("../../assets/images/admin/login.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+}
+#icon_password {
+  background-image: url("../../assets/images/admin/password.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+}
+.retourbtn {
+  cursor: pointer;
+}
+.div_img_login {
+  padding: 20px;
+}
+.div_img_login:hover {
+  cursor: pointer;
+  background: #fffcfc;
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: transparent !important;
+}
+.div_img_cnx{
+  height: 150px;
+  width: 150px;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/*************************************************************/
+
+/*************************************************************/
+@media screen and (max-width: 600px) {
+  .content_body {
+    width: 400px;
+    margin-left: 10%;
+  }
+  .content_connexion {
+    width: 50%;
+    margin-left: 5%;
+  }
+  .logo_app {
+    width: 300px;
+    height: 50px;
+    margin-left: 25%;
+  }
+  #left_03 {
+    margin-left: 25%;
+  }
+  .div_img_login {
+    padding: 5px;
+  }
+}

@@ -1,0 +1,269 @@
+<div class="container-fluid Dr_top_100" >
+  <div class="row">
+
+    <div class="col-md-9 col-lg-10">
+      <div class="col-xs-12 col-sm-8 col-md-4 col-lg-3 col-sm-offset-2 col-md-offset-6 top_br" >
+        <button type="submit" class="ang_nav left_radius ">Notes</button>
+        <button type="submit" class="ang_nav right_radius "   >Bilan des notes</button>
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-2 top_br">
+      <div class="form-group has-feedback">
+        <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+        <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+        <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<div class="container" >
+  <div class="row top_br">
+    <div class="col-md-4">
+      <span class="titre_table Dr_cr" > Classes  >    </span>
+
+    </div>
+  </div>
+
+  <div class="row top_br">
+    <div class="col-xs-3 col-md-3">
+
+    </div>
+  </div>
+  <div class="row top_br">
+    <div class="col-md-2" style="height: 34px">
+
+    </div>
+  </div>
+  <div *ngIf="Add">
+    <div class="col-xs-12 col-md-12">
+      <div class="col-xs-2 col-md-1"> </div>
+      <div class="col-xs-4 col-md-4" >Nom de la classe </div>
+      <div class="col-xs-4 col-md-5"> Abrégé</div>
+      <div class="col-xs-2 col-md-2 text-center"> Nombre d’élèves</div>
+    </div>
+
+    <div class="col-xs-12 col-md-12 top_br Dr_C_ligne">
+      <div class="col-xs-2 col-md-1"> <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle"></div>
+      <div class="col-xs-4 col-md-4">
+        <label  class="text_label Dr_label Dr_CJ" (click)="classe=true;Add=false">
+          Nom de la classe
+        </label>
+      </div>
+
+      <div class="col-xs-4 col-md-5">
+        <label  class="text_label Dr_label ">
+          CM2C
+        </label>
+      </div>
+
+      <div class="col-xs-2 col-md-2 text-center">
+        <label  class="text_label Dr_label ">
+          7
+        </label>
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+    <div class="col-xs-12 col-md-12 top_br Dr_C_ligne">
+      <div class="col-xs-2 col-md-1"> <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle"></div>
+      <div class="col-xs-4 col-md-4">
+        <label  class="text_label Dr_label Dr_CJ" (click)="Add=false">
+          Nom de la classe
+        </label>
+      </div>
+
+      <div class="col-xs-4 col-md-5">
+        <label  class="text_label Dr_label ">
+          CM2C
+        </label>
+      </div>
+
+      <div class="col-xs-2 col-md-2 text-center">
+        <label  class="text_label Dr_label ">
+          7
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="classe">
+    <div class="col-md-12">
+      <div class="col-md-2"> </div>
+      <div class="col-md-1"> <button type="submit" class="icon_Dr_FR"></button></div>
+      <div class="col-md-3 text-center">Contrôle 1 <label ><button type="submit" class="icon_Dr_psw DrPi"></button></label></div>
+      <div class="col-md-3 text-center">Contrôle 2 <label ><button type="submit" class="icon_modif DrPi"></button></label></div>
+      <div class="col-md-2 text-center"></div>
+      <div class="col-md-1"> <button type="submit" class="icon_Dr_FS"></button></div>
+
+
+    </div>
+    <div class="col-md-12 top_br Dr_fileBg">
+      <div class="col-md-3  Dr_HE Dr_fileBg">
+        <div class="col-md-4 Dr_pd_left">
+          Nom
+        </div>
+      </div>
+      <div class="col-md-3  Dr_HE Dr_P1 Dr_fileBg">
+              <span class="col-md-4 Dr_H3">
+                Note/10
+              </span>
+        <span class="col-md-4 Dr_H3">
+                Absent
+              </span>
+        <span class="col-md-4 Dr_H3">
+                Observation
+              </span>
+      </div>
+      <div class="col-md-3  Dr_HE Dr_P1 Dr_fileBg">
+              <span class="col-md-4 Dr_H3">
+                Note/10
+              </span>
+        <span class="col-md-4 Dr_H3">
+                Absent
+              </span>
+        <span class="col-md-4 Dr_H3">
+                Observation
+              </span>
+      </div>
+
+
+    </div>
+    <div class="col-md-12 top_br Dr_fileBg">
+      <div class="col-md-3 Dr_LC1">
+        <div class="col-md-4 Dr_pd_left">
+          <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+        </div>
+        <div class="col-md-8 Dr_pd_left">
+          <label  class="text_label Dr_label " >
+            Nom de l’élève
+          </label>
+        </div>
+      </div>
+      <div class="col-md-3 Dr_LC2 Dr_P1 ">
+        <label class="col-md-4 DrLBC1">
+          1
+        </label>
+        <label class="col-md-4 DrLBC2">
+          <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+        </label>
+        <label class="col-md-4 DrLBC3 ">
+          1
+        </label>
+      </div>
+      <div class="col-md-3 Dr_LC2  Dr_P1 ">
+        <label class="col-md-4 DrLBC1">
+          1
+        </label>
+        <label class="col-md-4 DrLBC2 ">
+          <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+        </label>
+        <label class="col-md-4 DrLBC3">
+          1
+        </label>
+      </div>
+
+
+    </div>
+    <div class="col-md-12 top_br Dr_fileBg">
+      <div class="col-md-3 Dr_LC1">
+        <div class="col-md-4 Dr_pd_left">
+          <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+        </div>
+        <div class="col-md-8 Dr_pd_left">
+          <label  class="text_label Dr_label " >
+            Nom de l’élève
+          </label>
+        </div>
+      </div>
+      <div class="col-md-3 Dr_LC2 Dr_P1 ">
+        <label class="col-md-4 DrLBC1">
+          1
+        </label>
+        <label class="col-md-4 DrLBC2">
+          <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+        </label>
+        <label class="col-md-4 DrLBC3 ">
+          1
+        </label>
+      </div>
+      <div class="col-md-3 Dr_LC2  Dr_P1 ">
+        <label class="col-md-4 DrLBC1">
+          1
+        </label>
+        <label class="col-md-4 DrLBC2">
+          <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+        </label>
+        <label class="col-md-4 DrLBC3">
+          1
+        </label>
+      </div>
+
+
+    </div>
+    <div class="col-md-12 top_br Dr_fileBg">
+      <div class="col-md-3 Dr_LC1">
+        <div class="col-md-4 Dr_pd_left">
+          <img src="../../../../assets/images/directeur/avatar.png" alt="" width="47px" class="rounded-circle">
+        </div>
+        <div class="col-md-8 Dr_pd_left">
+          <label  class="text_label Dr_label " >
+            Nom de l’élève
+          </label>
+        </div>
+      </div>
+      <div class="col-md-3 Dr_LC2 Dr_P1 ">
+        <label class="col-md-4 DrLBC1">
+          1
+        </label>
+        <label class="col-md-4 DrLBC2">
+          <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+        </label>
+        <label class="col-md-4 DrLBC3 ">
+          1
+        </label>
+      </div>
+      <div class="col-md-3 Dr_LC2  Dr_P1 ">
+        <label class="col-md-4 DrLBC1">
+          1
+        </label>
+        <label class="col-md-4 DrLBC2">
+          <label class="Dr_container right"><input type="checkbox" ><span class="Dr_check"></span></label>
+        </label>
+        <label class="col-md-4 DrLBC3">
+          1
+        </label>
+      </div>
+
+
+    </div>
+
+
+    <div  class="col-md-12 top_br">
+      <div  class="col-md-3"></div>
+      <div  class="col-md-6">
+        <button  class="Impr_btn" type="submit">Imprimer la liste</button>
+        <button  class="Expo_btn" type="submit">Export EXCEL</button>
+      </div>
+
+      <div  class="col-md-2"></div>
+    </div>
+
+  </div>
+
+
+
+</div>

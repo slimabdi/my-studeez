@@ -1,0 +1,81 @@
+<div class="Dr_titre_sideEmp text-center" >
+
+  <span *ngIf="type=='M'"> Modifier un album <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i></span>
+  <span *ngIf="type=='A'"> Ajouter un album <i class="fa fa-close fa-fw " style="float: right;cursor: pointer" closeSidebar></i></span>
+
+
+</div>
+
+<form #formulaire="ngForm">
+
+<div class=" col-xs-12 col-md-12 top_br "  *ngIf="type=='M'" hidden>
+  <div class="col-xs-8 col-md-8">
+
+    <input   name="id" [(ngModel)]="galerie.id" readonly  />
+  </div>
+
+</div>
+
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-3">Titre</div>
+  <div class="col-xs-10 col-md-9">
+    <input type="text"  class="form-control Dr_input" name="titre" [(ngModel)]="galerie.titre" required  #titre="ngModel">
+    <show-errors [control]="titre"></show-errors>
+  </div>
+</div>
+
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-3">Ajouter une icône</div>
+  <div class="col-xs-10 col-md-9">
+
+    <select class="form-control Dr_input"   name="icone" [(ngModel)]="galerie.icone" required>
+      <option value="icon1"> icon1 </option>
+      <option value="icon2"> icon2 </option>
+    </select>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-3">Partager avec</div>
+  <div class="col-xs-10 col-md-9">
+    <select class="form-control Dr_input"   name="partager" [(ngModel)]="galerie.partager" required>
+      <option value="tous"> tous </option>
+      <option value="ecole"> ecole </option>
+    </select>
+  </div>
+</div>
+
+
+
+<div class="col-xs-12 col-md-12 top_br" >
+  <div class="col-xs-4 col-md-3"><label class="Dr_add_form">Ajouter une photo</label></div>
+  <div class="col-xs-10 col-md-9 ">
+    <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file"><img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt=""></span>
+    <input type="file" accept ="image/*" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg" name="image" [(ngModel)]="galerie.files[0].namefile" (change)="uploadImage($event,0)" multiple >
+
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 top_br" >
+  <div class="col-xs-4 col-md-3"><label class="Dr_add_form">Ajouter une vidéo</label></div>
+  <div class="col-xs-10 col-md-9 ">
+    <span class="col-lg-offset-10 col-md-offset-10 col-xs-offset-10 Dr_icon_file"><img src="../../../../../../assets/images/directeur/Dr_icon_fiche.png" alt=""></span>
+    <input type="file" accept ="video/*" class="col-md-10 form-control Dr_input Dr_pd_left Dr_input_size Dr_fileBg" name="video" [(ngModel)]="galerie.files[1].namefile" (change)="uploadImage($event,1)" multiple  >
+  </div>
+</div>
+
+
+<div class="col-xs-12 col-md-12 top_br">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="type=='M'">Annuler</button>
+    <button type="submit" class="form-control Dr_btn_02"  closeSidebar   *ngIf="type=='A'" (click)="formulaire.reset()">Annuler</button>
+  </div>
+  <div class="col-xs-4 col-md-4">
+    <button type="submit" class="form-control DrBtn"  closeSidebar   (click)="ajoutergalerie();">Enregistrer</button>
+  </div>
+</div>
+
+</form>

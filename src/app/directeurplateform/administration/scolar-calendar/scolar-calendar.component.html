@@ -1,0 +1,128 @@
+
+
+<div class="container-fluid Dr_top_100">
+  <div class="row">
+
+    <div class="col-md-10" >
+      <div class="col-md-4 col-lg-offset-5 top_br text-center" >
+        <h3>
+          <i class="fa fa-fw fa-caret-left	"
+             mwlCalendarPreviousView [view]="view"
+             [(viewDate)]="viewDate"
+             (viewDateChange)="activeDayIsOpen = false">
+
+          </i>
+          <span mwlCalendarToday
+                [(viewDate)]="viewDate">
+  {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+</span>
+
+
+          <i class="fa fa-fw fa-caret-right	"mwlCalendarNextView
+             [view]="view"
+             [(viewDate)]="viewDate"
+             (viewDateChange)="activeDayIsOpen = false">
+
+          </i>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-2 top_br" >
+      <div class="form-group has-feedback">
+
+        <input type="text" class="form-control" id="inputSuccess2" placeholder="Rechercher par nom "/>
+        <span class="glyphicon glyphicon-search form-control-feedback col_icon Dr_icon_rech"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container">
+
+  <div class="row top_br">
+    <div class="col-md-4">
+
+    </div>
+  </div>
+
+  <div class="top_br">
+    <div class="row text-center">
+      <div class="col-md-4 top_br">
+        <div class="" dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn_add" aria-controls="dropdown-basic">
+            <i class="fa fa-plus fa-fw"></i>Ajouter
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu Dr_add_cl" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="dropdown-item Dr_item_add" href="#">Un cours</a></li>
+            <li role="menuitem"><a class="dropdown-item Dr_item_add" href="#">Une plage horaire</a></li>
+
+          </ul>
+        </div>
+
+
+      </div>
+      <div class="col-md-4 top_br">
+        <button type="submit" class="ang_nav left_radius" >Classes</button>
+        <button type="submit" class="ang_nav right_radius active_ang" >Enseignants</button>
+      </div>
+      <div class="col-md-4 top_br">
+        <div class="col-xs-12 btn-group Dr_right">
+          <div
+            class="icon_Dr_cl_jour Dr_listeIcone"
+            (click)="view = 'month'"
+            [class.active]="view === 'month'">
+
+          </div>
+          <div
+            class="icon_Dr_cl_semaine Dr_listeIcone"
+            (click)="view = 'week'"
+            [class.active]="view === 'week'">
+
+          </div>
+          <div
+            class="icon_Dr_cl_mois Dr_listeIcone"
+            (click)="view = 'day'"
+            [class.active]="view === 'day'">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="top_br">
+    <mwl-demo-utils-calendar-header
+      [(view)]="view"
+      [(viewDate)]="viewDate">
+    </mwl-demo-utils-calendar-header>
+
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="'month'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="'week'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="'day'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-day-view>
+    </div>
+  </div>
+  </div>
+</div>
+
+

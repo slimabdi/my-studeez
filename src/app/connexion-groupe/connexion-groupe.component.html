@@ -1,0 +1,141 @@
+<app-loaderpage *ngIf="!ready" ></app-loaderpage>
+<div *ngIf="ready" class="container-fluid" style=" height: 100% !important;padding-left: 0px;padding-right: 0px">
+
+  <div style="padding-left: 0px!important;padding-right: 0px!important;height: 100%;" id="myCarousels" class="carousel slide col-md-8 col-sm-8 col-xs-8"
+    data-ride="carousel" data-interval="false">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousels" *ngIf="!showlogin" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousels"  *ngIf="showlogin" data-slide-to="1"></li>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" style="height: 100%!important;">
+
+      <div *ngIf="!showlogin" class="item active" style="height: 100%!important;">
+        <img src="{{groupeInfo.imagePageConx}}" alt="Second slide" style="height: 100%!important;">
+      </div>
+
+      <div *ngIf="showlogin" class="item active" style="height: 100%!important;">
+        <img #img2 src="{{monEcole.imgPageCnx}}" alt="Second slide" style="height: 100%!important;">
+        <!--src="../../assets/images/admin/connexion-groupe.jpg"-->
+        <!-- Static Header -->
+        <div class="header-text text-center hidden-xs">
+          <div class="main_title">
+            <div class="row" style="margin-top: 5%;text-align: left">
+              <div class="col-md-3">
+                <img *ngIf="isHidden == false" #img2 src="{{imageDirecteur}}">
+              </div>
+              <div class="col-md-9" style="color: black;">{{motDirecteur}}
+              </div>
+            </div>
+            <div *ngIf="isHidden == false" class="row" style="margin-top: 5%;text-align: left">
+              <div class="col-md-6">
+                <span class="glyphicon glyphicon-time" style="color: #72d4f1; margin-left: 25%;"></span>
+                <div style="color: black">
+                  1, place des écoles
+                  <br> 89100 SENS
+                  <br> monecole@hotmail.com
+                  <br> 01.12.34 56.78
+                  <br> 01.12.34.56.78
+                  <br> www.monecole.com
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="glyphicon glyphicon-map-marker" style="color: #72d4f1; margin-left: 25%;"></span>
+                <div style="color: black">
+                  lundi 09.30-12.00 14.30-17.00
+                  <br> mardi 09.30-12.00 14.30-17.00
+                  <br> mercredi 14.30-17.00
+                  <br> jeudi 09.30-12.00 14.30-17.00
+                  <br> vendredi 09.30-12.00 14.30-17.00
+                  <br> samedi 09.30-12.00 14.30-17.00
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /header-text -->
+      </div>
+
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousels" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousels" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </div>
+  <!-- /carousel -->
+
+
+  <div class="col-md-4 col-sm-4 col-xs-4 login-sec content_overflow">
+    <div class="row">
+      <div class="col-md-2">
+        <img src="../../assets/images/admin/retour_connexion.png" class="retourbtn" (click)="showlogin=false;retour=false" *ngIf="retour">
+      </div>
+      <div class="col-md-8">
+        <img style="text-align: center;" *ngIf="!showlogin" src="{{groupeInfo.logoPageConx}}" name="image" style="display: block;margin-left: auto;margin-right: auto; width: 50%;margin-left: 30%;">
+        <img style="text-align: center;" *ngIf="showlogin" src="{{monEcole.logoPageCnx}}" name="image" style="display: block;margin-left: auto;margin-right: auto; width: 50%;margin-left: 30%;">
+      </div>
+    </div>
+    <!--<h2 class="text-center">Login Now</h2>  -->
+    <div class="col-md-12" *ngIf="showlogin">
+
+      <form class="content_connexion ng-pristine ng-valid ng-touched" >
+        <input class="form_con ng-pristine ng-valid ng-touched" id="icon_login" name="email" [(ngModel)]="user.email"  placeholder="Adresse Mail"
+          type="text">
+
+        <span class="alert-danger" color="red">{{MessageErreur}}  </span>
+
+        <input class="form_con ng-untouched ng-pristine ng-valid" id="icon_password" name="password" [(ngModel)]="user.password"  placeholder="Mot de Passe"
+          type="password" >
+
+        <input class="top_br" id="check_form" name="" type="checkbox">
+        <label id="lb_check">Se Souvenir de moi</label>
+
+        <button (click)="loginUser()"  class="btn_connexion" [style.background-color]="monEcole.couleurExterne||groupeInfo.couleurExterne">Se Connecter</button>
+
+        <p class="top_br" id="left_03" [style.color]="monEcole.couleurExterne||groupeInfo.couleurExterne" >
+          <u>Mot de Passe oublié ?</u>
+        </p>
+        <span class="alert-danger" color="red"></span>
+      </form>
+
+      <div>
+
+
+
+        <div col-md-4 col-sm-4 col-xs-4 login-sec>
+          <div class="row text-center"> Besoin d'aide ?</div>
+          <div class="row text-center  support_text"  [style.color]="monEcole.couleurExterne||groupeInfo.couleurExterne"> Support@studeez.com</div>
+        </div>
+        <div class="top_logo ">
+          <div class="row">
+
+            <img src="../../assets/images/admin/logo.jpg" name="image" style="display: block;margin-left: auto;margin-right: auto;">
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12" *ngIf="!showlogin">
+
+      <div class="top_logo ">
+        <div class="row text-center">
+          <h3> Sélectionnez une école</h3>
+        </div>
+        <div class="col-md-6 div_img_login top_br" *ngFor="let ecole of groupeInfo.ecoles" >
+          <div class="div_img_cnx center-block" (click)="schoolselected(ecole)" [style.background-image]="'url('+ ecole.logoPageCnx +')'" >
+          </div>
+          <h4 class="text-center">{{ecole.nomEcole}}</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,1870 @@
+
+@import "color.scss";
+@import "icon.scss";
+@import "angular-calendar.scss";
+
+
+body {
+  font-family: FuturaPT-Medium !important;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $col_S003;
+  height: 500px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+/*--------------------------------------*/
+@media screen and (min-width: 1920px) {
+  .Dr_modal_supp  {
+    width: 45% !important;
+    margin-top: 15%;
+    margin-left: 29%;
+  }
+}
+/*--------------------------------------*/
+.Dr_modal_supp{margin-top: 15%}
+textarea:focus,
+input:focus,
+ul,
+li,
+a,
+select:focus,
+button:focus {
+  outline: none;
+}
+.nav>li>a{
+  outline: none;
+}
+.col_S002 {
+  background: $col_S004;
+}
+.Dr_listeIcone{
+  display: inline-block;
+}
+.Dr_icon_file{
+  position: absolute;
+  margin-top: 5px;
+}
+.Dr_GAdd{
+  position: absolute;
+  margin-top: 5px;
+  background: $col_S026;
+  width: 89%;
+  height: 200px;
+}
+.Dr_GAdd i{
+  position: absolute;
+  margin-top: 37%;
+  margin-left: 47%;
+  color: $col_S014;
+}
+.Dr_fileG{
+  height: 200px!important;
+  opacity: 0;
+}
+.DrBTeleve{
+  width: 64%!important;
+  padding-left: 35px!important;
+}
+.DrBTdir{
+  width: 74%!important;
+  padding-left: 32px!important;
+}
+.DrBTen{
+  width: 80%!important;
+  padding-left: 32px!important;
+}
+.DrBTmat{
+  width: 75%!important;
+  padding-left: 30px!important;
+}
+.DriPlus{
+  width: 20px;
+  height: 20px;
+  background: $col_S003;
+  border-radius: 100%;
+  border: none;
+  color: #fff;
+  font-size: 8px;
+  padding-top: 3px;
+  padding-left: 5px;
+}
+.icon_Dr_DB {
+  background: $icon_supp no-repeat;
+  border: none;
+  width: 17px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_Dr_MB {
+  background: $icon_modif no-repeat;
+  border: none;
+  width: 22px;
+  height: 22px;
+  background-size: contain;
+}
+.icon_Dr_G {
+  background: $icon_Dr_G no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  padding-right: 30px;
+}
+.icon_Dr_G01 {
+  background: $icon_Dr_G01 no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  padding-right: 30px;
+}
+.icon_Dr_play {
+  background: $icon_Dr_play no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  padding-right: 30px;
+}
+.icon_Dr_down {
+  background: $icon_Dr_download no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  padding-right: 30px;
+}
+.icon_Dr_L {
+  background: $icon_Dr_L no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  padding-right: 30px;
+}
+.icon_Dr_L01 {
+  background: $icon_Dr_L01 no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  padding-right: 30px;
+}
+.icon_Dr_FR {
+  background: $icon_Dr_FR no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+.icon_Dr_FS {
+  background: $icon_Dr_FS no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+.icon_Dr_psw {
+  background: $icon_Dr_psw no-repeat;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+.icon_Dr_poly {
+  background: $icon_Dr_Poly no-repeat;
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_Dr_Valide {
+  background: $icon_Dr_Valide no-repeat;
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_Dr_print {
+  background: $icon_Dr_Print no-repeat;
+  border: none;
+  width: 25px;
+  height: 25px;
+  background-size: contain;
+}
+.icon_Dr_CAL {
+  background: $icon_Dr_CAL no-repeat;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  font-size: 18px;
+  padding-top: 5px;
+  color: $col_S003;
+  margin-left: 10px;
+}
+.icon_Dr_fermer {
+  background: $icon_Dr_fermer no-repeat;
+  border: none;
+  width: 15px;
+  height: 15px;
+  background-size: contain;
+}
+.icon_Dr_cl_jour {
+  background: $icon_Dr_cl_jour no-repeat;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+}
+.icon_Dr_cl_semaine {
+   background: $icon_Dr_cl_semaine no-repeat;
+   border: none;
+   width: 40px;
+   height: 40px;
+   background-size: contain;
+ }
+.icon_Dr_MDG {
+  background: $icon_Dr_cl_semaine no-repeat;
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  cursor: pointer;
+}
+.icon_Dr_cl_mois {
+  background: $icon_Dr_cl_mois no-repeat;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+}
+.icon_Dr_setting {
+  background: $icon_Dr_setting no-repeat;
+  border: none;
+  width: 25px;
+  height: 30px;
+  background-size: contain;
+}
+
+.icon_message {
+  background: $icon_message no-repeat;
+  border: none;
+  width: 25px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_Dr_profil {
+  background: $icon_Dr_profil no-repeat;
+  border: none;
+  width: 25px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_notif {
+  background: $icon_notif no-repeat;
+  border: none;
+  width: 25px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_info {
+  background: $icon_info no-repeat;
+  border: none;
+  width: 25px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_menu {
+  background: $icon_menu no-repeat;
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_liste{
+  background: $icon_menu no-repeat;
+  border: none;
+  width: 28px;
+  height: 26px;
+  background-size: contain;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.icon_supp {
+  background: $icon_supp no-repeat;
+  border: none;
+  width: 16px;
+  height: 25px;
+  background-size: contain;
+}
+.icon_modif {
+  background: $icon_modif no-repeat;
+  border: none;
+  width: 20px;
+  height: 30px;
+  background-size: contain;
+}
+.icon_mdf{
+  background: $icon_modif no-repeat;
+  border: none;
+  width: 20px;
+  height: 22px;
+  background-size: contain;
+  padding-left: 27px;
+}
+
+.w_01 {
+  width: 6%;
+}
+.right {
+  float: right!important;
+}
+.item_icon {
+  width: 30px;
+  height: 30px;
+  background: red;
+}
+.pad_01 {
+  padding-left: 15px;
+}
+
+
+.content_sidebar {
+  width: 40vh;
+  height: 92vh !important;
+  -moz-box-shadow: -3px -7px 37px 3px #ccc;
+  -webkit-box-shadow: -3px -7px 37px 3px #ccc;
+  box-shadow: -3px -7px 37px 3px #ccc;
+  overflow: auto;
+}
+.bg_ff {
+  background: $col_S018 ;
+}
+.item_titre{
+  font-size: 16px;
+}
+.item_titre a {
+  border-bottom: 2px solid $col_S015;
+  color: $col_S015 ;
+}
+.Dr_UI{
+  padding-left: 40px!important;
+}
+.Dr_UI i{
+  margin-left: -40px !important;
+  position: absolute;
+  margin-top: 5px;
+}
+.Dr_ISM{
+  top: 1px;
+  border-bottom: 1px solid $col_S015!important;
+}
+.color_item {
+  color: $col_S015 ;
+  padding-left: 0px!important;
+}
+.fleche {
+  background: transparent $icon_fleche no-repeat 97% 49% ;
+}
+
+
+
+
+
+
+.top_br {
+  margin-top: 20px;
+}
+.btn_calendre {
+  width: 0% !important;
+}
+.bs-datepicker {
+  //left: 0% !important;
+}
+.titre_table {
+  text-decoration: underline;
+}
+.abs {
+  position: absolute;
+}
+.border_td {
+  border-top: 0px !important;
+}
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+  border-top: 0px !important;
+  // color: $col_S014;
+}
+.border_col {
+  border-top: 1px solid $col_S024;
+}
+.pagination>li>a, .pagination>li>span{
+  background-color: transparent!important;
+}
+.Dr_pagination .pagination > .active > a,
+.Dr_pagination .pagination > .active > span,
+.Dr_pagination .pagination > .active > a:hover,
+.Dr_pagination .pagination > .active > span:hover,
+.Dr_pagination .pagination > .active > a:focus,
+.Dr_pagination .pagination > .active > span:focus {
+  background-color:transparent !important;
+  border-color: $col_S015 !important;
+  color: $col_S015 !important;
+  text-decoration: underline;
+}
+.Dr_pagination .pagination > li > a,
+.Dr_pagination .pagination > li > span {
+  border: 0px !important;
+  color: $col_S015 !important;
+}
+.Dr_pagination .pagination {
+  position: absolute;
+}
+.Dr_right{
+  float: right
+}
+.ang_nav {
+  width: 50%;
+  height: 40px;
+  border: none;
+  border: 2px solid $col_S003;
+  background: $col_S018;
+  color: $col_S003;
+  font-size: 1.8vh;
+  margin-left: -3px;
+}
+.left_radius {
+  border-top-left-radius: 20px!important;
+  border-bottom-left-radius: 20px!important;
+}
+.right_radius {
+  border-top-right-radius: 20px!important;
+  border-bottom-right-radius: 20px!important;
+  border-left: none;
+}
+.active_ang {
+  background: $col_S009!important;
+}
+.active_tab{
+  background: $col_S003!important;
+  color: $col_S018!important;
+}
+
+.btn_add {
+  border: none;
+  background: $col_S003 $icon_Dr_Plus no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: 60%;
+  height: 35px;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px!important;
+}
+.DrBTN1 {
+  border: none;
+  background: $col_S003 $icon_Dr_alfa no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto !important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px!important;
+  padding-left: 35px!important;
+}
+.DrBTN2 {
+  border: none;
+  background: $col_S003 $icon_Dr_audio no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto !important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px !important;
+  padding-left: 34px!important;
+  margin-left: 10px;
+}
+.DrBTN3 {
+  border: none;
+  background: $col_S003 $icon_Dr_video no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto!important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px !important;
+  margin-left: 10px;
+  padding-left: 35px!important;
+}
+.DrBTN4 {
+  border: none;
+  background: $col_S003 $icon_Dr_doc no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto!important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px !important;
+  padding-left: 32px!important;
+  margin-left: 10px;
+}
+.DrBTN5 {
+  border: none;
+  background: $col_S003 $icon_Dr_enquete no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto!important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px !important;
+  padding-left: 32px!important;
+  margin-left: 10px;
+}
+.DrBTN6 {
+  border: none;
+  background: $col_S003 $icon_Dr_quiz no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto!important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px !important;
+  padding-left: 26px!important;
+  margin-left: 10px;
+}
+.DrBTN7 {
+  border: none;
+  background: $col_S003 $icon_Dr_test no-repeat 8% 50% !important;
+  color: $col_S018!important;
+  width: auto!important;
+  height: 30px!important;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 3px !important;
+  padding-left: 32px!important;
+  margin-left: 10px;
+}
+.DrLR{
+  font-weight: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+}
+.DrInline{
+  display: inline-flex;
+}
+.DrBtn{
+  border: none;
+  background: $col_S003  !important;
+  color: $col_S018!important;
+  width: 60%;
+  height: 35px;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 0px!important;
+}
+.DrBtnRed{
+  border: none;
+  background: $col_S029  !important;
+  color: $col_S018!important;
+  width: 60%;
+  height: 35px;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 0px!important;
+}
+.DrON{
+  margin-top: 20px;
+  position: absolute;
+  margin-left: -50px;
+}
+.DrC1N{
+  color: $col_S003;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 100;
+}
+.DrC1O{
+  color: $col_S029;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 100;
+}
+.DrBtn[disabled]{
+  background: $col_S003!important;
+  color: $col_S018!important;
+  opacity: 0.5!important;
+}
+.btn_add:hover {
+  background: $col_S002;
+}
+.Dr_btn_02{
+  border: none;
+  background: $col_S018!important;
+  color: $col_S003!important;
+  width: 60%;
+  height: 35px;
+  font-size: 18px;
+  border-radius: 20px!important;
+  padding-top: 0px!important;
+  border: 2px solid $col_S003!important;
+}
+.Dr_btn_02:hover{
+  background: $col_S003!important;
+  color: $col_S018!important;
+}
+.text_label {
+  font-weight: 100 !important;
+}
+.Dr_LBM{
+  font-weight: 100;
+  padding-top: 15px;
+}
+.Dr_text_label {
+  font-weight: 100 !important;
+}
+.col_icon {
+  color: $col_S015 !important;
+}
+.btn_Bas {
+  margin-top: 60px;
+}
+.Impr_btn {
+  width: 45%;
+  height: 40px;
+  border: none;
+  background: $col_S018;
+  border: 2px solid $col_S003;
+  border-radius: 20px;
+  color: $col_S003;
+  font-size: 18px;
+}
+.Expo_btn {
+  width: 45%;
+  height: 40px;
+  border: none;
+  background: $col_S018;
+  border: 2px solid $col_S003;
+  border-radius: 20px;
+  color: $col_S003;
+  font-size: 18px;
+  float: right;
+}
+.sidenav {
+  height: 100% !important;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  background: $col_S018;
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+.Dr_label{
+  font-size: 1.6vh!important;
+}
+.Dr_top_100{
+  margin-top: 100px
+}
+.Dr_Bn{
+  border-top: 0px!important;
+}
+.Dr_SIL{
+  padding-left: 5px!important;
+  cursor: pointer;
+  font-size: 15px;
+
+}
+.Dr_UL{
+  padding-left: 20px!important;
+}
+.Dr_i_side{
+  border-bottom: 1px solid $col_S015;
+  font-size: 18px
+}
+.Dr_i_sideS{
+  border-bottom: 1px solid $col_S015;
+  font-size: 18px;
+  top: 1px;
+}
+.Dr_i_side:hover{
+  // background: $col_S023;
+}
+.Dr_i_sideS:hover{
+  //background: $col_S018;
+}
+.Dr_label_001{
+  font-weight: 100
+}
+.Dr_sidebar{
+  padding-left: 20px!important;
+  padding-right: 20px!important;
+}
+.Dr_item_left{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  outline: none;
+}
+.Dr_content_nav .ng-sidebar{
+  background: $col_S018;
+  width: 25%;
+  -moz-box-shadow: 20px 0px 32px -24px #ccc;
+  -webkit-box-shadow: 20px 0px 32px -24px #ccc;
+  box-shadow:20px 0px 32px -24px #ccc;
+  overflow: auto
+}
+.Dr_titre_01{
+  font-size: 29px;
+  color: $col_S014;
+  line-height: 1.444;
+  width: 190px;
+  height: 33px;
+  z-index: 216;
+}
+.Dr_titre_M{
+  font-size: 29px;
+  color: $col_S014;
+  line-height: 1.444;
+  height: 33px;
+  z-index: 216;
+  text-align: center;
+}
+.Dr_icon_rech{
+  opacity: 1!important;
+  position: absolute!important;
+}
+.Dr_icon_nav:hover{
+  background: $col_S018!important;
+}
+.Dr_btn_add{
+  width: 45px;
+  height: 45px ;
+  border-radius: 100%;
+  border: none ;
+  background: $col_S018;
+  border: 2px solid $col_S003;
+  color: $col_S003;
+  cursor: pointer;
+}
+.Dr_Bp{
+  width: 35px;
+  height: 35px ;
+  border-radius: 100%;
+  border: none ;
+  background: $col_S018;
+  border: 2px solid $col_S003;
+  color: $col_S003;
+  cursor: pointer;
+}
+.Dr_btn_CAL{
+  width: 35px;
+  height: 35px ;
+  border-radius: 100%;
+  border: none ;
+  background: $col_S018;
+  border: 2px solid $col_S003;
+  color: $col_S003;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.Dr_btn_CAL i{
+  font-size: 19px;
+  margin-left: -20%;
+  margin-top: 16.5%;
+}
+.Dr_pagination .pagination{
+  font-size: 15px;
+  margin: 0px 0% !important;
+}
+.Dr_content_nav  .ng-sidebar{
+  position: fixed!important;
+  margin-top: 68px!important;
+}
+.Dr_text_Imprim{
+  color: $col_S003;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.Dr_sidemodal .ng-sidebar{
+  width: 30%;
+  position: absolute;
+  background: $col_S018;
+  margin-top: 68px;
+  -moz-box-shadow: -7px -2px 19px -5px #ccc;
+  -webkit-box-shadow: -7px -2px 19px -5px #ccc;
+  box-shadow:-7px -2px 19px -5px #ccc;
+  overflow: auto;
+}
+.Dr_titre_sideMD{
+  height: 50px;
+  background: $col_S013;
+  padding-top: 10px;
+  font-size: 19px;
+}
+.Dr_titre_sideEmp{
+  height: 50px;
+  padding-top: 20px;
+  font-size: 23px;
+  font-weight: 700;
+}
+.Dr_icon_MD{
+  width: 150px;
+  height: 150px;
+  background-position: center; background-size: cover;background-repeat: no-repeat;    border: 1px solid #eee;    border-radius: 50%;margin-left: 47px;
+}.file_input_Dr{    position: absolute!important;width: 100%!important;height: 100%;opacity: 0!important;left: 0px;cursor: pointer;}
+.Dr_input{
+  border: 1px solid $col_S015!important;
+  border-radius: 0px!important;
+}
+.Dr_inputM{
+  border-bottom: 1px solid $col_S015!important;
+  border-radius: 0px!important;
+}
+.Dr_select{
+  background: $col_S018 $icon_fleche no-repeat 99% 49% !important;
+}
+.Dr_Se{
+  background: $col_S018 $icon_fleche no-repeat 93% 49% !important;
+}
+.Dr_bold{
+  font-weight: bold;
+}
+.Dr_titreTabMD{
+  font-size: 1.5vh;
+}
+.Dr_input_co{
+  width: 12%!important;
+}
+.Dr_padding{
+  padding: 0px!important;
+}
+.Dr_icon_ok{
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: $col_S003;
+  color: $col_S018;
+  border: none;
+}
+.Dr_Iok{
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: $col_S001;
+  color: $col_S018;
+  border: none;
+}
+
+.Dr_sidemodal .test{
+  width: 100%;
+  height: 100vh;
+  background: #ccc;
+  position: absolute;
+  opacity: 0.5;
+}
+.Dr_sidemodal .test2{
+  width: 50vh;
+  float: right;
+  height: 100vh;
+  background: #fff;
+}
+.Dr_bg{
+  background: #fff;
+}
+.cal-week-view .cal-event{
+  border-right: 0px;
+  border-bottom: 0px;
+  border-top: 0px;
+}
+.Dr_cal_side .ng-sidebar{
+  width: 30vh;
+  height: 30vh;
+  //margin-left: 25px;
+  position: absolute;
+  background: $col_S018;
+
+}
+.ng-sidebar[_ngcontent-c4]{
+  z-index:4!important;
+}
+.theme-green .bs-datepicker-head{
+  background-color: $col_S003!important;
+}
+.Dr_fil_side .ng-sidebar{
+  width: 30vh;
+  height: 62vh;
+  //margin-left: 25px;
+  position: absolute;
+  background: $col_S018;
+  -moz-box-shadow: 4px -2px 43px -8px #ccc;
+  -webkit-box-shadow: 4px -2px 43px -8px #ccc;
+  box-shadow:4px -2px 43px -8px #ccc;
+}
+
+.Dr_btn001{
+  border: none;
+  background: $col_S018;
+}
+.Dr_cal_side{
+  width: 300px;
+  height: 10px;
+  margin-top: 68px;
+  position: absolute
+}
+.Dr_content_Filtre{
+  margin-top: 40vh;
+}
+.Dr_fil_side  .ng-sidebar{
+  position: fixed!important;
+  margin-top: 38vh!important;
+}
+.Dr_add_cl{
+  left: 30px!important;
+}
+.Dr_add_c2{
+  left: 98px!important;
+}
+.Dr_item_add{
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  cursor: pointer;
+}
+.Dr_item_add:hover{
+  background: $col_S013!important;
+}
+.Dr_titre_filtre{
+  font-size: 20px;
+  font-weight: 100;
+  padding: 10px;
+}
+.Dr_item_filtre{
+  font-weight: 100;
+  padding-left: 10px;
+}
+.Dr_item_border_F{
+  border-bottom: 1px solid $col_S007;
+}
+.Dr_btnNav{
+  background: $col_S019 ;
+  border: 2px solid $col_S003!important;
+  color: $col_S003;
+}
+
+.Dr_bgCol_001{
+  background: $col_S013;
+}
+.Dr_add_form{
+  float: right;
+  font-weight: 100;
+}
+.Dr_pd_left{
+  padding-left: 0px!important;
+}
+.Dr_lab_form{
+  font-weight: 100;
+}
+.Dr_padding_001{
+  padding-top: 11px;
+  padding-bottom: 5px;
+}
+.Dr_padding_002{
+  padding-top: 10px;
+}
+.Drpdck{
+  padding-right: 31px!important;
+}
+.Dr_active_L{
+  background: $col_S003;
+  color: $col_S018;
+}
+.Dr_inputT_color{
+  padding: 0px;
+  background: $col_S018;
+  border: none;
+  font-weight: 100;
+  position: absolute;
+}
+.Dr_color{
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  border: none;
+  border: 1px solid $col_S015;
+  margin-left: 3%
+}
+.uploader{
+  width: 100%!important;
+  outline: 1px solid $col_S015!important;
+}
+.Dr_btn_Msupp {
+  width: 45%;
+  float: right;
+  border: none;
+  height: 35px;
+  border-radius: 50px;
+  background-color: $col_S003;
+  color: $col_S018;
+}
+.Dr_btn_AnnM {
+  width: 45%;
+  border: none;
+  height: 35px;
+  border-radius: 50px;
+  background-color: $col_S018;
+  border: 3px solid $col_S003;
+  color: $col_S003;
+}
+.Dr_listeBtnModal{
+  width: 88% !important;
+  margin-left: 7% !important;
+  margin-top: 10%;
+}
+.Dr_lab_Modal{
+  font-weight: 100;
+  font-size: 2vh
+}
+.Dr_Active_ligne{
+  background: $col_S001!important;
+  color: $col_S018;
+  padding-top: 10px;
+}
+.Dr_color_ligne{
+  background-color: $col_S013;
+}
+.Dr_paddinR01{
+  padding-right: 0px!important;
+}
+.material-switch>input[type="checkbox"]:checked+label::before {
+  background: $col_S003!important;
+  opacity: 0.5;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::after {
+  background: $col_S003!important;
+  left: 20px;
+}
+.Dr_iconSuppPar{
+  margin-top: 10px;
+  margin-left: 60%;
+}
+.Dr_padding_003{
+  padding-bottom:50px;
+}
+.Dr_file_01{
+  width: 100%;
+  height: 150px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid #eee;
+  border: 1px solid $col_S015 !important;
+}
+
+.Dr_size_Side{
+  font-size: 1.5vh!important;
+}
+.card-header {
+  padding: .75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: #f4f1ed;
+  font-weight: bold;
+  font-size: 2vh;
+}
+.card {
+  margin: 39px 0px;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border-radius: .25rem;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+.Dr_btn_HB{
+  height: 40px !important;
+  border-radius: 40px !important;
+}
+.Dr-cercle_img{
+  border-radius: 100%
+}
+.Dr_H_01{
+  height: 38px!important;
+}
+.Dr_content_Bcol01{
+  border-bottom: 1px solid $col_S022;
+  border-left: 3px solid $col_S003;
+  padding-bottom: 20px;
+}
+.Dr_lb_col01{
+  color: $col_S003;
+  cursor: pointer;
+}
+.Dr_content_Bcol02{
+  border-bottom: 1px solid $col_S022;
+  border-left: 3px solid $col_S001;
+  padding-bottom: 20px;
+}
+.Dr_lb_col02{
+  color: $col_S001;
+  cursor: pointer;
+}
+.Dr_content_Bcol03{
+  border-bottom: 1px solid $col_S022;
+  border-left: 3px solid $col_S010;
+  padding-bottom: 20px;
+}
+.Dr_lb_col03{
+  color: $col_S010;
+  cursor: pointer;
+}
+.Dr_content_Bcol04{
+  border-bottom: 1px solid $col_S022;
+  border-left: 3px solid $col_S004;
+  padding-bottom: 20px;
+}
+.Dr_lb_col04{
+  color: $col_S004;
+  cursor: pointer;
+}
+.Dr_input_size{
+  font-size: 14px!important;
+}
+.Dr_padding_B01{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.Dr_CC01{
+  background: $col_S013;
+}
+.Dr_CC02{
+  background: $col_S001!important;
+  color: $col_S018!important;
+}
+.Dr_input[disabled]{
+  opacity: 1;
+  border: 0px!important;
+  background: #ffffff !important;
+  -webkit-appearance: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075);
+}
+input[type=file]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.Dr_fileBg{
+  background: transparent!important;
+}
+.sortable{cursor: move!important;}
+.Dr_IG{
+  margin-top: 15px
+}
+.Dr_IMG{
+  width: 100%;
+
+}
+.Dr_PDG{
+  padding-top: 30px;
+}
+.Dr_box{
+  -moz-box-shadow: -3px 6px 15px -6px #ccc;
+  -webkit-box-shadow: -3px 6px 15px -6px #ccc;
+  box-shadow:-3px 6px 15px -6px #ccc;
+}
+.Dr_LabG{
+  font-weight: 100;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  cursor: pointer;
+}
+.Dr_IIG{
+  position: absolute;
+  margin-top: 11px;
+  width: 89%;
+  height: 59%;
+  opacity: 0;
+}
+.Dr_IIG:hover{
+  opacity: 1;
+}
+.Dr_btnMA{
+  margin-top: 12px;
+  position: absolute;
+  margin-left: 30px;
+}
+.Dr_btnSA{
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 70px;
+}
+.Dr_WH{
+  width: 30vh;
+  height: 30vh;
+}
+.Dr_logo{
+  height: 36px;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 54px;
+}
+.Dr_BoxAl{
+  box-shadow: 1px 9px 26px -7px #ccc;
+  border: 0px!important;
+  padding: 0px!important;
+}
+.Dr_BoxAl a>img{
+  height: 200px!important;
+}
+.caption{
+  cursor: pointer;
+}
+.Dr_cr{cursor: pointer}
+.cal-today{
+  background: $col_S018!important;
+  border-bottom: 2px solid $col_S004;
+  color: $col_S004!important;
+}
+.Dr_sp{
+  position: absolute;
+  margin-left: 50px;
+  margin-top: 5px;
+  color: $col_S004;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.Dr_VR{
+  position: absolute;
+  margin-left: 50px;
+  margin-top: 5px;
+  color: $col_S001;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.Dr_sp01{
+  position: absolute;
+  margin-left: 50px;
+  margin-top: 5px;
+  color: $col_S003;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.Dr_Lf{
+  margin-left: 30px;
+}
+.Dr_Lf1{
+  margin-left: 90px;
+}
+.Dr_btnR{
+  height: 25px!important;
+  padding-left: 20px!important;
+  padding-right: 20px!important;
+  padding-bottom: 27px!important;
+}
+.Dr_HL{
+  width: 14.9%!important;
+}
+.Dr_CA{
+  color: $col_S027;
+}
+.Dr_CRE{
+  color: $col_S028;
+}
+.Dr_CAB{
+  color: $col_S029;
+}
+.Dr_EX{
+  color: $col_S016;
+}
+.Dr_LB{
+  color: $col_S015;
+  font-size: 19px;
+  font-weight: 100;
+  float: right;
+}
+.Dr_HE{
+  height: 57px!important;
+}
+.Dr_ck input {
+  display: none; /* hide the default checkbox */
+}
+
+/* style the artificial checkbox */
+.Dr_ck span {
+  height: 13px;
+  width: 13px;
+  border: 2px solid #666666;
+  border-radius: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+/* style its checked state..with a ticked icon */
+
+.Dr_CJ{
+  color: $col_S003;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.Dr_C_ligne{
+  background: #fff;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: $col_S015;
+  -moz-box-shadow: -6px 9px 12px -13px #ccc;
+  -webkit-box-shadow: -6px 9px 12px -13px #ccc;
+  box-shadow: -6px 9px 12px -13px #ccc;
+}
+.Dr_w3{
+  width: 13%!important;
+}
+.Dr_w4{
+  width: 23%!important;
+}
+.Dr_w7{
+  width: 16%!important;
+}
+.Dr_w1{
+  width: 11%!important;
+}
+.Dr_w6{
+  width: 40%!important;
+}
+.Dr_w8{
+  width: 5%!important;
+}
+.Dr_w5{
+  width: 16.4%!important;
+}
+.Dr_P1{
+  padding-top: 12px;
+}
+.Dr_CE{
+  color: $col_S003;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 15px;
+}
+.Dr_pdBT{
+  padding-left: 40px!important;
+  padding-right: 40px!important;
+}
+.Dr_pdBT02{
+  padding-left: 40px!important;
+  padding-right: 24px!important;
+}
+.Dr_ckM{
+  margin-left: 10px!important;
+  margin-top: 10px!important;
+}
+.Dr_btnJ{
+  border: none;
+  background: $col_S018;
+  border: 1px solid $col_S003;
+  color: $col_S003;
+  cursor: pointer;
+  border-radius: 20px;
+
+}
+.Dr_rech{
+  border-radius: 40px!important;
+}
+.Dr_WB{
+  width: 100%;
+}
+.cal-week-view .cal-day-headers .cal-header:not(:last-child){
+  color: $col_S014;
+}
+
+/* The container */
+.Dr_container {
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-top: 7px;
+}
+.Dr_container input[type=checkbox], input[type=radio]{
+  margin: 2px -35px 0px !important;
+}
+/* Hide the browser's default radio button */
+.Dr_container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.Dr_radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: $col_S015;
+  border-radius: 50%;
+}
+.Dr_check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: $col_S018;
+  border-radius: 50%;
+  box-shadow: -1px 1px 14px 1px #ccc;
+}
+.Dr_C1{
+  background-color: $col_S001;
+  border: 1px solid #eee;
+}
+
+
+/* On mouse-over, add a grey background color */
+
+
+.Dr_container:hover input ~ .Dr_check {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.Dr_container input:checked ~ .Dr_radio {
+  //background-color: #ffffff;
+  //border: 2px solid $col_S015;
+}
+.Dr_container input:checked ~ .Dr_check {
+  //background-color: #ffffff;
+}
+.Dr_container input:checked ~ .Dr_C1 {
+  //border: 2px solid $col_S001;
+}
+.Dr_container input:checked ~ .Dr_C2 {
+  //border: 2px solid $col_S010;
+}
+.Dr_container input:checked ~ .Dr_C3 {
+  // border: 2px solid $col_S002;
+}
+.Dr_container input:checked ~ .Dr_C4 {
+  //border: 2px solid $col_S004;
+}
+.Dr_container input:checked ~ .Dr_C5 {
+  //border: 2px solid $col_S015;
+}
+.Dr_container input:checked ~ .Dr_C6 {
+  //border: 2px solid $col_S020;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.Dr_radio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.Dr_check:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.Dr_container input:checked ~ .Dr_radio:after {
+  display: block;
+}
+.Dr_container input:checked ~ .Dr_check:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.Dr_container .Dr_radio:after {
+  top: -5px;
+  left: -5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+
+}
+.Dr_container .Dr_check:after {
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $col_S015;
+}
+.Dr_container .Dr_C1:after {
+  border: 3px solid $col_S001;
+}
+.Dr_container .Dr_C2:after {
+  border: 3px solid $col_S010;
+}
+.Dr_container .Dr_C3:after {
+  border: 3px solid $col_S002;
+}
+.Dr_container .Dr_C4:after {
+  border: 3px solid $col_S004;
+}
+.Dr_container .Dr_C5:after {
+  border: 3px solid $col_S015;
+}
+.Dr_container .Dr_C6:after {
+  border: 3px solid $col_S020;
+}
+.Dr_colorE{
+  color: red;
+}
+.Dr_LB01{
+  color: $col_S001;
+  font-weight: 100;
+  cursor: pointer;
+}
+.Dr_item_L {
+  margin-top: -22px;
+}
+.Dr_H2{
+  height: 100%;
+  -moz-box-shadow: -6px 9px 12px -13px #ccc;
+  -webkit-box-shadow: -6px 9px 12px -13px #ccc;
+  box-shadow: -6px 9px 12px -13px #ccc;
+  padding-left: 0px!important;
+  color: $col_S016;
+  text-align: center;
+}
+.Dr_H3{
+  padding-left: 0px!important;
+  text-align: center;
+}
+.danger_input_Dr{    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(255, 0, 0);}
+.Dr_iClose{
+  background: $icon_Dr_close 0px 11px no-repeat;
+  right: 28px !important;
+}
+.Dr_iR{
+  background: $icon_Dr_Rech 0px 10px no-repeat;
+
+
+}
+.Dr_LC1{
+  width: 23%!important;
+  height: 57px!important;
+  background: #fff;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: $col_S015;
+  -moz-box-shadow: -6px 9px 12px -13px #ccc;
+  -webkit-box-shadow: -6px 9px 12px -13px #ccc;
+  box-shadow: -6px 9px 12px -13px #ccc;
+}
+.Dr_LC2{
+  width: 23%!important;
+  margin-left: 2%;
+  height: 57px!important;
+  background: #fff;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: $col_S015;
+  -moz-box-shadow: -6px 9px 12px -13px #ccc;
+  -webkit-box-shadow: -6px 9px 12px -13px #ccc;
+  box-shadow: -6px 9px 12px -13px #ccc;
+}
+.Dr_LC3{
+  width: 23%!important;
+  margin-left: 3%;
+  height: 57px!important;
+  color: $col_S015;
+}
+.DrLF0{
+  margin-left: 10px;
+}
+.Dr_LC3 label{
+  background: $col_S018;
+  padding-top: 15px!important;
+  -moz-box-shadow: -6px 9px 12px -13px #ccc;
+  -webkit-box-shadow: -6px 9px 12px -13px #ccc;
+  box-shadow: -6px 9px 12px -13px #ccc;
+}
+.DrLBC1{
+  padding-left: 30px!important;
+  padding-top: 10px;
+  color: $col_S027;
+}
+.DrLBC2{
+  padding-left: 36px!important;
+  padding-top: 10px;
+  color: $col_S028;
+
+}
+.DrLBC3{
+  padding-left: 44px!important;
+  padding-top: 10px;
+  color: $col_S016;
+}
+.DrLI1{
+  padding-left: 0px!important;
+  padding-top: 10px;
+}
+.DrLI1 input[type=text]{
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+  font-weight: 100;
+  font-size: 14px!important;
+}
+.DrI1{
+  width: 130px!important;
+}
+.Drbg02{
+  height: 200px;
+  background: transparent $icon_Dr_BG no-repeat 0%  !important;
+}
+.DrPi{
+  width: 18px!important;
+  height: 18px!important;
+  padding-left: 20px;
+}
+.DrPi1{
+  width: 18px!important;
+  height: 18px!important;
+}
+.DrWI{
+  width: 10px !important;
+  padding: 0px!important;
+  padding-top: 7px!important;
+}
+.DrCI{
+  color: $col_S001;
+}
+.modal-backdrop{
+  background-color: transparent!important;
+}
+.Dr_MD .modal-dialog{
+  width: 60% !important;
+  margin-top: 9%!important;
+}
+.DrIIF{
+  margin-left: 35px;
+  width: 8%!important;
+}
+.DrPLR{
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+}
+.DrCur{
+  cursor: pointer;
+}
+.DrLLI{
+  margin-left: 32%!important;
+}
+.Dr_BTNli{
+  width: 40%;
+  border: none;
+  background: $col_S018;
+}
+.DrVtext{
+  padding-left: 55px!important;
+  font-size: 17px;
+  color: $col_S030;
+}
+.DrOtext{
+  padding-left: 55px!important;
+  font-size: 17px;
+  color: $col_S028;
+}
+.DrRtext{
+  padding-left: 55px!important;
+  font-size: 17px;
+  color: $col_S029;
+}
+.DrBtext{
+  padding-left: 55px!important;
+  font-size: 17px;
+  color: $col_S031;
+}
+.DrPIL{
+  color: $col_S014;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.DrPII{
+  padding-left: 55px!important;
+}
+.DrBTClass{
+  width: 72%!important;
+  padding-left: 32px!important;
+}
+@media(max-width: 991px){
+  .Dr_content_nav .ng-sidebar{
+    width: 95%;
+    margin-top: 57px!important;
+  }
+  .Dr_left_btn{
+    margin-left: 21%;
+  }
+  .Dr_left_btn02{
+    margin-left: 29%;
+  }
+  .Dr_add_c2{
+    left: 24%!important;
+  }
+  .Dr_BoxAl a>img{
+    height: auto!important;
+  }
+  .Dr_pdBT{
+    padding-left: 10px!important;
+    padding-right: 23px!important;
+  }
+  .Dr_pdBT02{
+    padding-left: 9px!important;
+    padding-right: 12px!important;
+  }
+
+  .btn_add{
+    width: 50px!important;
+    height: 50px!important;
+    border-radius: 100%!important;
+    z-index: 1;
+    position: fixed;
+    margin-left: 75%;
+    margin-top: 100%;
+    color: transparent!important;
+    background: $col_S003 $icon_Dr_Plus no-repeat 47% 50% !important;
+  }
+  .Dr_add_cl{
+    left: 39%!important;
+    margin-top: 98%!important;
+  }
+
+
+
+}
+@media(max-width: 991px){
+  .Dr_sidemodal .ng-sidebar{
+    width: 99%;
+  }
+  .Dr_sidemodal .ng-sidebar{
+    margin-top: 57px;
+  }
+  .Dr_icon_file{
+    padding-top: 10px;
+  }
+}
+
+#menuToggle {
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  margin-top: 6px;
+}
+
+#menuToggle input {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  cursor: pointer;
+  opacity: 0; /* hide input */
+  z-index: 1; /* top of the menu */
+}
+
+#menuToggle span{
+  width: 37px;
+  height: 3px;
+  margin-bottom: 8px;
+  background: #666666;
+  border-radius: 4px;
+  -webkit-transition: all .5s cubic-bezier(.08,.81,.87,.71);
+  -moz-transition: all .5s cubic-bezier(.08,.81,.87,.71);
+  -ms-transition: all .5s cubic-bezier(.08,.81,.87,.71);
+  -o-transition: all .5s cubic-bezier(.08,.81,.87,.71);
+  transition: all .5s cubic-bezier(.08,.81,.87,.71);
+}
+
+#span1 {
+  transform-origin: 4px 0px;
+}
+
+#span3 {
+  transform-origin: bottom right;
+}
+
+#menuToggle input:checked ~ #span1 {
+  background-color: $col_S003;
+  transform: rotate(45deg) translate(8px);
+  transform: rotate(0deg) translate(7px);
+  width: 28px;
+  height: 3px;
+}
+#menuToggle input:checked ~ #span2 {
+  background-color: $col_S003;
+  transform: rotate(495deg) translate(4px);
+  transform: rotate(719deg) translate(0px);
+  width: 28px;
+  height: 3px;
+}
+#menuToggle input:checked ~ #span3 {
+  background-color: $col_S003;
+  width: 28px;
+  height: 3px;
+  transform: rotate(0deg) translate(7px);
+}
+
+
+
+
+
+
+
+//--------------------------------------
+
+
+
+
+//@media (max-width:1355px ) {
+//.Dr_sidemodal .ng-sidebar{
+//  width: 45%;
+//}
+//
+//}
+//
+//@media (min-width:990px ) {
+//  .Dr_sidemodal .ng-sidebar{
+//    width: 45%;
+//  }
+//
+//}

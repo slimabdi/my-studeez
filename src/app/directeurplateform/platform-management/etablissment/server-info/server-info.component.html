@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="row top_br Dr_bgCol_001">
+    <div class="col-md-4 "><label class="Dr_titre_filtre">Année 2017/2018</label></div>
+  </div>
+
+  <form #formulaire="ngForm">
+
+
+    <input type="text"  class="form-control Dr_input" name="id" [(ngModel)]="ecole.id"  style="display: none">
+    <input type="text"  class="form-control Dr_input" name="nomGroupe" [(ngModel)]="ecole.groupeScolaire"     style="display: none">
+  <div class="row top_br ">
+    <div class="col-md-4 "></div>
+    <div class="col-md-6 Dr_padding_001">
+      <label class="Dr_add_form">Tout cocher <input type="checkbox"></label>
+    </div>
+  </div>
+
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form Dr_padding_001 ">Calendrier scolaire</label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001 Dr_active_L">
+      <label class="Dr_lab_form">Calendrier scolaire</label>
+      <label class="Dr_add_form" > <input type="checkbox" name="calendrierS" [(ngModel)]=" ecole.DonneeServeurs[0].calendrierS "  ></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form Dr_padding_001">Emploi du temps</label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Emploi du temps des classes </label>
+      <label class="Dr_add_form"> <input type="checkbox"  name="eDTClasses" [(ngModel)]="ecole.DonneeServeurs[0].eDTClasses"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form"></label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Emploi du temps des professionnels</label>
+      <label class="Dr_add_form"> <input type="checkbox"  name="eDTProf" [(ngModel)]="ecole.DonneeServeurs[0].eDTProf"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form Dr_padding_001">Documents administratifs</label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+
+      <label class="Dr_lab_form">Documents publiés</label>
+      <label class="Dr_add_form"> <input type="checkbox"  name="docPublie" [(ngModel)]="ecole.DonneeServeurs[0].docPublie"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form"></label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Documents reçus</label>
+      <label class="Dr_add_form"> <input type="checkbox" name="docRecu" [(ngModel)]="ecole.DonneeServeurs[0].docRecu"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form Dr_padding_001">Galerie</label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Galerie - photos et vidéos</label>
+      <label class="Dr_add_form"> <input type="checkbox" name="galerie" [(ngModel)]="ecole.DonneeServeurs[0].galerie" ></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form"></label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Documents pédagogiques</label>
+      <label class="Dr_add_form"> <input type="checkbox"   name="docP" [(ngModel)]="ecole.DonneeServeurs[0].docP" ></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form"></label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Bilan des absences</label>
+      <label class="Dr_add_form"> <input type="checkbox" name="bilanAbs" [(ngModel)]="ecole.DonneeServeurs[0].bilanAbs"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form"></label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Carnet de correspondance</label>
+      <label class="Dr_add_form"> <input type="checkbox" name="carnet" [(ngModel)]="ecole.DonneeServeurs[0].carnet"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form Dr_padding_001">Bulletins</label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Bulletins des élèves</label>
+      <label class="Dr_add_form"> <input type="checkbox"  name="bullEleves" [(ngModel)]="ecole.DonneeServeurs[0].bullEleves"></label>
+    </div>
+  </div>
+
+  <div class="row top_br ">
+    <div class="col-xs-4 col-md-4 ">
+      <label class="Dr_add_form"></label>
+    </div>
+    <div class="col-xs-8 col-md-6 Dr_bgCol_001 Dr_padding_001">
+      <label class="Dr_lab_form">Bulletins des classes</label>
+      <label class="Dr_add_form"> <input type="checkbox"  name="bullClasses" [(ngModel)]="ecole.DonneeServeurs[0].bullClasses"></label>
+    </div>
+  </div>
+
+  <div class="row  top_br">
+    <div class="col-md-4 "></div>
+    <div class="col-md-6">
+      <div class="col-md-6">
+
+      </div>
+
+      <div class="col-md-6">
+        <button type="submit" class="form-control DrBtn" (click)="updateDonneeServeur(formulaire.value)" >Enregistrer dans mon Drive</button>
+      </div>
+
+    </div>
+
+
+    <div class="row top_br Dr_top_100 ">
+    </div>
+</div>
+
+  </form>
+</div>
+
+

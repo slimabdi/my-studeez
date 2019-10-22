@@ -1,0 +1,206 @@
+
+
+
+
+<div class="Dr_sidemodal">
+    <ng-sidebar-container style="height: 100vh;position: absolute">
+      <ng-sidebar [(opened)]="_opened" position="right" >
+  
+          <sidebarinfirmary  (ajout)="getFList()"  [mode]="mode" > </sidebarinfirmary>
+  
+  
+      </ng-sidebar>
+      <div ng-sidebar-content>
+          <div class="container-fluid Dr_top_100" >
+              <div class="row">
+      
+                <div class="col-md-9 col-lg-10">
+                  <div class="col-xs-12 col-sm-8 col-md-4 col-lg-3 col-sm-offset-2 col-md-offset-6 top_br" >
+                    <button type="submit" class="ang_nav left_radius active_tab"   [routerLink]="['/directeurplateform/scholar-life/infirmerie']"  (click)="activeClass()"   >Passage en infirmerie</button>
+                    <button type="submit"  class="ang_nav right_radius " [routerLink]="['/directeurplateform/scholar-life/infirmerie/carnet']"  (click)="activeEns()" >Carnet de santé</button> 
+                     <!-- <a class="ang_nav right_radius "  [routerLink]="['/directeurplateform/scholar-life/infirmerie/carnet']"> Carnet de santé</a>-->
+                  </div>
+                </div>
+            
+                <div class="col-md-3 col-lg-2 top_br">
+                  <div class="form-group has-feedback">
+                    <input type="search" class="form-control Dr_rech" id="" placeholder="Rechercher par nom " name="" >
+                    <span class="Dr_iR form-control-feedback col_icon Dr_icon_rech"></span>
+                    <span class="Dr_iClose form-control-feedback col_icon Dr_icon_rech"></span>
+                  </div>
+                </div>
+      
+              </div>
+            </div>
+      
+      
+            <div class="container" >
+
+                <div class="row top_br">
+                    <div class="col-xs-3 col-md-3">
+                        <button type="submit" class="form-control btn_add"  (click)="_toggleSidebar();mode='create'">Ajouter un passage</button>
+                </div>
+                  
+                <!--- contenue -->
+                
+                <!---  liste des passage infermier  -->
+                <div class="col-xs-12 col-md-12 top_br Dr_C_ligne">
+                          <div class="col-xs-2 col-md-2 Dr_w3">
+                            <label  class="text_label Dr_label " >
+                              Date
+                            </label>
+                          </div>
+                          <div class="col-xs-1 col-md-1">
+                            <label  class="text_label Dr_label " >
+                              Arrivée
+                            </label>
+                          </div>
+                
+                          <div class="col-xs-1 col-md-1">
+                            <label  class="text_label Dr_label ">
+                              Départ
+                            </label>
+                          </div>
+                
+                          <div class="col-xs-1 col-md-1 text-center">
+                            <label  class="text_label Dr_label ">
+                              Classes
+                            </label>
+                          </div>
+                          <div class="col-xs-2 col-md-2 text-center">
+                            <label  class="text_label Dr_label ">
+                              Élève malade
+                            </label>
+                          </div>
+                          <div class="col-xs-2 col-md-2 text-center">
+                            <label  class="text_label Dr_label ">
+                           Accompagnateur
+                            </label>
+                          </div>
+                          <div class="col-xs-2 col-md-2 text-center">
+                            <label  class="text_label Dr_label ">
+                              Nom personnel
+                            </label>
+                          </div>
+                          <div class="col-xs-1 col-md-1 text-center">
+                
+                          </div>
+                
+                  </div>
+                
+                
+                        <div *ngFor="let inf of passageinfermier" class="col-xs-12 col-md-12 top_br Dr_C_ligne Dr_paddinR01">
+                          <div class="col-xs-2 col-md-2 Dr_w3">
+                            <label  class="text_label Dr_label " type="date" >
+                              {{inf.date| date: 'yyyy-MM-dd'}}
+                            </label></div>
+                          <div class="col-xs-1 col-md-1">
+                            <label  class="text_label Dr_label "  >
+                              {{inf.HEntree}}
+                            </label>
+                          </div>
+                
+                          <div class="col-xs-1 col-md-1">
+                            <label  class="text_label Dr_label "  >
+                              {{inf.Hsortie}}
+                            </label>
+                          </div>
+                
+                          <div class="col-xs-1 col-md-1 text-center">
+                            <label  class="text_label Dr_label " >
+                              {{inf.nomClasse}}
+                            </label>
+                          </div>
+                
+                          <div class="col-xs-2 col-md-2 text-center">
+                         <img src="{{inf.avatar}}" alt="" width="47px" class="rounded-circle">
+                            
+                            <label  class="text_label Dr_label " >
+                              {{inf.nom}} {{inf.prenom}}
+                            </label>
+                
+                          </div>
+                          <div class="col-xs-2 col-md-2 text-center">
+                            <img src="{{inf.avatarAccompagnateur}}" alt="" width="47px" class="rounded-circle">
+                    
+                            <label  class="text_label Dr_label ">
+                              {{inf.nomAccompagnateur}}  {{inf.prenomAccompagnateur}}
+                            </label>
+                
+                          </div>
+                          <div class="col-xs-2 col-md-2 text-center">
+                            <label  class="text_label Dr_label " >
+                              {{inf.nomPersonnel}} {{inf.prenomPersonnel}}
+                            </label>
+                
+                          </div>
+                
+                          <div class="col-xs-1 col-md-1 text-center DrIIF">
+                            <label  class="text_label Dr_label ">
+                            <button type="submit" class="icon_mdf" (click)="_toggleSidebar(); showForEdit(inf);"></button>
+                            <button type="submit" class="icon_supp" (click)="deletedobj=inf"  data-toggle="modal" data-target="#ModalSupp"  ></button>
+                            </label>
+                          </div>
+                
+                        </div>
+                      
+                        <div class="col-md-12 top_br">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" >
+                              <button type="submit" class="Impr_btn" (click)="generationPDF()">Imprimer la liste</button>
+                              <button type="submit" class="Expo_btn" (click)="exportationExcel()" >Export EXCEL</button>
+                            </div>
+                
+                            <div class="col-md-2"></div>
+                          </div>
+                          
+                  
+                            <div id="ModalSupp" class="modal fade Dr_modal_supp" role="dialog">
+                                <div class="modal-dialog ">
+                              
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                              
+                              
+                                    </div>
+                                    <div class="modal-body text-center">
+                                      <label class="Dr_lab_Modal" >Etes vous sur(e) de supprimer le  passage  infermier de   {{deletedobj?.nom}} {{deletedobj?.prenom}}  ? </label>
+                                      <div class="Dr_listeBtnModal">
+                                        <input type="submit" name="" class="Dr_btn_AnnM" data-dismiss="modal" value="Annuler">
+                              
+                                        <input type="submit" name="" class="Dr_btn_Msupp " (click)="onDelete(deletedobj.id)" data-dismiss="modal" value="OUI">
+                                      </div>
+                                    </div>
+                              
+                                  </div>
+                              
+                                  </div>
+                             </div>
+
+                               <!-- Modal -->
+                               <div bsModal #lgModal="bs-modal"  id="exampleModalCenter"  class="modal fade" tabindex="-1"role="dialog" aria-labelledby="dialog-sizes-name1" >
+                                  <div class="modal-dialog modal-lg" >
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div  class="modal-body text-center">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Etes vous sur(e) de supprimer le  passage  infermier de   {{currenteleve?.nom}} {{currenteleve?.prenom}}  ? </h5>
+                                  </div>
+                                  <div class="modal-footer Dr_listeBtnModal">
+                                    <button type="button" class="Dr_btn_AnnM" value="Annuler"  (click)="closePopup()" >Close</button>
+                                    <button type="button" class="btn btn-primary" class="Dr_btn_Msupp " data-dismiss="modal">Save changes</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                </div>
+                
+              </div>
+              </div>
+              </ng-sidebar-container>
+              </div>
+              
