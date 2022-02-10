@@ -70,7 +70,7 @@
     "ngx-toastr": "^8.8.0",
     "ngx-webstorage": "^2.0.1",
     "node-excel-to-json": "0.0.3",
-    "node-sass": "^4.9.1",
+    "node-sass": "^7.0.0",
     "npm": "^6.1.0",
     "replace-in-file": "^3.4.0",
     "rxjs": "^6.2.1",
